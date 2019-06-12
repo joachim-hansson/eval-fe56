@@ -5,7 +5,7 @@
 ##################################################
 
 # root directory of the evaluation pipeline
-rootpath <- "/home/fe56eval"
+rootpath <- "/home/user/eval-fe56"
 setwd(rootpath)
 
 source("required_packages.R")
