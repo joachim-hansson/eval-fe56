@@ -1,9 +1,10 @@
 #
 # DESCRIPTION OF STEP
 #
-# 1) create a parameter specification: refInpList
-# 2) create an extended output specification extNeedsDt
-#    also containing results of reference calculation
+# Use the covariance matrices constructed
+# during the previous steps and solve the
+# non-linear Generalized-Least-Squares problem
+# with the Levenberg-Marquardt algorithm.
 #
 
 source("config.R")
