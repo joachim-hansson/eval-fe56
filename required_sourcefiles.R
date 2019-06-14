@@ -20,3 +20,7 @@ source(file.path(utilpath, "otherfuns.R"))
 # a generator function create a logger function
 # for the Levenberg-Marquardt optimization
 source(file.path(utilpath, "LM_logger.R"))
+
+# a generator function to create an object with
+# functions to calculate the logarithmized posterior density
+source(file.path(utilpath, "logPosterior_wrapper.R"))
