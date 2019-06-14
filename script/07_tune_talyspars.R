@@ -215,6 +215,7 @@ refPar <- optParamDt[ADJUSTABLE==TRUE, unlist(PARVAL)]
 #setkey(optSysDt, IDX)
 #optSysDt[, IDX := seq_len(.N)]
 
+if (!dir.exists(savePathLM)) dir.create(savePathLM, recursive=TRUE)
 loggerLM <- createLoggerLM(talys, savePathLM)
 
 optRes <- LMalgo(talys$fun, talys$jac, pinit = refPar, p0 = refPar, P0 = P0, D = D, S = S0, X = X, yexp =yexp,
