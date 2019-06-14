@@ -1,9 +1,15 @@
 #
 # DESCRIPTION OF STEP
 #
-# 1) create a parameter specification: refInpList
-# 2) create an extended output specification extNeedsDt
-#    also containing results of reference calculation
+# If the experimental data is inconsistent
+# (taking into account all uncertainties),
+# an additional systematic uncertainty is
+# introduced on this step using maximum
+# likelihood optimization. 
+# The underlying model of the 'true' cross
+# section function is a Gaussian process 
+# that penalizes large values of the
+# second derivative.
 #
 
 source("config.R")

@@ -1,9 +1,15 @@
 #
 # DESCRIPTION OF STEP
 #
-# 1) create a parameter specification: refInpList
-# 2) create an extended output specification extNeedsDt
-#    also containing results of reference calculation
+# Retrieve the uncertainties from the EXFOR 
+# entries and add extra uncertainties if
+# something is fishy, e.g., individual
+# uncertainty components do not add up to the
+# total uncertainty or systematic uncertainties
+# are missing. The reference calculation of the
+# step 02 is used as the basis to convert
+# relative uncertainties to absolute ones
+# in order to avoid Peelle's pertinent puzzle.
 #
 
 source("config.R")

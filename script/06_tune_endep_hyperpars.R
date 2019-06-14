@@ -1,9 +1,10 @@
 #
 # DESCRIPTION OF STEP
 #
-# 1) create a parameter specification: refInpList
-# 2) create an extended output specification extNeedsDt
-#    also containing results of reference calculation
+# tune the hyperparameters of the Gaussian
+# processes attached to the energy-dependent
+# TALYS parameters using maximunm likelihood
+# optimization.
 #
 
 source("config.R")

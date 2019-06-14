@@ -7,9 +7,16 @@
 #
 # DESCRIPTION OF STEP
 #
-# 1) create a parameter specification: refInpList
-# 2) create an extended output specification extNeedsDt
+# 1) create a parameter specification 'refInpList'
+# 2) create an extended output specification 'extNeedsDt'
 #    also containing results of reference calculation
+#
+# The same information as in 'refInpList' is also
+# stored in 'refParamDt' as a datatable.
+# Also the object 'rawRes' is stored which contains
+# in addition to the results more details about the
+# calculations, such as an excerpt of the main
+# TALYS output file.
 #
 
 source("config.R")

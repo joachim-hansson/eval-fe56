@@ -1,9 +1,12 @@
 #
 # DESCRIPTION OF STEP
 #
-# 1) create a parameter specification: refInpList
-# 2) create an extended output specification extNeedsDt
-#    also containing results of reference calculation
+# Calculate the sensitivity matrix of TALYS
+# taking all adjustable model parameters into
+# account. This matrix is required for step 06
+# to tune the hyperparameters of the Gaussian
+# processes defined on energy-dependent TALYS
+# parameters.
 #
 
 source("config.R")
