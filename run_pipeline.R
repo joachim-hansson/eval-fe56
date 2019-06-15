@@ -22,6 +22,8 @@ run_step("04_tune_experimental_uncertainties.R")
 run_step("05_create_reference_jacobian.R")
 run_step("06_tune_endep_hyperpars.R")
 run_step("07_tune_talyspars.R")
+run_step("08_calculate_posterior_approximation.R")
+run_step("09_create_randomfiles.R")
 
 
 
