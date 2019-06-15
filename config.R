@@ -52,7 +52,12 @@ exforHandler <- createExforHandler(subentHandler)
 savePathLM <- file.path(rootpath, "log/LMalgo")
 
 # number of TALYS randomfiles to be created
-numTalysFiles <- 100
+numTalysFiles <- 50
+
+# where to store the TALYS results on the remote machine
+# content of TALYS result directories is stored as tar archives
+# needed for the creation of ENdf randomfiles using modified TASMAN
+savePathTalys <- "savePathTalys"
 
 createTalysHandlers <- function() {
 
