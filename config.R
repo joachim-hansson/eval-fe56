@@ -51,6 +51,9 @@ exforHandler <- createExforHandler(subentHandler)
 # optimization using the Levenberg-Marquardt algorithm should be stored
 savePathLM <- file.path(rootpath, "log/LMalgo")
 
+# number of TALYS randomfiles to be created
+numTalysFiles <- 100
+
 createTalysHandlers <- function() {
 
     # set up the connection to the cluster
