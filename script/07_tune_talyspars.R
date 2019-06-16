@@ -34,7 +34,8 @@ optGpDt <- read_object(6, "optGpDt")
 ##################################################
 
 # define objects to be returned
-outputObjectNames <- c("optRes")
+outputObjectNames <- c("optRes", "optParamDt", "Sexp", "mask",
+                       "refPar", "P0", "yexp", "D", "S0", "X")
 check_output_objects(scriptnr, outputObjectNames)
 
 # convert the sparse matrix given as data.table 
@@ -220,7 +221,7 @@ loggerLM <- createLoggerLM(talys, savePathLM)
 
 optRes <- LMalgo(talys$fun, talys$jac, pinit = refPar, p0 = refPar, P0 = P0, D = D, S = S0, X = X, yexp =yexp,
                  lower = rep(-Inf, length(refPar)), upper = rep(Inf, length(refPar)), logger = loggerLM,
-                 control = list(maxit = 1))
+                 control = list(maxit = 10))
 
 # save the needed files for reference
 save_output_objects(scriptnr, outputObjectNames, overwrite)
