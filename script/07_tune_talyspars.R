@@ -219,7 +219,11 @@ refPar <- optParamDt[ADJUSTABLE==TRUE, unlist(PARVAL)]
 if (!dir.exists(savePathLM)) dir.create(savePathLM, recursive=TRUE)
 loggerLM <- createLoggerLM(talys, savePathLM)
 
-optRes <- LMalgo(talys$fun, talys$jac, pinit = refPar, p0 = refPar, P0 = P0, D = D, S = S0, X = X, yexp =yexp,
+# uncomment the line below to start from last parameterset of previous LM run
+#pinit <- read_object(7, "optRes")$par
+pinit <- refPar
+  
+optRes <- LMalgo(talys$fun, talys$jac, pinit = pinit, p0 = refPar, P0 = P0, D = D, S = S0, X = X, yexp =yexp,
                  lower = rep(-Inf, length(refPar)), upper = rep(Inf, length(refPar)), logger = loggerLM,
                  control = list(maxit = 10))
 
