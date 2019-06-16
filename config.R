@@ -101,3 +101,13 @@ createTalysHandlers <- function() {
          talysOptHnd = talysOptHnd)
 }
 
+
+runManually <- function() {
+  # run this code to setup the slave script
+  # on the cluster
+  con <- createTalysHandlers()
+  # run the command string printed by the next
+  # instruction on the worker nodes of the cluster
+  con$clustHnd$startNodeController(con$clustHnd)
+  con$clustHnd$closeCon()
+}
