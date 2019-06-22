@@ -74,7 +74,6 @@ idcsToRemove <- grep(enParReg, names(adjParList))
 adjParList <- adjParList[-idcsToRemove]
 
 # add the energy dependent parameter specifications
-energyGridForParams <- seq(0,31,by=2)
 endepParnames <- expand.grid(tmpPar,'(',energyGridForParams,') ', tmpProj) 
 endepParnames <- do.call(paste0, endepParnames)
 endepInpList <- as.list(rep(1, length(endepParnames)))

@@ -27,9 +27,13 @@ calcdir_loc <- "localCalcDir"
 mongo_dbname <- "exfor"
 mongo_colname <- "entries"
 
-# energy grid for TALYS calculations and
-# specification of the TALYS input file used as template
+# energy grid for TALYS calculations
 energyGrid <- seq(0.1, 30.001, length = 100)
+
+# energy grid for energy-dependent TALYS parameters
+energyGridForParams <- seq(0,31,by=2)
+
+# specification of the TALYS input file used as template
 param_template_path <- file.path(rootpath, "indata/n_Fe_056.inp")
 
 # instantiate the transformation used for all parameters of the form ...adjust
