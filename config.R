@@ -30,6 +30,11 @@ mongo_colname <- "entries"
 # energy grid for TALYS calculations
 energyGrid <- seq(0.1, 30.001, length = 100)
 
+# default threshold energy for reaction channels
+# if automatic determination fails
+# (because of vanishing reaction cross section at all energies)
+defaultThresEn <- NA
+
 # energy grid for energy-dependent TALYS parameters
 energyGridForParams <- seq(0,31,by=2)
 

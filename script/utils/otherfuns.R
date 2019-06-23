@@ -2,9 +2,16 @@
 # TODO: These functions should go somewhere else in the future
 ##############################################################
 
-getThresEn <- function(reac, expDt) {
+getThresEn <- function(reac, expDt, defaultThresEn = NA) {
   
-  expDt[REAC == reac, L1[which(DATA[order(L1)] != 0)[1]]]
+  if (expDt[REAC == reac, all(DATA == 0)]) {
+    if (is.na(defaultThresEn))
+      stop("automatic energy threshold specification failed")
+    else
+      defaultThresEn
+  }
+  else
+    expDt[REAC == reac, L1[which(DATA[order(L1)] != 0)[1]]]
 }
 
 

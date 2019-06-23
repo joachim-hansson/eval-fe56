@@ -70,7 +70,7 @@ reacHandler$addMap("pw", pwMap)
 # Other elements: prior uncertainty of the 2nd derivative of the xs
 
 curReac <- "(26-FE-56(N,INL)26-FE-56,,SIG)"
-curEnGrid <- seq(getThresEn(curReac, modDt), 32, by = 0.1)
+curEnGrid <- seq(getThresEn(curReac, modDt, defaultThresEn), 32, by = 0.1)
 curUncs <- c(1e4, 1e4, rep(2, length(curEnGrid)-2))
 reacHandler$assignMapToReac("pw", curReac,
                             vals = rep(0, length(curEnGrid)),
@@ -79,7 +79,7 @@ reacHandler$assignMapToReac("pw", curReac,
                                         order = 3, outsideZero = TRUE))
 
 curReac <- "(26-FE-56(N,P)25-MN-56,,SIG)"
-curEnGrid <- seq(getThresEn(curReac, modDt), 32, by = 0.1)
+curEnGrid <- seq(getThresEn(curReac, modDt, defaultThresEn), 32, by = 0.1)
 curUncs <- c(1e4, 1e4, rep(10, length(curEnGrid)-2))
 reacHandler$assignMapToReac("pw", curReac,
                             vals = rep(0, length(curEnGrid)),
@@ -88,7 +88,7 @@ reacHandler$assignMapToReac("pw", curReac,
                                         order = 3, outsideZero = TRUE))
 
 curReac <- "(26-FE-56(N,2N)26-FE-55,,SIG)"
-curEnGrid <- seq(getThresEn(curReac, modDt), 32, by = 0.1)
+curEnGrid <- seq(getThresEn(curReac, modDt, defaultThresEn), 32, by = 0.1)
 curUncs <- c(1e4, 1e4, rep(0.5, length(curEnGrid)-2))
 reacHandler$assignMapToReac("pw", curReac,
                             vals = rep(0, length(curEnGrid)),
@@ -97,7 +97,7 @@ reacHandler$assignMapToReac("pw", curReac,
                                         order = 3, outsideZero = TRUE))
 
 curReac <- "(26-FE-56(N,TOT),,SIG)"
-curEnGrid <- seq(getThresEn(curReac, modDt), 32, by = 0.1)
+curEnGrid <- seq(getThresEn(curReac, modDt, defaultThresEn), 32, by = 0.1)
 curUncs <- c(1e4, 1e4, rep(2, length(curEnGrid)-2))
 reacHandler$assignMapToReac("pw", curReac,
                             vals = rep(0, length(curEnGrid)),
@@ -107,7 +107,7 @@ reacHandler$assignMapToReac("pw", curReac,
 
 
 curReac <- "(26-FE-56(N,EL)26-FE-56,,SIG)"
-curEnGrid <- seq(getThresEn(curReac, modDt), 32, by = 0.1)
+curEnGrid <- seq(getThresEn(curReac, modDt, defaultThresEn), 32, by = 0.1)
 curUncs <- c(1e4, 1e4, rep(2, length(curEnGrid)-2))
 reacHandler$assignMapToReac("pw", curReac,
                             vals = rep(0, length(curEnGrid)),
@@ -117,7 +117,7 @@ reacHandler$assignMapToReac("pw", curReac,
 
 
 curReac <- "(26-FE-56(N,A)24-CR-53,,SIG)"
-curEnGrid <- seq(getThresEn(curReac, modDt), 32, by = 1)
+curEnGrid <- seq(getThresEn(curReac, modDt, defaultThresEn), 32, by = 1)
 curUncs <- c(1e4, 1e4, rep(50, length(curEnGrid)-2))
 reacHandler$assignMapToReac("pw", curReac,
                             vals = rep(0, length(curEnGrid)),
@@ -127,7 +127,7 @@ reacHandler$assignMapToReac("pw", curReac,
 
 
 curReac <- "(26-FE-56(N,D)25-MN-55,,SIG)"
-curEnGrid <- seq(getThresEn(curReac, modDt), 32, by = 1)
+curEnGrid <- seq(getThresEn(curReac, modDt, defaultThresEn), 32, by = 1)
 curUncs <- c(1e4, 1e4, rep(5, length(curEnGrid)-2))
 reacHandler$assignMapToReac("pw", curReac,
                             vals = rep(0, length(curEnGrid)),
