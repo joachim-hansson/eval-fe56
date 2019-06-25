@@ -32,7 +32,7 @@ finalParCovmat <- read_object(8, "finalParCovmat")
 ##################################################
 
 # define objects to be returned
-outputObjectNames <- c()
+outputObjectNames <- c("allParsets")
 check_output_objects(scriptnr, outputObjectNames)
 
 # if LM algorithm did not sufficiently converge
