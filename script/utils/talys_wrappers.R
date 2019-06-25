@@ -54,6 +54,7 @@ createTalysFun <- function(talysClust, print.info = TRUE) {
     stopifnot(c("IDX","ADJUSTABLE","PARNAME") %in%
                 names(paramDt))
     thisParamDt <<- copy(paramDt)
+    setkey(thisParamDt, IDX)
     numPars <<- nrow(thisParamDt)
   }
   
@@ -69,6 +70,7 @@ createTalysFun <- function(talysClust, print.info = TRUE) {
     stopifnot(all(needsDt$ELEMENT[1] == needsDt$ELEMENT))
     stopifnot(all(needsDt$MASS[1] == needsDt$MASS))
     thisNeedsDt <<- copy(needsDt)
+    setkey(thisNeedsDt, IDX)
     numNeeds <<- nrow(thisNeedsDt)
   }
 
@@ -156,6 +158,7 @@ createTalysFun <- function(talysClust, print.info = TRUE) {
       else
       {
         setkey(thisParamDt, IDX)
+        setkey(thisNeedsDt, IDX)
         thisParamDt[ADJUSTABLE == TRUE, PARVAL := as.list(curx)]
         inputDt <- convertToInput(thisParamDt, thisNeedsDt)
         inpList <- c(inpList, inputDt$inputs)
