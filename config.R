@@ -56,6 +56,9 @@ exforHandler <- createExforHandler(subentHandler)
 # abuAgent <- createAbuAgent("talys/structure/abundance/")
 # subentHandler$getHandlerByName("handler_ntot_nat")$configure(list(abuAgent = abuAgent))
 
+# maximum number of iterations for Levenberg-Marquardt algorithm
+maxitLM <- 1
+
 # specify the directory were status information and plots during the 
 # optimization using the Levenberg-Marquardt algorithm should be stored
 savePathLM <- file.path(rootpath, "log/LMalgo")
