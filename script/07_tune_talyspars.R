@@ -155,7 +155,6 @@ optSysDt <- optSysDt[! PARNAME %in% fixedParnames]
 
 # recreate the index because we have deleted rows
 optSysDt[, IDX := seq_len(.N)]
-optParamDt[, IDX := seq_len(.N)]
 
 stopifnot(optSysDt[grepl("TALYS",EXPID),PARNAME] == optParamDt$PARNAME[optParamDt$ADJUSTABLE == TRUE])
 
@@ -206,6 +205,7 @@ X <- P[expSel, expSel]
 S0 <- S[, expSel]
 D <- Diagonal(x = optExpDt$UNC^2) 
 yexp <- getDt_DATA(optExpDt)
+setkey(optParamDt, IDX)
 refPar <- optParamDt[ADJUSTABLE==TRUE, unlist(PARVAL)]
 
 # because we removed rows from optSysDt, we need to restore
