@@ -80,7 +80,10 @@ logPostVals <- logPost$fun(variationMat, variationMatRes)
 # by evaluating the 2nd derivative using finite differences
 fp <- (logPostVals[idx3] - logPostVals[idx2]) / (2*workEps)
 fpp <- (logPostVals[idx3] - 2 * logPostVals[1] + logPostVals[idx2]) / workEps^2
-finalParCovmat <- 1/fpp
+
+# The second derivative (Hessian matrix) of the posterior distribution
+# is approximately the negative inverse covariance matrix.
+finalParCovmat <- (-1) * 1/fpp
 finalPars <- optPars
 
 # IMPORTANT REMARK: 
