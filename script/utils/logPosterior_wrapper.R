@@ -41,7 +41,7 @@ setupLogPost <- function(p0, P0, yexp, D, S, X, talys) {
       dpriorRef <- prefCur - p0
       LpriorRef <- as.vector(crossprod(dpriorRef, invP0 %*% dpriorRef))
       Lref <- as.vector(mult_xt_invCov_x(yexp - frefCur, D, S, X)) + LpriorRef
-      print(Lref)
+      Lref <- (-0.5) * Lref
       res[i] <- Lref
     }
     res
@@ -49,12 +49,13 @@ setupLogPost <- function(p0, P0, yexp, D, S, X, talys) {
   
   
   jac <- function(pref) {
-    print("jac")
     invP0 <- solve(P0)
     J <- talys$jac(pref)
     fref <- talys$fun(pref)
     dpriorRef <- pref - p0
-    as.matrix(2 * invP0 %*% dpriorRef - 2 * t(J) %*% mult_invCov_x(yexp - fref, D, S, X))
+    res <- as.matrix(2 * invP0 %*% dpriorRef - 2 * t(J) %*% mult_invCov_x(yexp - fref, D, S, X))
+    res <- (-0.5) * res
+    res 
   }
   
   list(fun = fun, jac = jac, getLastPars = getLastPars)
