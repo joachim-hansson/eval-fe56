@@ -64,7 +64,7 @@ maxitLM <- 1
 savePathLM <- file.path(rootpath, "log/LMalgo")
 
 # number of TALYS randomfiles to be created
-numTalysFiles <- 50
+numTalysFiles <- 5
 
 # where to store the TALYS results on the remote machine
 # content of TALYS result directories is stored as tar archives
