@@ -71,7 +71,8 @@ tmpProj <- c('n','p','d','t','h','a')
 enParDt <- expand.grid(par = tmpPar, proj = tmpProj)
 enParReg <- paste0(with(enParDt, paste0('^ *',par,' +',proj,' *$')), collapse='|')
 idcsToRemove <- grep(enParReg, names(adjParList))
-adjParList <- adjParList[-idcsToRemove]
+if (length(idcsToRemove) > 0)
+    adjParList <- adjParList[-idcsToRemove]
 
 # add the energy dependent parameter specifications
 endepParnames <- expand.grid(tmpPar,'(',energyGridForParams,') ', tmpProj) 
