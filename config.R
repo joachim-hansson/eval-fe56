@@ -114,12 +114,14 @@ createTalysHandlers <- function() {
 }
 
 
-runManually <- function() {
-  # run this code to setup the slave script
-  # on the cluster
+# function that copies worker controller script to cluster
+# and returns the command that needs to be run on worker nodes
+# to watch for and execute transmitted jobs
+slaveSetupCmd <- function(nohup = TRUE, launch = FALSE) {
   con <- createTalysHandlers()
-  # run the command string printed by the next
-  # instruction on the worker nodes of the cluster
-  con$clustHnd$startNodeController(con$clustHnd)
+  cmdstr <- con$clustHnd$startNodeController(con$clustHnd)
   con$clustHnd$closeCon()
+  if (isTRUE(nohup))
+      cmdstr <- paste0("nohup ", cmdstr, " &")
+  cmdstr
 }
