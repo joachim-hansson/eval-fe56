@@ -22,6 +22,10 @@ ssh_pw <- "sshpassword"
 calcdir_rem <- "remoteCalcDir"
 calcdir_loc <- "localCalcDir"
 
+# time interval to check for completed
+# TALYS calculation in seconds
+pollTime <- 60
+
 # settings to retrieve EXFOR entries from
 # the MongoDb database
 mongo_dbname <- "exfor"

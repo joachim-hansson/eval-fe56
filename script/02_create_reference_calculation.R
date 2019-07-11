@@ -139,7 +139,7 @@ save_output_objects(scriptnr, "runObj", overwrite)
 cat("Started calculations at", as.character(Sys.time()), "\n")
 cat("Waiting for termination...\n")
 while (talysHnd$isRunning(runObj)) { 
-    Sys.sleep(60)
+    Sys.sleep(pollTime)
 }
 rawRes <- talysHnd$result(runObj)
 talysHnds$clustHnd$closeCon()
