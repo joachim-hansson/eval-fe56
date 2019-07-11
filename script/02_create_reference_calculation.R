@@ -62,10 +62,16 @@ refInpHeader <- list(projectile = "n",
 #                 template = paramTemplate)
 
 adjParList <- extractAdjustedTalysParameters(paramTemplate)
+if (isTRUE(fewParameterTest)) adjParList <- adjParList[1:3]
 
 # augment parameter list with energy dependent parameters
 tmpPar <- paste0(c('v1','d1','w1','vso1','wso1','rc'),'adjust')
 tmpProj <- c('n','p','d','t','h','a')
+
+if (isTRUE(fewParameterTest)) {
+    tmpPar <- tmpPar[1:3]
+    tmpProj <- tmpProj[1]
+}
 
 # to do that, first remove the associated global specifications
 enParDt <- expand.grid(par = tmpPar, proj = tmpProj)

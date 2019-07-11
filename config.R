@@ -11,6 +11,16 @@ setwd(rootpath)
 source("required_packages.R")
 source("required_sourcefiles.R")
 
+# should pipeline be executed with a very 
+# small number of adjustable model parameters
+# for testing purposes
+fewParameterTest <- FALSE
+
+# should TALYS calculations be performed
+# within the Docker container
+# for testing purposes
+containerTest <- FALSE
+
 # settings needed to connect to the cluster
 # and run TALYS calculations in parallel
 ssh_login <- "user@host.com"
@@ -131,3 +141,8 @@ slaveSetupCmd <- function(nohup = TRUE, launch = FALSE) {
       cmdstr <- paste0("nohup ", cmdstr, " &")
   cmdstr
 }
+
+if (isTRUE(containerTest)) {
+    slaveSetupCmd(nohup = FALSE, launch = TRUE)
+}
+
