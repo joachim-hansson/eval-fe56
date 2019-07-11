@@ -14,12 +14,12 @@ source("required_sourcefiles.R")
 # should pipeline be executed with a very 
 # small number of adjustable model parameters
 # for testing purposes
-fewParameterTest <- TRUE
+fewParameterTest <- FALSE
 
 # should TALYS calculations be performed
 # within the Docker container
 # for testing purposes
-containerTest <- TRUE
+containerTest <- FALSE
 
 # settings needed to connect to the cluster
 # and run TALYS calculations in parallel
@@ -34,7 +34,7 @@ calcdir_loc <- "localCalcDir"
 
 # time interval to check for completed
 # TALYS calculation in seconds
-pollTime <- 10
+pollTime <- 60
 
 # settings to retrieve EXFOR entries from
 # the MongoDb database
@@ -42,15 +42,15 @@ mongo_dbname <- "exfor"
 mongo_colname <- "entries"
 
 # energy grid for TALYS calculations
-energyGrid <- seq(1, 2, length = 2)
+energyGrid <- seq(0.1, 30.001, length = 100)
 
 # default threshold energy for reaction channels
 # if automatic determination fails
 # (because of vanishing reaction cross section at all energies)
-defaultThresEn <- 1 
+defaultThresEn <- NA
 
 # energy grid for energy-dependent TALYS parameters
-energyGridForParams <- seq(1, 2, length = 2)
+energyGridForParams <- seq(0,31,by=2)
 
 # specification of the TALYS input file used as template
 param_template_path <- file.path(rootpath, "indata/n_Fe_056.inp")
@@ -61,8 +61,8 @@ param_template_path <- file.path(rootpath, "indata/n_Fe_056.inp")
 paramTrafo <- generateTrafo(1, 0.5, 4) 
 
 # only use experimental data in that energy range
-minExpEn <- 1
-maxExpEn <- 2
+minExpEn <- 2
+maxExpEn <- 30
 
 # set up the handlers to map TALYS results to EXFOR entries
 subentHandler <- createSubentHandler(createDefaultSubentHandlerList())
@@ -71,7 +71,7 @@ exforHandler <- createExforHandler(subentHandler)
 # subentHandler$getHandlerByName("handler_ntot_nat")$configure(list(abuAgent = abuAgent))
 
 # maximum number of iterations for Levenberg-Marquardt algorithm
-maxitLM <- 5
+maxitLM <- 1
 
 # specify the directory were status information and plots during the 
 # optimization using the Levenberg-Marquardt algorithm should be stored
