@@ -125,6 +125,8 @@ slaveSetupCmd <- function(nohup = TRUE, launch = FALSE) {
   con <- createTalysHandlers()
   cmdstr <- con$clustHnd$startNodeController(con$clustHnd)
   con$clustHnd$closeCon()
+  if (isTRUE(launch))
+      system(cmdstr, wait = FALSE, ignore.stderr = TRUE)
   if (isTRUE(nohup))
       cmdstr <- paste0("nohup ", cmdstr, " &")
   cmdstr
