@@ -61,7 +61,7 @@ logPost <- setupLogPost(refPar, P0, yexp, D, S0, X, talys)
 
 # define the variations needed to calculate the diagonal
 # elements of the Hessian matrix
-workEps <- 0.02
+workEps <- 0.01
 optPars <- optRes$par
 
 idx1 <- seq_along(optPars) 
