@@ -60,6 +60,10 @@ param_template_path <- file.path(rootpath, "indata/n_Fe_056.inp")
 # the maximal deviation from the default values is 50%
 paramTrafo <- generateTrafo(1, 0.5, 4) 
 
+# random generator seed for optimization of experimental uncertainties
+# impacts the initial extra uncertainties in the optimization setup
+tuneExpUncSeed <- 11
+
 # only use experimental data in that energy range
 minExpEn <- 1
 maxExpEn <- 2
@@ -76,6 +80,9 @@ maxitLM <- 5
 # specify the directory were status information and plots during the 
 # optimization using the Levenberg-Marquardt algorithm should be stored
 savePathLM <- file.path(rootpath, "log/LMalgo")
+
+# random seed to create TALYS randomfiles
+talysFilesSeed <- 13
 
 # number of TALYS randomfiles to be created
 numTalysFiles <- 5

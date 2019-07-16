@@ -179,6 +179,10 @@ sysDt[, ORIGIDX := IDX]
 # store modified uncertainties in updSysDt
 updSysDt <- copy(sysDt)
 
+# set the seed for random number generator
+# to have reproducible results
+set.seed(tuneExpUncSeed)
+
 for (curReac in unique(expDt$REAC)) {
 
     cat("CURRENT REACTION: ", curReac, "\n")

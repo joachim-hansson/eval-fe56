@@ -50,6 +50,10 @@ talys$setSexp(Sexp)
 talys$setMask(mask)
 talys$setEps(0.01)
 
+# set the seed for the random number generator
+# to have a reproducible creation of TALYS parameter sets
+set.seed(talysFilesSeed)
+
 # create a sample of parameter sets
 numPars <- length(finalPars)
 variedParsets <- matrix(rnorm(numPars*numTalysFiles, 
