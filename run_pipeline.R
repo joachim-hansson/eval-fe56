@@ -2,6 +2,7 @@
 # which are part of the exemplary Fe56 evaluation.
 
 run_step <- function(filename) {
+  Sys.sleep(1)
   setwd("/home/user/eval-fe56")
   filepath <- file.path("script", filename)
   Rscript <- paste0("Rscript --vanilla --no-save --no-restore")
