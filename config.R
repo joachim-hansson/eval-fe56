@@ -95,7 +95,7 @@ savePathTalys <- "savePathTalys"
 createTalysHandlers <- function() {
 
     # wait to avoid some problem due to connecting
-    # to quickly in sequence
+    # too quickly in sequence
     Sys.sleep(1)
 
     # set up the connection to the cluster
