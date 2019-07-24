@@ -14,7 +14,7 @@
 #   D  ... Diagonal matrix with statistical errors of experiments
 #   S  ... matrix S mapping systematic errors to the appropriate indices of experimental data points
 #   X  ... covariance matrix associated with systematic error components
-#   talys ... talys wrapper as created by function 'createTalysFun' in 'talys_wrappers.R'
+#   talys ... talys wrapper as created by function 'createTalysFun' in 'talys_wrapper.R'
 
 setupLogPost <- function(p0, P0, yexp, D, S, X, talys) {
   

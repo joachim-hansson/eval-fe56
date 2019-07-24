@@ -6,7 +6,7 @@ source(file.path(utilpath, "pipelinefuns.R"))
 
 # function to generate a wrapper to run TALYS
 # calculations and retrieve results
-source(file.path(utilpath, "talys_wrappers.R"))
+source(file.path(utilpath, "talys_wrapper.R"))
 
 # functions to transform TALYS parameters using
 # a logistic function to ensure TALYS parameters
