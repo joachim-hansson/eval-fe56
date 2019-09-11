@@ -225,7 +225,7 @@ pinit <- refPar
   
 optRes <- LMalgo(talys$fun, talys$jac, pinit = pinit, p0 = refPar, P0 = P0, D = D, S = S0, X = X, yexp =yexp,
                  lower = rep(-Inf, length(refPar)), upper = rep(Inf, length(refPar)), logger = loggerLM,
-                 control = list(maxit = maxitLM))
+                 control = list(maxit = maxitLM, reltol = reltolLM))
 
 # save the needed files for reference
 save_output_objects(scriptnr, outputObjectNames, overwrite)

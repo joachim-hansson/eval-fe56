@@ -75,7 +75,12 @@ exforHandler <- createExforHandler(subentHandler)
 # subentHandler$getHandlerByName("handler_ntot_nat")$configure(list(abuAgent = abuAgent))
 
 # maximum number of iterations for Levenberg-Marquardt algorithm
-maxitLM <- 5
+maxitLM <- 10
+
+# if the relative difference between subsequent iterations of the
+# Levenberg-Marquardt algorithm falls below this value,
+# the optimization procedure terminates
+reltolLM <- 1e-5
 
 # specify the directory were status information and plots during the 
 # optimization using the Levenberg-Marquardt algorithm should be stored
