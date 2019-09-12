@@ -31,3 +31,10 @@ Noteworthy packages are:
   multivariate normal distributions or Gaussian processes, and
   solving the resulting Bayesian update equations.
 
+The pipeline has some dependencies, such as a MongoDB database 
+with EXFOR subentries, the R interpreter, and some Linux command line
+tools for communication via SSH.
+To facilitate the use and exploration of the pipeline, 
+a Docker file has been created which takes care of assembling
+a Docker image with all the mentioned dependencies.
+It can be found at <https://github.com/gschnabel/eval-fe56-docker>.
