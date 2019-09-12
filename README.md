@@ -37,6 +37,6 @@ tools for communication via SSH.
 To facilitate the use and exploration of the pipeline, 
 a Docker file has been created which takes care of assembling
 a Docker image with all the mentioned dependencies.
-It can be found at <https://github.com/gschnabel/eval-fe56-docker>.
+It can be found at <https://github.com/gschnabel/eval-fe56-docker>
 together with a manual that contains installation instructions
 and more details about the structure of the pipeline.
