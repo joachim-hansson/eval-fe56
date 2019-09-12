@@ -60,6 +60,10 @@ param_template_path <- file.path(rootpath, "indata/n_Fe_056.inp")
 # the maximal deviation from the default values is 50%
 paramTrafo <- generateTrafo(1, 0.5, 4) 
 
+# random generator seed for optimization of experimental uncertainties
+# impacts the initial extra uncertainties in the optimization setup
+tuneExpUncSeed <- 11
+
 # only use experimental data in that energy range
 minExpEn <- 2
 maxExpEn <- 30
@@ -71,11 +75,19 @@ exforHandler <- createExforHandler(subentHandler)
 # subentHandler$getHandlerByName("handler_ntot_nat")$configure(list(abuAgent = abuAgent))
 
 # maximum number of iterations for Levenberg-Marquardt algorithm
-maxitLM <- 1
+maxitLM <- 15
+
+# if the relative difference between subsequent iterations of the
+# Levenberg-Marquardt algorithm falls below this value,
+# the optimization procedure terminates
+reltolLM <- 1e-5
 
 # specify the directory were status information and plots during the 
 # optimization using the Levenberg-Marquardt algorithm should be stored
 savePathLM <- file.path(rootpath, "log/LMalgo")
+
+# random seed to create TALYS randomfiles
+talysFilesSeed <- 13
 
 # number of TALYS randomfiles to be created
 numTalysFiles <- 5
@@ -86,6 +98,10 @@ numTalysFiles <- 5
 savePathTalys <- "savePathTalys"
 
 createTalysHandlers <- function() {
+
+    # wait to avoid some problem due to connecting
+    # too quickly in sequence
+    Sys.sleep(1)
 
     # set up the connection to the cluster
     # and the functionality to run TALYS in parallel
