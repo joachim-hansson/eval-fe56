@@ -154,6 +154,7 @@ fixedParnames <- optParamDt[ADJUSTABLE == FALSE, PARNAME]
 optSysDt <- optSysDt[! PARNAME %in% fixedParnames]
 
 # recreate the index because we have deleted rows
+setkey(optSysDt, IDX)
 optSysDt[, IDX := seq_len(.N)]
 
 stopifnot(optSysDt[grepl("TALYS",EXPID),PARNAME] == optParamDt$PARNAME[optParamDt$ADJUSTABLE == TRUE])
