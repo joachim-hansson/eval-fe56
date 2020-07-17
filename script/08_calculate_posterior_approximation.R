@@ -20,6 +20,9 @@ overwrite <- FALSE
 #       OUTPUT FROM PREVIOUS STEPS
 ##################################################
 
+refParamDt <- read_object(2, "refParamDt")
+optSysDt <- read_object(6, "optSysDt")
+optGpDt <- read_object(6, "optGpDt")
 extNeedsDt <- read_object(2, "extNeedsDt")
 optParamDt <- read_object(7, "optParamDt")
 Sexp <- read_object(7, "Sexp")
@@ -31,6 +34,8 @@ D <- read_object(7, "D")
 S0 <- read_object(7, "S0")
 X <- read_object(7, "X")
 optRes <- read_object(7, "optRes")
+optSysDt_allpars <- read_object(7, "optSysDt_allpars")
+optSysDt_optpars <- read_object(7, "optSysDt_optpars")
 
 ##################################################
 #       START OF SCRIPT
@@ -59,6 +64,29 @@ talys$setEps(0.01)
 # posterior distribution.
 logPost <- setupLogPost(refPar, P0, yexp, D, S0, X, talys)
 
+# construct the full prior covariance matrix
+# including sensitive and insensitive parameters
+# sensitive parameters were considered during LM optimization
+# whereas insensitive parameters not
+gpHandler <- createSysCompGPHandler()
+sysCompHandler <- createSysCompHandler()
+sysCompHandler$addGPHandler(gpHandler)
+P0_all <- sysCompHandler$cov(optSysDt_allpars, optGpDt, ret.mat = TRUE)
+
+# get the indices of the adjustable parameters
+optpars_indices <- optSysDt_optpars[, sort(IDX)]
+
+# consistency check
+stopifnot(all(P0_all[optpars_indices, optpars_indices] == P0))
+
+# compute the GLS Hessian
+# Smod maps from model parameters to optimzed parameters only
+Smod <- optRes$jac
+tS_invCexp_S <- mult_xt_invCov_x(Smod, D, S0, X)
+invP0_all <- solve(P0_all)
+H_gls <- (-solve(P0_all))
+H_gls[optpars_indices, optpars_indices] <- H_gls[optpars_indices, optpars_indices] - (tS_invCexp_S)
+
 # define the variations needed to calculate the diagonal
 # elements of the Hessian matrix
 workEps <- 0.01
@@ -81,10 +109,30 @@ logPostVals <- logPost$fun(variationMat, variationMatRes)
 fp <- (logPostVals[idx3] - logPostVals[idx2]) / (2*workEps)
 fpp <- (logPostVals[idx3] - 2 * logPostVals[1] + logPostVals[idx2]) / workEps^2
 
+# compute the approximation to the Hessian
+H <- H_gls
+diag(H)[optpars_indices] <- pmin(fpp, diag(H_gls)[optpars_indices])
+
 # The second derivative (Hessian matrix) of the posterior distribution
 # is approximately the negative inverse covariance matrix.
-finalParCovmat <- (-1) * 1/fpp
+finalParCovmat <- (-1) * solve(H)
 finalPars <- optPars
+
+# update insensitive parameters
+# not considered for optimization
+setkey(refParamDt, IDX)
+p0 <- unlist(refParamDt[ADJUSTABLE==TRUE, PARVAL])
+pref <- p0
+pref[optpars_indices] <- optRes$par
+
+d0 <- pref - p0
+d1 <- yexp - optRes$fn
+
+invCexp_d1 <- mult_invCov_x(d1, D, S0, X)
+G <- (-invP0_all %*% d0)
+G[optpars_indices] <- G[optpars_indices] + t(Smod) %*% invCexp_d1
+
+p1 <- as.matrix(pref + finalParCovmat %*% G)
 
 # IMPORTANT REMARK: 
 # If Levenberg-Marquardt did not converge sufficiently 
@@ -95,10 +143,11 @@ finalPars <- optPars
 # save the result also in a more human-readable way
 # as a table also containing the parameter names
 finalParamDt <- copy(optParamDt)
+finalParamDt[PARNAME %in% optSysDt_allpars$PARNAME, ADJUSTABLE:=TRUE]
 setkey(finalParamDt, IDX)
-finalParamDt[ADJUSTABLE == TRUE, POSTVAL := paramTrafo$fun(optPars)]
+finalParamDt[ADJUSTABLE == TRUE, POSTVAL := paramTrafo$fun(p1)]
 # IMPORTANT NOTE: POSTUNC is still with respect to transformed parameters
-finalParamDt[ADJUSTABLE == TRUE, POSTUNC := sqrt(finalParCovmat)]
+finalParamDt[ADJUSTABLE == TRUE, POSTUNC := sqrt(diag(finalParCovmat))]
 
 # sanity check:
 # make sure that the results obtained by the two different

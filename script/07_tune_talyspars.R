@@ -35,7 +35,8 @@ optGpDt <- read_object(6, "optGpDt")
 
 # define objects to be returned
 outputObjectNames <- c("optRes", "optParamDt", "Sexp", "mask",
-                       "refPar", "P0", "yexp", "D", "S0", "X")
+                       "refPar", "P0", "yexp", "D", "S0", "X",
+                       "optSysDt_allpars", "optSysDt_optpars")
 check_output_objects(scriptnr, outputObjectNames)
 
 # convert the sparse matrix given as data.table 
@@ -149,14 +150,26 @@ tmpIdcs <- match(optParamDt[ADJUSTABLE==TRUE,PARNAME], optSysDt$PARNAME)
 stopifnot(!is.unsorted(tmpIdcs))
 stopifnot(length(tmpIdcs) == nrow(optParamDt[ADJUSTABLE==TRUE]))
 
+# keep a reduced version of optSysDt
+# with TALYS parameters that were initially considered
+# for optimization
+optSysDt_allpars <- optSysDt[grepl("^TALYS-", EXPID),]
+setkey(optSysDt_allpars, IDX)
+optSysDt_allpars[, IDX:=seq_len(.N)]
+
 # remove TALYS parameters from optSysDt that will not be optimized
+# note that optSysDt still also contains systematic experimental components
 fixedParnames <- optParamDt[ADJUSTABLE == FALSE, PARNAME]
 optSysDt <- optSysDt[! PARNAME %in% fixedParnames]
 
+# store the TALYS parameters to be optimized in
+# an additional data table
+optSysDt_optpars <- optSysDt_allpars[! PARNAME %in% fixedParnames]
+
 # recreate the index because we have deleted rows
 setkey(optSysDt, IDX)
+setkey(optParamDt, IDX)
 optSysDt[, IDX := seq_len(.N)]
-
 stopifnot(optSysDt[grepl("TALYS",EXPID),PARNAME] == optParamDt$PARNAME[optParamDt$ADJUSTABLE == TRUE])
 
 # prepare the Gaussian process handler 
