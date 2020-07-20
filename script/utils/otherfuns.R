@@ -30,3 +30,14 @@ createSubentStub <- function(exforReacStr, en, xs=NULL) {
 }
 
 
+# sample from a multivariate normal distribution
+sample_mvn <- function(num, meanvec, covmat) {
+  L <- chol(as.matrix(covmat))
+  p <- length(meanvec)
+  N <- num
+  meanvec <- as.vector(meanvec)
+  stopifnot(dim(covmat)[1] == p)
+  samples <- meanvec + t(L) %*% matrix(rnorm(p*N), nrow=p, ncol=N)
+  return(samples)
+}
+

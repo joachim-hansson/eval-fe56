@@ -24,20 +24,22 @@ extNeedsDt <- read_object(2, "extNeedsDt")
 optParamDt <- read_object(7, "optParamDt")
 Sexp <- read_object(7, "Sexp")
 mask <- read_object(7, "mask")
+optSysDt_allpars <- read_object(7, "optSysDt_allpars")
 finalPars <- read_object(8, "finalPars")
 finalParCovmat <- read_object(8, "finalParCovmat")
+
 
 ##################################################
 #       START OF SCRIPT
 ##################################################
 
 # define objects to be returned
-outputObjectNames <- c("allParsets")
+outputObjectNames <- c("allParsets", "allResults")
 check_output_objects(scriptnr, outputObjectNames)
 
-# if LM algorithm did not sufficiently converge
-# in step 07, we cannot create the covariance matrix
-stopifnot(all(finalParCovmat > 0))
+# now consider also the insensitive parameters
+# available for variations
+optParamDt[PARNAME %in% optSysDt_allpars$PARNAME, ADJUSTABLE:=TRUE]
 
 # see step 07_tune_talyspars.R for more explanation
 # about setting up the talys handler
@@ -55,16 +57,13 @@ talys$setEps(0.01)
 set.seed(talysFilesSeed)
 
 # create a sample of parameter sets
-numPars <- length(finalPars)
-variedParsets <- matrix(rnorm(numPars*numTalysFiles, 
-                              rep(0,numPars*numTalysFiles),
-                              rep(sqrt(finalParCovmat), numTalysFiles)),
-                        nrow = numPars, ncol = numTalysFiles)
+variedParsets <- sample_mvn(numTalysFiles, finalPars, finalParCovmat)
+
 allParsets <- cbind(finalPars, variedParsets)
 
 # perform calculations and save the result
 talysHnds$remHnd$ssh$execBash(paste0("mkdir -p '", savePathTalys, "'; echo endofcommand"))
-talys$fun(allParsets, applySexp = FALSE, saveDir = savePathTalys)
+allResults <- talys$fun(allParsets, applySexp = FALSE, ret.dt=FALSE, saveDir = savePathTalys)
 
 # save the needed files for reference
 save_output_objects(scriptnr, outputObjectNames, overwrite)

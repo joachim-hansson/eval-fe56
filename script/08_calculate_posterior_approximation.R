@@ -116,7 +116,12 @@ diag(H)[optpars_indices] <- pmin(fpp, diag(H_gls)[optpars_indices])
 # The second derivative (Hessian matrix) of the posterior distribution
 # is approximately the negative inverse covariance matrix.
 finalParCovmat <- (-1) * solve(H)
-finalPars <- optPars
+
+# if LM algorithm did not sufficiently converge
+# in step 07, the covariance matrix would not be well defined
+stopifnot(isSymmetric(finalParCovmat, tol=1e-10))
+finalParCovmat <- (finalParCovmat + t(finalParCovmat)) / 2
+stopifnot(all(eigen(finalParCovmat)$values >= 0))
 
 # update insensitive parameters
 # not considered for optimization
@@ -134,6 +139,9 @@ G[optpars_indices] <- G[optpars_indices] + t(Smod) %*% invCexp_d1
 
 p1 <- as.matrix(pref + finalParCovmat %*% G)
 
+finalPars <- p1
+finalPars[optpars_indices] <- optRes$par
+
 # IMPORTANT REMARK: 
 # If Levenberg-Marquardt did not converge sufficiently 
 # to a (local) posterior maximum, some values in 
@@ -145,7 +153,7 @@ p1 <- as.matrix(pref + finalParCovmat %*% G)
 finalParamDt <- copy(optParamDt)
 finalParamDt[PARNAME %in% optSysDt_allpars$PARNAME, ADJUSTABLE:=TRUE]
 setkey(finalParamDt, IDX)
-finalParamDt[ADJUSTABLE == TRUE, POSTVAL := paramTrafo$fun(p1)]
+finalParamDt[ADJUSTABLE == TRUE, POSTVAL := paramTrafo$fun(finalPars)]
 # IMPORTANT NOTE: POSTUNC is still with respect to transformed parameters
 finalParamDt[ADJUSTABLE == TRUE, POSTUNC := sqrt(diag(finalParCovmat))]
 
