@@ -1,6 +1,5 @@
-
 source("config.R")
-scriptnr <- 4L
+library(ggplot2)
 
 origSysDt <- read_object(4, "origSysDt")
 updSysDt <- read_object(4, "updSysDt")
@@ -20,14 +19,15 @@ statUnc <- getDt_UNC(expDt)
 origUnc <- sqrt(statUnc^2 + diag(S %*% origX %*% t(S))) 
 updUnc <- sqrt(statUnc^2 + diag(S %*% updX %*% t(S)))
 
-setkey(qxpDt, IDX)
+setkey(expDt, IDX)
 expDt[, ORIGUNC := origUnc]
 expDt[, UPDUNC := updUnc]
 
 library(ggplot2)
 
-reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)",
-               "(26-FE-56(N,P)25-MN-56,,SIG)")
+# reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)",
+#                "(26-FE-56(N,P)25-MN-56,,SIG)")
+reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)")
 
 for (curReac in reactions) {
 
@@ -40,8 +40,8 @@ for (curReac in reactions) {
     ggp <- ggp + geom_errorbar(aes(x = L1, ymin = DATA - ORIGUNC, ymax = DATA + ORIGUNC, col = EXPID), size = 1)
     ggp <- ggp + geom_point(aes(x = L1, y = DATA, col = EXPID))
 
-    filepath <- paste0("img/04/", curReac, ".png")
-    ggsave(filepath, ggp, width = 16, height = 12, units = "cm", dpi = 300)
-
+    print(ggp)
+    filepath <- file.path(plotPath, 'plot_example_MLO_correction.png')
+    ggsave(filepath, ggp, width = 15, height = 10, units = "cm", dpi = 300)
 }
 

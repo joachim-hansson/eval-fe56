@@ -97,6 +97,10 @@ numTalysFiles <- 5
 # needed for the creation of ENdf randomfiles using modified TASMAN
 savePathTalys <- "savePathTalys"
 
+# where to save plots produced by the scripts in eval-fe56/script/visualization
+plotPath <- file.path(rootpath, 'outdata/plots')
+
+
 createTalysHandlers <- function() {
 
     # wait to avoid some problem due to connecting
