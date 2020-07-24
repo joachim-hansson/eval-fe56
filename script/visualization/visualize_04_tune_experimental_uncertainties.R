@@ -41,6 +41,7 @@ for (curReac in reactions) {
     ggp <- ggp + geom_point(aes(x = L1, y = DATA, col = EXPID))
 
     print(ggp)
+    dir.create(plotPath, recursive=TRUE, showWarnings=FALSE)
     filepath <- file.path(plotPath, 'plot_example_MLO_correction.png')
     ggsave(filepath, ggp, width = 15, height = 10, units = "cm", dpi = 300)
 }
