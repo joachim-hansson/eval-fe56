@@ -32,17 +32,23 @@ reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)")
 for (curReac in reactions) {
 
     curExpDt <- expDt[REAC == curReac]
-    ggp <- ggplot(curExpDt) + theme_bw() + guides(col = FALSE)
+    ggp <- ggplot(curExpDt) + theme_bw()
+    ggp <- ggp + theme(axis.text=element_text(size=9),
+                       axis.title=element_text(size=10),
+                       plot.title=element_text(size=12))
+    ggp <- ggp + guides(col = FALSE)
     ggp <- ggp + xlab("energy [MeV]") + ylab("cross section [mbarn]")
     ggp <- ggp + ggtitle(curReac)
 
-    ggp <- ggp + geom_errorbar(aes(x = L1, ymin = DATA - UPDUNC, ymax = DATA + UPDUNC), col = "green", size = 1)
-    ggp <- ggp + geom_errorbar(aes(x = L1, ymin = DATA - ORIGUNC, ymax = DATA + ORIGUNC, col = EXPID), size = 1)
+    ggp <- ggp + geom_errorbar(aes(x = L1, ymin = DATA - UPDUNC, ymax = DATA + UPDUNC), col = "green",
+                               size = 0.5, width = 0.2)
+    ggp <- ggp + geom_errorbar(aes(x = L1, ymin = DATA - ORIGUNC, ymax = DATA + ORIGUNC, col = EXPID),
+                               size = 0.5, width = 0.3)
     ggp <- ggp + geom_point(aes(x = L1, y = DATA, col = EXPID))
 
     print(ggp)
     dir.create(plotPath, recursive=TRUE, showWarnings=FALSE)
     filepath <- file.path(plotPath, 'plot_example_MLO_correction.png')
-    ggsave(filepath, ggp, width = 15, height = 10, units = "cm", dpi = 300)
+    ggsave(filepath, ggp, width = 8.65, height = 5.6, units = "cm", dpi = 300)
 }
 

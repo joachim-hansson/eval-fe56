@@ -81,8 +81,11 @@ plotDt[, UNC:=as.vector(sqrt(diag(Smod %*% diag(tmpDt$UNC) %*% t(Smod))))]
 
 ggp <- ggplot(data=plotDt)
 ggp <- ggp + theme_bw() + theme(legend.position="none")
+ggp <- ggp + theme(axis.text=element_text(size=9),
+                   axis.title=element_text(size=10),
+                   strip.text=element_text(size=8))
 ggp <- ggp + xlab('enegy [MeV]') + ylab('cross section [mbarn]')
-# overlay experiental data
+# overlay experimental data
 ggp <- ggp + geom_errorbar(aes(x=L1, ymin=DATA-UNC, ymax=DATA+UNC, col=EXPID), data=tmpExpDt)
 ggp <- ggp + geom_point(aes(x=L1, y=DATA, col=EXPID), data=tmpExpDt, size=0.2)
 # plot the model
@@ -94,7 +97,7 @@ ggp
 
 dir.create(plotPath, recursive=TRUE, showWarnings=FALSE)
 ggsave(file.path(plotPath, 'plot_posterior_xs.png'), ggp,
-       units='cm', width=15, height=10)
+       units='cm', width=17.8, height=10)
 
 
 
