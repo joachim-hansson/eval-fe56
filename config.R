@@ -84,7 +84,7 @@ reltolLM <- 1e-5
 
 # specify the directory were status information and plots during the 
 # optimization using the Levenberg-Marquardt algorithm should be stored
-savePathLM <- file.path(rootpath, "log/LMalgo")
+savePathLM <- file.path(rootpath, "outdata/log/LMalgo")
 
 # random seed to create TALYS randomfiles
 talysFilesSeed <- 13
