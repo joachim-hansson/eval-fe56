@@ -19,7 +19,7 @@ fewParameterTest <- FALSE
 # should TALYS calculations be performed
 # within the Docker container
 # for testing purposes
-containerTest <- FALSE
+containerTest <- TRUE
 
 # settings needed to connect to the cluster
 # and run TALYS calculations in parallel
