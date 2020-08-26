@@ -149,7 +149,7 @@ createTalysHandlers <- function() {
 # to watch for and execute transmitted jobs
 slaveSetupCmd <- function(nohup = TRUE, launch = FALSE) {
   con <- createTalysHandlers()
-  cmdstr <- con$clustHnd$startNodeController(con$clustHnd)
+  cmdstr <- con$clustHnd$startNodeController(con$clustHnd, maxNumCpus=64)
   con$clustHnd$closeCon()
   if (isTRUE(launch))
       system(cmdstr, wait = FALSE, ignore.stderr = TRUE)
