@@ -13,7 +13,6 @@ source("required_sourcefiles.R")
 
 # should pipeline be executed with a very 
 # small number of adjustable model parameters
-# for testing purposes
 fewParameterTest <- FALSE
 
 # should TALYS calculations be performed

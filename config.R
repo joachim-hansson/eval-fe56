@@ -18,7 +18,6 @@ fewParameterTest <- TRUE
 
 # should TALYS calculations be performed
 # within the Docker container
-# for testing purposes
 containerTest <- TRUE
 
 # number of CPUs limiting the number of 
