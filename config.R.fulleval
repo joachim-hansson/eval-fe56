@@ -20,6 +20,11 @@ fewParameterTest <- FALSE
 # within the Docker container
 containerTest <- TRUE
 
+# number of CPUs limiting the number of 
+# TALYS calculations performed in parallel
+maxNumCPU <- as.numeric(Sys.getenv('maxNumCPU'))
+if (is.na(maxNumCPU)) maxNumCPU <- 32
+
 # settings needed to connect to the cluster
 # and run TALYS calculations in parallel
 ssh_login <- "user@host.com"
@@ -152,7 +157,7 @@ createTalysHandlers <- function() {
 # to watch for and execute transmitted jobs
 slaveSetupCmd <- function(nohup = TRUE, launch = FALSE) {
   con <- createTalysHandlers()
-  cmdstr <- con$clustHnd$startNodeController(con$clustHnd)
+  cmdstr <- con$clustHnd$startNodeController(con$clustHnd, maxNumCpus=maxNumCPU)
   con$clustHnd$closeCon()
   if (isTRUE(launch))
       system(cmdstr, wait = FALSE, ignore.stderr = TRUE)
