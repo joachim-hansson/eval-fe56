@@ -1,0 +1,13 @@
+******** S Y S T E M A T I C  U N C E R T A I N T I E S  *********
+
+***** L E V E N B E R G - M A R Q A R D T  A L G O R I T H M *****
+
+A Levenberg-Marquardt (LM) algorithm modified to alow for prior information was used to optimize TALYS parameters sensitive to avalible data. To constrain the bahaviour of eneryg-dependentTALYS pramters, a Gaussian Process prior was imposed on each energy-dependent paramter. Hyperparamters of the Gaussian Processeswere optimized using marginal likelihood optimisation prior to optimizing the TALYS paramters with the LM algorithm.
+
+****** U N C E R T A I N T Y   Q U A N T I F I C A T I O N ******* 
+
+Due to the high computational demand of the TALYS model, sampling the distribution of the paramters is intractable using regular MC methods. Therefore the Laplace approximation of the posteror distribution is used. The computation of the hessian at the posterior mode is completely parallellizable, however the numberof computations needed scales quadradically with the number ofparamters in the model. Threfore, an approximation of the hessian is used. The approximate hessian at the log of the posterior mode is calculated by decomposing the hessian into tracltable and untraclable components. Untractable components require numerical diffrentiation of the TALYS model and are therefore approximated by only taking only diagonal derivatives into account, while prior and linear components are directly avalible after the final LM-step.
+
+Prior correlations imposed by the Gaussian Processes affect the posterior paramter correlations and expectations of insensitive paramters. The posterior expectations are updated unsing newtons method at the posterior mode of the LM optimized parameters by taking one step with an approximation of the hessian matrix.
+
+When the final parameter covariance matrix has been obtained, The multivariate normal distribution obtained by the Laplace approximation is sampled and each sample is propagated through the TALYS model. Finally, all propagated samples are used to determine the mean and covariance of the TALYS model predicitons.

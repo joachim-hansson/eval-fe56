@@ -1,0 +1,482 @@
+
+************************ T E N D L  I N F O **********************
+
+TENDL-2012 (Talys Evaluated Nuclear Data Library)
+
+Neutron transport library made by Talys 
+
+Authors: A.J. Koning and D. Rochman, NRG Petten, The Netherlands
+
+************** G E N E R A L   I N F O R M A T I O N *************
+
+This evaluated data file is based primarily on the nuclear model 
+code Talys [kon07], version 1.4 and on existing resonance 
+parameter tables. It is part of a large collection of isotopic 
+evaluations, all created by running Talys with either default or
+adjusted input parameters. This means that the data in this 
+evaluation have been tested in detail for some isotopes against 
+individual experimental data, while for other isotopes it is
+only as good as the global quality of Talys at the present moment.
+The mutual quality of all individual evaluations is however 
+consistent: The same set of nuclear models is used and, equally 
+important, the same ENDF-6 formatting procedures for each isotope.
+The resulting data file provides a complete representation of 
+nuclear data needed for transport, damage, heating, radioactivity,
+and shielding applications over the incident neutron energy range 
+from 1.0E-11 to 200 MeV. 
+
+For the resonance range we have adopted the best possible 
+resonance parameters from available numerical tables or from an 
+existing library.
+
+All transport data for neutrons, charged particles, photons and 
+residual nuclides are filed using a combination of MF1,2,3,4,5,6, 
+12,14,15. This includes cross sections, angular distributions, 
+double-differential spectra, discrete and continuum photon 
+production cross sections, and residual production (activation) 
+cross sections. Moreover, isomeric production data are stored in 
+MF8,9,10. This evaluation can thus be used as both transport 
+and activation library. The data file has been created 
+automatically using the ENDF-6 format generator TEFAL.
+
+A complete set of covariance data is included, which is stored
+in MF32,33,34.
+
+##### ORIGIN
+
+Resonance parameters (MF2/MT151): Best data from existing sets
+All other data < 200 MeV        : Produced with Talys code 
+
+*************************** T H E O R Y **************************
+
+Talys is a computer code system for the prediction and analysis 
+of nuclear reactions. Talys simulates reactions that involve 
+neutrons, gamma-rays, protons, deuterons, tritons, helions and 
+alpha-particles, in the 1 keV - 200 MeV energy range and for 
+target nuclides of mass 12 and heavier. This is achieved by 
+implementing a suite of nuclear reaction models into a single 
+code system. It enables to evaluate nuclear reactions from 
+the unresolved resonance region up to intermediate energies. This 
+evaluation is based on a theoretical analysis that utilizes the 
+optical model, compound nucleus statistical theory, fission, 
+direct reactions and pre-equilibrium processes, in combination 
+with databases and models for nuclear structure. The following 
+output of Talys is stored in this data file:
+
+- Total, elastic and non-elastic cross sections
+- Elastic scattering angular distributions
+- Inelastic cross sections to discrete states
+- Inelastic scattering angular distributions to discrete states
+- Exclusive channel cross sections, e.g. (n,g), (n,2n), (n,np),..
+- Exclusive channel energy spectra
+- Exclusive channel double-differential spectra
+- Exclusive gamma production for discrete states and continuum
+- Isomeric and ground state cross sections
+- Residual production cross sections
+- Recoil data
+- Total particle cross sections, e.g. (n,xn), (n,xp),..
+- Total particle energy spectra
+- Total particle double-differential spectra
+
+Here follows a short description of the used nuclear models:
+
+##### OPTICAL MODEL
+
+All optical model calculations are performed by ECIS-06 [ray94], 
+in Talys used as a subroutine. The default optical model 
+potentials (OMP) used are the local and global parameterizations 
+of Koning and Delaroche [kon03]. These are phenomenological OMPs 
+for neutrons and protons which in principle are valid over the 
+1 keV - 200 MeV energy range, though the low energy boundary of 
+validity may differ from nucleus to nucleus. For neutrons and 
+protons, the used parameterization is given in Eq. (7) of 
+[kon03]. Revised versions of these potentials (unpublished) are 
+used in the case of deformed nuclides.
+To calculate the transmission coefficients and reaction 
+cross sections for deuterons, tritons, helions and alpha 
+particles, we use OMPs that are directly derived from our nucleon 
+potentials using Watanabe's folding approach.
+
+##### DIRECT REACTIONS
+
+The built-in ECIS-06 is used for DWBA or coupled-channels 
+calculations for rotational or vibrational (or a combination of
+these) nuclides, depending on the information present in the
+nuclear structure database of Talys.
+In addition, a macroscopic, phenomenological model to describe 
+giant resonances in the inelastic channel is used. For each 
+multipolarity an energy weighted sum rule applies and a DWBA 
+calculation with ECIS-06 is performed for each giant resonance 
+state. The cross section is then spread over the continuum with a 
+Gaussian distribution.
+
+##### COMPOUND NUCLEUS
+
+For binary compound nucleus reactions we use the model of 
+Moldauer, i.e. the Hauser-Feshbach model corrected for width 
+fluctuations. The transmission coefficients have been generated 
+with the aforementioned OMPs and the full j,l-dependence of the 
+transmission coefficients in the Hauser-Feshbach model is used. 
+For each nucleus that can be reached through a binary reaction, 
+several discrete levels and a continuum described by level 
+densities are included simultaneously as competing channels.
+
+The compound nucleus angular distributions are calculated with 
+the Blatt-Biedenharn formalism, leading to compound nucleus 
+Legendre coefficients that are added to their direct 
+counterparts. For multiple compound emission, i.e. emitted 
+particles after the binary emission, we use the Hauser-Feshbach 
+model. Again, for each residual nucleus several discrete states 
+are included as well as a continuum described by level densities. 
+Multiple compound emission is continued until all reaction 
+channels are closed and the population distribution of all 
+residual nuclides is depleted, through gamma decay, until they
+end up in the ground state or in an isomer. 
+
+For the level density, we take the Constant Temperature Model 
+with level density parameters as given in [kon08]. This employs
+the temperature law at low energies and a Fermi gas expression at 
+high energies, and takes into account the damping of shell 
+effects at high excitation energy. We have obtained the level 
+density parameters from a simultaneous fit to all experimental 
+discrete levels and D0 values from the RIPL library [rip09]. 
+
+Gamma-ray transmission coefficients are generated with the 
+Kopecky-Uhl generalized Lorentzian for strength functions, with 
+giant dipole resonance parameters taken from the RIPL library 
+[rip09], and normalized with experimental radiative widths. 
+
+##### PRE-EQUILIBRIUM REACTIONS
+
+For pre-equilibrium reactions, which become important for 
+incident energies above about 10 MeV, we use the two-component 
+exciton model [kon04], in which the neutron or proton types of 
+particles and holes are followed throughout the reaction. For 
+energies above 20 MeV, multiple pre-equilibrium emission up to 
+any order of particle emission was included in the calculations.
+A parameterization for the squared matrix element is used that is 
+valid for the whole energy range of this evaluation.
+
+For deuterons, tritons, helions and alpha-particles, an extra
+contribution was added from the pick/up and knock-out reaction
+model by Kalbach [kal05]. 
+
+For photons, the model of Akkermans and Gruppelaar [akk85] was 
+applied, to simulate the direct and semi-direct capture 
+processes. 
+
+The angular distribution systematics by Kalbach [kal88] were used 
+to describe the angular distributions for all continuum 
+particles. An isotopic distribution for photons was adopted.
+
+***************** F I L E   I N F O R M A T I O N ****************
+
+##### MF1: GENERAL INFORMATION 
+ 
+- MT451    : Descriptive data and directory
+  
+This text and the full directory of used MF/MT sections.
+
+##### MF2: RESONANCE PARAMETERS
+
+- MT151    : Resonance parameters
+
+If present, we adopt the resonance parameters from an existing 
+table or library. The choice of library is made, for each isotope 
+separately, on basis of completeness, date of the evaluation and 
+used representation. If not present, the potential scattering 
+radius, calculated from the optical model, is written to MF2.
+The default is to take the resonances from a revised version of
+the Atlas of Neutron Resonances, 5th edition [mug06]. 
+
+##### MF3: REACTION CROSS SECTIONS
+
+All the data present in the following MT-sections have been 
+calculated with Talys. If the maximal cross section in an 
+excitation function over the whole energy range does not exceed 
+1.e-9 b, the MT-number is not included at all. Cross sections 
+lower than 1.e-20 b are assumed to have no physical meaning and 
+are set to zero. We present only the most important reactions
+explicitly with a separate MT-number. The minor reaction channels
+are also present but they are stored in MT5 and can be
+reproduced in combination with MF6. All MT numbers extend up to
+the highest incident energy.
+The following reaction channels/MT numbers are generally included:
+
+- MT1      : Total cross section 
+
+Calculated with the optical model over the whole energy range,
+or partly reproduced using experimental data.
+
+- MT2      : Elastic scattering cross section 
+
+Obtained by subtracting the non-elastic cross section from the
+total cross section. 
+
+- MT3      : Non-elastic cross section 
+
+Calculated with the optical model over the whole energy range.
+
+- MT4      : Total inelastic cross section
+
+Sum of MT=51-91.
+
+- MT5      : (n,anything) cross section
+
+MT5 contains the reactions which can not be stored in any other 
+MT-number. As the incident energy increases, the cross section 
+of MT5 increases as more reaction channels are no longer stored 
+under a specific MT number. The information of MF3/MT5 can be 
+combined with MF6/MT5 to obtain residual production cross 
+sections particle production cross sections and 
+(double-)differential cross sections.
+
+- MT16     : (n,2n) cross section
+- MT17     : (n,3n) cross section
+- MT22     : (n,na) cross section
+- MT28     : (n,np) cross section
+- MT51-70  : (n,n') cross section for 1st-20th excited state
+- MT91     : (n,n') continuum cross section
+- MT102    : (n,gamma) cross section 
+- MT103    : (n,p) cross section
+- MT104    : (n,d) cross section
+- MT105    : (n,t) cross section
+- MT106    : (n,h) cross section
+- MT107    : (n,a) cross section
+- MT600-610: (n,p) cross section for 0th-10th excited state
+- MT649    : (n,p) continuum cross section
+- MT650-655: (n,d) cross section for 0th-5th excited state
+- MT699    : (n,d) continuum cross section
+- MT700-705: (n,t) cross section for 0th-5th excited state
+- MT749    : (n,t) continuum cross section
+- MT750-755: (n,h) cross section for 0th-5th excited state
+- MT799    : (n,h) continuum cross section
+- MT800-810: (n,a) cross section for 0th-10th excited state
+- MT849    : (n,a) continuum cross section
+
+##### MF4: ANGULAR DISTRIBUTIONS OF SECONDARY PARTICLES
+
+We use MF4 for the neutron scattering angular distribution for 
+discrete levels. 
+
+- MT2      : Elastic angular distribution         
+
+The flag LTT=3 is used to indicate a switch at some high energy,
+generally 50 MeV, from a Legendre representation to a tabulated 
+representation. For incident energies below this energy, the 
+Legendre coefficients are given on a sufficiently precise energy 
+grid. They are a sum of calculated Legendre coefficients for 
+compound nucleus and shape-elastic scattering. For higher 
+incident energies, relative angular distributions are tabulated 
+on an angular grid. 
+
+- MT51-70  : (n,n') angular distribution for 1st-20th state
+- MT600-610: (n,p) angular distribution for 0th-10th state
+- MT650-655: (n,d) angular distribution for 0th-5th state
+- MT700-705: (n,t) angular distribution for 0th-5th state
+- MT750-755: (n,h) angular distribution for 0th-5th state
+- MT800-810: (n,a) angular distribution for 0th-10th state
+
+##### MF6: PRODUCT ENERGY-ANGLE DISTRIBUTIONS
+
+In MF6 we store all secondary energy, angle, and energy-angle 
+distributions, as well as all residual and discrete + continuum
+photon production cross sections for channels other than capture 
+(MT102) and reactions to discrete levels (MT51,etc.). 
+All data are generated with Talys.
+
+- MT5      : (n,anything) yields and energy-angle distributions
+
+MT5 contains the production yields of particles and residual 
+products. It also contains the secondary energy-angle 
+distributions for all particles and photons which are not
+represented by explicit MT numbers. First, the yields for 
+neutrons are given for the whole energy range. Next, on a 
+secondary energy grid the relative emission spectra are given 
+together with the parameters for the Kalbach systematics for 
+angular distributions. Inelastic scattering cross sections for 
+discrete states have been broadened and added to the continuum 
+spectra. This procedure is repeated for protons, deuterons, 
+tritons, Helium-3, alpha particles and photons. Finally, the 
+residual production yields are given per final product. All these 
+yields and relative distributions can be multiplied with the 
+cross sections given in MF3/MT5 to get the production cross 
+sections and (double-)differential cross sections.
+
+- MT16     : (n,2n) energy-angle distr. and photon production
+
+First, for each type of outgoing particle, the (trivial) integer 
+particle yields are given. Next, on a sufficiently dense incident 
+energy grid the secondary energy-angle distributions are 
+specified by means of the relative emission spectra and the 
+parameters for the Kalbach systematics for angular distributions. 
+Next, the photon yield is tabulated as a function of incident 
+energy. For each incident energy, the photon production is given 
+for all discrete gamma lines present in the final nucleus. A
+continuum photon distribution is added to this. We assume 
+isotropy for all produced gamma rays.
+
+For the following MT-numbers, the same procedure as for MT16 is
+followed:
+
+- MT17 : (n,3n) energy-angle distr. and photon production
+- MT22 : (n,na) energy-angle distr. and photon production
+- MT28 : (n,np) energy-angle distr. and photon production
+- MT91 : (n,n') continuum energy-angle distr. and phot. prod.
+- MT649: (n,p) continuum energy-angle distr. and photon prod.
+- MT699: (n,d) continuum energy-angle distr. and photon prod.
+- MT749: (n,t) continuum energy-angle distr. and photon prod.
+- MT809: (n,h) continuum energy-angle distr. and photon prod.
+- MT849: (n,a) continuum energy-angle distr. and photon prod.
+
+-----
+
+##### MF8: RADIOACTIVE DECAY DATA
+
+For reactions to isomers, MF8 designates where the information 
+for isomeric versus ground state production can be found, i.e. 
+for each MT number it points to either MF6, MF9 or MF10.
+
+##### MF9: MULTIPLICITIES FOR PRODUCTION OF RADIOACTIVE NUCLIDES
+
+MF9 is used for non-threshold reactions.
+All data are generated with Talys. Final states with a lifetime
+that exceeds 1 second are treated as isomer.
+
+##### MF10: CROSS SECTIONS FOR PRODUCTION OF RADIOACTIVE NUCLIDES
+
+MF10 is used for threshold reactions.
+All data are generated with Talys. Final states with a lifetime
+that exceeds 1 second are treated as isomer.
+
+##### MF12: PHOTOPRODUCTION YIELD DATA
+
+MF12 is used for the photon production for two types of reactions:
+- Reactions to discrete levels (MT51, etc.) For this transition 
+  probabilities are used (LO=2)
+- Photons from neutron capture (MT102). Here multiplicities are
+  given
+
+##### MF14: PHOTON ANGULAR DISTRIBUTIONS
+
+All photon production is considered as isotropic
+
+##### MF15: PHOTON ENERGY SPECTRA
+
+For capture (MT102), the photon energy spectrum is given.
+
+##### MF32: COVARIANCES OF RESONANCE PARAMETERS
+
+In MF32, we store the covariances of resonance parameters 
+considering the resonance energy and the neutron and radiative 
+widths. The uncertainties of these parameters are based on the 
+Atlas of Neutron Resonances, 5th edition [mug06]. For each 
+isotope, the bound level resonance parameters, scattering radius 
+and uncertainties have been adjusted to match the microscopic 
+uncertainties (thermal elastic and capture cross sections as well 
+as the capture integral), as given in the Atlas, or as extracted
+from evaluated libraries. For parameter correlation between Gn 
+and Gg, no long-range correlation is considered for the time 
+being. As short-range correlation (between parameters of the same 
+resonance), the method described in Ref [roc08a] is used. 
+Uncertainties on cross sections have been checked and are 
+partially presented in Ref.[roc08b] and Ref.[roc08c]. It should 
+be noted that the scattering radius can not be varied in the
+existing format for MF-32, (which would underestimate the 
+elastic and total cross section uncertainties between resonances) 
+however we have added its uncertainty in a vacant field in the 
+header of each subsection.
+
+##### MF33: COVARIANCES OF NEUTRON CROSS SECTIONS
+
+In MF33, we store the covariances of most, but not all, reaction
+channels that are given in MF3. All covariances are generated
+with the TASMAN code, which generates Talys runs using a Monte
+Carlo parameter method.
+For each MT-number, the information consists of:
+1. Covariances for MTa, Ea and MTa, Ea (variances)
+2. Covariances for MTa, Ea and MTa, Eb (correlations for the
+   same reaction channel between different energies)
+3. Covariances for MTa, Ea and MTb, Ea (correlations between
+   different reaction channels for the same energy)
+4. Covariances for MTa, Ea and MTb, Eb (correlations between
+   different reaction channels for different energies)
+Classes 1 and 2 are covered by NI-type subsubsections with
+flag LB=5, followed by an obligatory LB=8 section which contains
+the cross section variances multiplied by 1.e-3 (a suggestion
+adopted from S. Tagesen and used, for example, in the JEFF-3.1 
+Fe-56 file). Next, classes 3 and 4 are covered by flag LB=6 to 
+account for the different energy grids that two correlating 
+MT-sections may have. Since the total correlation matrix is fully 
+symmetric, we only need to include the correlation elements 
+between different MT-numbers once, and we do that in the 
+subsection with the lowest of the two MT-numbers.
+We include covariance information for all the total cross 
+sections, the lumped partial cross sections and the individual 
+inelastic cross sections per level (MT51,...). We do not include 
+covariances for MT600 and higher MT-numbers.
+
+##### MF34: COVARIANCES OF ANGULAR DISTRIBUTIONS 
+
+In MF34, we store the covariances of the elastic scattering 
+angular distributions that are given in MF4/MT2. All covariances 
+are generated with the TASMAN code, which generates Talys runs 
+using a Monte Carlo parameter method.
+The tables are restricted to MT2 and contain covariances for the 
+first 6 Legendre coefficients. Boht intra- and inter-correlations 
+of the various Legendre coefficients are given. As in MF33, the 
+LB5 representation is used.
+
+***** F I L E   C H E C K I N G   A N D   P R O C E S S I N G ****
+
+This file has been checked successfully by the BNL checking 
+codes CHECKR-8.0, FIZCON-8.0 and PSYCHE-8.0 [her08] and has 
+been processed successfully into an MCNP library by the 
+processing code NJOY99.90 [mac00].
+
+*********************** R E F E R E N C E S **********************
+
+[akk85] J.M. Akkermans and H. Gruppelaar, Phys. Lett. 157B, 95
+        (1985).   
+[her08] M. Herman, ENDF Utility Codes Release 8.0, (2008).
+[kal88] C. Kalbach, Phys. Rev. C37, 2350 (1988).    
+[kal05] C. Kalbach, Phys. Rev. C71, 034606 (2005).
+[kon03] A.J. Koning and J.P. Delaroche, Nucl. Phys. A713, 231 
+        (2003).  
+[kon04] A.J. Koning and M.C. Duijvestijn, Nucl. Phys. A744, 15
+        (2004).
+[kon07] A.J. Koning, S. Hilaire and M.C. Duijvestijn, Talys-1.0,
+        Proceedings of the International Conference on Nuclear 
+        Data for Science and Technology - ND-2007, 
+        April 22-27, 2007, Nice, France
+[kon08] A.J. Koning, S. Hilaire and S. Goriely, ``Global and 
+        local level density models'', Nucl Phys. A810, 
+        13-76 (2008).
+[mac00] R.E. Macfarlane, NJOY99 - Code system for producing 
+        pointwise and multigroup neutron and photon cross 
+        sections from ENDF/B Data, RSIC PSR-480 (2000).
+[mug06] S.F. Mughabghab, Atlas of Neutron Resonances, 
+        5th edition, Elsevier Publisher, 2006.
+[ray94] J. Raynal, Notes on ECIS94, CEA Saclay Report 
+        No. CEA-N-2772, 1994.         
+[roc08a] D. Rochman and A.J. Koning, "Pb and Bi neutron data 
+         libraries with full covariance evaluation and improved 
+         integral tests", Nucl. Inst. and Methods A589 (2008) 85.
+[roc08b] A.J. Koning and D. Rochman, "Towards sustainable nuclear
+         energy: Putting nuclear physics to work", Annals of 
+         Nuclear Energy 35 (2008) 2024.
+[roc08c] D.Rochman, A.J.Koning and S.C. van der Marck, 
+         "Uncertainties for criticality-safety benchmarks and 
+         keff distributions", Ann. Nuc. En. 36 810-831 (2009).
+[rip09] R. Capote, M. Herman, P. Oblozinsky, P.G. Young,
+        S. Goriely, T. Belgya, A.V. Ignatyuk, A.J. Koning,
+        S. Hilaire, V. Plujko, M. Avrigeanu, O. Bersillon,
+        M.B. Chadwick, T. Fukahori, S. Kailas, J. Kopecky,
+        V.M. Maslov, G. Reffo, M. Sin, E. Soukhovitskii,
+        P. Talou, H. Yinlu, and G. Zhigang,
+        RIPL - Reference Input Parameter Library for calculation
+        of nuclear reactions and nuclear data evaluation,
+        Nucl. Data Sheets 110, 3107 (2009).
+
+************************* C O N T E N T S ************************
+

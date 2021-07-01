@@ -1,0 +1,48 @@
+******************* I N T R O D U C T I O N **********************
+
+This evaluation primarily builds upon the nuclear model TALYS [1] and its associated code system. More information about the TALYS nuclear model and the TALYS Evaluated Nuclear Data Library (TENDL) [2] can be found further down in the section entitled General Information, as supplied by the default ENDF file produced with TEFAL after having run TALYS.
+
+In this evaluation a nuclear data evaluation pipeline [3] implementing advanced statistical methods is employed to optimize TALYS parameters, compensate for inconsistent data and to treat model deficiencies. The TALYS model is optimized using angle-integrated cross section data between 2-30 MeV for neutron induced reactions in Fe56. All data used in this evaluation were extracted from the EXFOR database. The EXFOR reaction codes and the number of data points is shown in the table below.
+
+TABLEREAC
+
+The EXFOR access number of the fitted experimental data sets are:
+
+TABLEEXPID
+
+******** S Y S T E M A T I C  U N C E R T A I N T I E S  *********
+
+Systematic uncertainties reported by experiments are not always complete and/or miss-specified. This leads to statistical inconsistencies between experiments. To mitigate this problem when fitting inconsistent data we employ a variant of the method described in [4], [5]. Extra uncertainties were added and their values selected to maximize the likelihood of the data. 
+
+***** L E V E N B E R G - M A R Q A R D T  A L G O R I T H M *****
+
+A Levenberg-Marquardt (LM) [6], [7] algorithm modified to allow for prior information [8] was used to optimize TALYS parameters sensitive to available data. To constrain the behavior of energy-dependent TALYS parameters, a Gaussian Process (GP) [9] prior was imposed on each energy-dependent parameters [10]. In addition, a Gaussian Processes discrepancy function with zero mean was introduced on the observable, inflating the uncertainty of the model predictions in the presence of model defects. This is beneficial since deficient models tend to yield underestimated parameter uncertainties, since the standard assumptions of uncertainty estimation relies on a correct model specification.  Hyperparameters of the GPs were optimized using marginal likelihood optimization prior to optimizing the TALYS parameters with the LM algorithm.
+
+****** U N C E R T A I N T Y   Q U A N T I F I C A T I O N ******* 
+
+Due to the high computational demand of the TALYS model, sampling the distribution of the parameters is intractable using regular MC methods. Therefore the Laplace approximation of the posterior distribution is used. The computation of the hessian at the posterior mode is completely parallelizable, however the number of computations needed scales quadratically with the number of parameters in the model. Therefore, an approximation of the hessian is used. The approximate hessian at the log of the posterior mode is calculated by decomposing the hessian into tractable and untraceable components. Untraceable components require numerical differentiation of the TALYS model and are therefore approximated by only taking only diagonal derivatives into account, while prior and linear components are directly available after the final LM-step.
+
+Prior correlations imposed by the Gaussian Processes affect the posterior parameter correlations and expectations of insensitive parameters. The posterior expectations are updated using newtons method at the posterior mode of the LM optimized parameters by taking one step with an approximation of the hessian matrix.
+
+When the final parameter covariance matrix has been obtained, The multivariate normal distribution obtained by the Laplace approximation is sampled and each sample is propagated through the TALYS model. Finally, all propagated samples are used to determine the mean and covariance of the TALYS model predictions.
+
+********************* P A R A M E T E R S ************************
+
+TALYS parameters were selected by linearizing the TALYS model around the reference parameters used in the TENDL 2015 library. Taking the Jacobian of the linear model, the model sensitivity was determined for the available data for all parameters. Only parameters which are sensitive to available data were kept. In the list below, sensitive parameters are labeled with LM to indicate that they were optimized using the LM algorithm. Energy-dependent parameters are written on the form *adjust(E)* where E denote the energy. Note that this notation is used in the pipeline only. In the pipeline, TALYS parameters are transformed to  the interval 0.5-1.5 by using a logistic transformation, while parameters used by the LM algorithm are allowed to take any value. In the table below, transformed parameters are given, as used in the LM algorithm. Before inputting these parameters, or samples thereof to TALYS, they have to be transformed back.
+
+TABLEPAR
+
+********************* R E F E R E N C E S  ************************
+
+[1]	A. J. Koning and D. Rochman, “Modern Nuclear Data Evaluation with the TALYS Code System,” Nuclear Data Sheets, vol. 113, no. 12, pp. 2841–2934, Dec. 2012, doi: 10.1016/j.nds.2012.11.002.
+[2]	A. J. Koning, D. Rochman, J.-Ch. Sublet, N. Dzysiuk, M. Fleming, and S. van der Marck, “TENDL: Complete Nuclear Data Library for Innovative Nuclear Science and Technology,” Nuclear Data Sheets, vol. 155, pp. 1–55, Jan. 2019, doi: 10.1016/j.nds.2019.01.002.
+[3]	G. Schnabel, H. Sjöstrand, D. Rochman, A. Koning, J. Hansson, and R. Capote, “Conception and software implementation of a nuclear data evaluation pipeline,” p. 69.
+[4]	Schnabel Georg, “Fitting and Analysis Technique for Inconsistent Nuclear Data,” Proceedings of the International Conference on Mathematics and Computational Methods applied to Nuclear Science and Engineering, 2017, [Online]. Available: http://toc.proceedings.com/38222webtoc.pdf.
+[5]	H. Sjöstrand and G. Schnabel, “Monte Carlo integral adjustment of nuclear data libraries – experimental covariances and inconsistent data,” EPJ Web Conf., vol. 211, p. 07007, 2019, doi: 10.1051/epjconf/201921107007.
+[6]	K. Levenberg, “A method for the solution of certain non-linear problems in least squares,” Quart. Appl. Math., vol. 2, no. 2, pp. 164–168, 1944, doi: 10.1090/qam/10666.
+[7]	D. W. Marquardt, “An Algorithm for Least-Squares Estimation of Nonlinear Parameters,” Journal of the Society for Industrial and Applied Mathematics, vol. 11, no. 2, pp. 431–441, Jun. 1963, doi: 10.1137/0111030.
+[8]	P. Helgesson and H. Sjöstrand, “Fitting a defect non-linear model with or without prior, distinguishing nuclear reaction products as an example,” Review of Scientific Instruments, vol. 88, no. 11, p. 115114, Nov. 2017, doi: 10.1063/1.4993697.
+[9]	C. E. Rasmussen and C. K. I. Williams, Gaussian processes for machine learning. Cambridge, Mass: MIT Press, 2006.
+[10]	P. Helgesson and H. Sjöstrand, “Treating model defects by fitting smoothly varying model parameters: Energy dependence in nuclear data evaluation,” Annals of Nuclear Energy, vol. 120, pp. 35–47, Oct. 2018, doi: 10.1016/j.anucene.2018.05.026.
+
+TENDLINFO

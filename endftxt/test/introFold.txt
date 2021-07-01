@@ -1,0 +1,14 @@
+This evaluation primarily builds upon the nuclear model TALYS and 
+its associated code system. More information about the TALYS  
+nuclear model and the Talys Evaluated Nuclear Data Library (TENDL) 
+can be found further down in the section entiteled General 
+Information, as supplied by the default ENDF file produced with 
+TEFAL after having run TALYS.
+
+In this evaluation, advanced statistical methods are used to 
+optimize TALYS parameters, compensate for inconsistent data and to 
+treat model deficiencies. The TALYS model is optimized using  
+angle-integrated cross section data between 2-30 MeV for neutron 
+induced reactions in Fe56. All data used in this evaluation were 
+extracted from the EXFOR database. The EXFOR reaction codes and 
+the number of data points is shown in the table below.

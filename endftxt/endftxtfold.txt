@@ -1,0 +1,1625 @@
+******************* I N T R O D U C T I O N **********************
+
+This evaluation primarily builds upon the nuclear model TALYS [1] 
+and its associated code system. More information about the TALYS 
+nuclear model and the TALYS Evaluated Nuclear Data Library (TENDL) 
+[2] can be found further down in the section entitled General 
+Information, as supplied by the default ENDF file produced with 
+TEFAL after having run TALYS.
+
+In this evaluation a nuclear data evaluation pipeline [3] 
+implementing advanced statistical methods is employed to optimize 
+TALYS parameters, compensate for inconsistent data and to treat 
+model deficiencies. The TALYS model is optimized using 
+angle-integrated cross section data between 2-30 MeV for neutron 
+induced reactions in Fe56. All data used in this evaluation were 
+extracted from the EXFOR database. The EXFOR reaction codes and 
+the number of data points is shown in the table below.
+
+
+======================================
+EXFOR REACTION STRING          NUM PTS
+--------------------------------------
+(26-FE-56(N,TOT),,SIG)          3895  
+(26-FE-56(N,P)25-MN-56,,SIG)     324  
+(26-FE-56(N,INL)26-FE-56,,SIG)   55   
+(26-FE-56(N,2N)26-FE-55,,SIG)    30   
+(26-FE-56(N,EL)26-FE-56,,SIG)    22   
+(26-FE-56(N,A)24-CR-53,,SIG)      4   
+(26-FE-56(N,D)25-MN-55,,SIG)      1   
+(26-FE-56(N,T)25-MN-54,,SIG)      1   
+(26-FE-56(N,N+P)25-MN-55,,SIG)    1   
+--------------------------------------
+
+The EXFOR access number of the fitted experimental data sets are:
+
+
+===================================
+10022010 11718005 21049005 30656021
+10031005 12812010 21339005 30676002
+10037004 12812012 21352002 30707013
+10037005 12956012 21352007 30755003
+10289002 12969013 21372003 30802002
+10309004 13132002 21419006 30807008
+10417007 13764002 21487008 30978022
+10529004 14462004 21868002 30993003
+10827031 20091004 21923003 31479002
+10835002 20280004 22089042 31479003
+10958012 20377002 22093011 31524008
+11274031 20387004 22312004 32737002
+11276007 20416003 22316003 32737003
+11464006 20669004 22338048 33045003
+11494009 20721021 22414017 40485002
+11696007 20721094 22497004 40532014
+11700002 20772003 22976017 41118012
+11701002 20798003 23134005 41118013
+11701003 20815014 23171003 41156006
+11701004 20854015 30463021 41240012
+11703002 20887015 30483002 41313002
+11708003 20888004 30483003 41316002
+11715003 20890004 30562019 41325003
+11715004 20993002 30644006 41614019
+-----------------------------------
+
+******** S Y S T E M A T I C  U N C E R T A I N T I E S  *********
+
+Systematic uncertainties reported by experiments are not always 
+complete and/or miss-specified. This leads to statistical 
+inconsistencies between experiments. To mitigate this problem when 
+fitting inconsistent data we employ a variant of the method 
+described in [4], [5]. Extra uncertainties were added and their 
+values selected to maximize the likelihood of the data. 
+
+***** L E V E N B E R G - M A R Q A R D T  A L G O R I T H M *****
+
+A Levenberg-Marquardt (LM) [6], [7] algorithm modified to allow 
+for prior information [8] was used to optimize TALYS parameters 
+sensitive to available data. To constrain the behavior of 
+energy-dependent TALYS parameters, a Gaussian Process (GP) [9] 
+prior was imposed on each energy-dependent parameters [10]. In 
+addition, a Gaussian Processes discrepancy function with zero mean 
+was introduced on the observable, inflating the uncertainty of the 
+model predictions in the presence of model defects. This is 
+beneficial since deficient models tend to yield underestimated 
+parameter uncertainties, since the standard assumptions of 
+uncertainty estimation relies on a correct model specification.  
+Hyperparameters of the GPs were optimized using marginal 
+likelihood optimization prior to optimizing the TALYS parameters 
+with the LM algorithm.
+
+****** U N C E R T A I N T Y   Q U A N T I F I C A T I O N ******* 
+
+Due to the high computational demand of the TALYS model, sampling 
+the distribution of the parameters is intractable using regular MC 
+methods. Therefore the Laplace approximation of the posterior 
+distribution is used. The computation of the hessian at the 
+posterior mode is completely parallelizable, however the number of 
+computations needed scales quadratically with the number of 
+parameters in the model. Therefore, an approximation of the 
+hessian is used. The approximate hessian at the log of the 
+posterior mode is calculated by decomposing the hessian into 
+tractable and untraceable components. Untraceable components 
+require numerical differentiation of the TALYS model and are 
+therefore approximated by only taking only diagonal derivatives 
+into account, while prior and linear components are directly 
+available after the final LM-step.
+
+Prior correlations imposed by the Gaussian Processes affect the 
+posterior parameter correlations and expectations of insensitive 
+parameters. The posterior expectations are updated using newtons 
+method at the posterior mode of the LM optimized parameters by 
+taking one step with an approximation of the hessian matrix.
+
+When the final parameter covariance matrix has been obtained, The 
+multivariate normal distribution obtained by the Laplace 
+approximation is sampled and each sample is propagated through the 
+TALYS model. Finally, all propagated samples are used to determine 
+the mean and covariance of the TALYS model predictions.
+
+********************* P A R A M E T E R S ************************
+
+TALYS parameters were selected by linearizing the TALYS model 
+around the reference parameters used in the TENDL 2015 library. 
+Taking the Jacobian of the linear model, the model sensitivity was 
+determined for the available data for all parameters. Only 
+parameters which are sensitive to available data were kept. In the 
+list below, sensitive parameters are labeled with LM to indicate 
+that they were optimized using the LM algorithm. Energy-dependent 
+parameters are written on the form *adjust(E)* where E denote the 
+energy. Note that this notation is used in the pipeline only. In 
+the pipeline, TALYS parameters are transformed to  the interval 
+0.5-1.5 by using a logistic transformation, while parameters used 
+by the LM algorithm are allowed to take any value. In the table 
+below, transformed parameters are given, as used in the LM 
+algorithm. Before inputting these parameters, or samples thereof 
+to TALYS, they have to be transformed back.
+
+
+=========================================================
+Name               Prior PriorUnc  Updt  UpdtUnc Adjust. 
+---------------------------------------------------------
+s2adjust 25 56_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 55_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 26 55_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 55_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 26 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 46_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 46_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 45_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 26 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 45_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 44_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 46_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 45_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 44_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 43_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 42_0     1    0.100     1     0.100  POSTUPDT
+v2adjust n           1    0.100   0.974   0.049     LM   
+v3adjust n           1    0.100   1.006   0.100     LM   
+v4adjust n           1    0.100   1.000   0.100     LM   
+rvadjust n           1    0.100   0.878   0.001     LM   
+avadjust n           1    0.100   1.362   0.015     LM   
+w2adjust n           1    0.100   1.081   0.097     LM   
+w3adjust n           1    0.100     1     0.100  POSTUPDT
+w4adjust n           1    0.100     1     0.100  POSTUPDT
+d2adjust n           1    0.100   1.075   0.088     LM   
+d3adjust n           1    0.100   1.353   0.076     LM   
+rvdadjust n          1    0.100     1     0.100  POSTUPDT
+avdadjust n          1    0.100   1.001   0.100     LM   
+rvsoadjust n         1    0.100   1.610   0.080     LM   
+avsoadjust n         1    0.100   0.754   0.027     LM   
+vso2adjust n         1    0.100   0.967   0.100     LM   
+wso2adjust n         1    0.100   0.971   0.100     LM   
+gamgamadjust 26 57 0.600  0.060   0.614   0.060     LM   
+sgradjust 26 57_e1   1    0.100   0.965   0.099     LM   
+egradjust 26 57_e1   1    0.100   1.179   0.088     LM   
+ggradjust 26 57_e1   1    0.100   0.930   0.098     LM   
+s2adjust 26 57       1    0.100   0.966   0.100     LM   
+s2adjust 26 56       1    0.100   1.049   0.096     LM   
+s2adjust 25 56       1    0.100   1.049   0.068     LM   
+s2adjust 25 55       1    0.100   0.996   0.100     LM   
+s2adjust 25 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 53       1    0.100     1     0.100     LM   
+s2adjust 26 55       1    0.100   1.004   0.100     LM   
+s2adjust 25 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 55       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 26 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 25 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 46       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 46       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 45       1    0.100     1     0.100  POSTUPDT
+s2adjust 26 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 25 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 45       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 44       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 46       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 45       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 44       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 43       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 42       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 57     0.900  0.090   0.905   0.044     LM   
+gnadjust 26 56       1    0.100   0.932   0.094     LM   
+gnadjust 25 56       1    0.100   0.976   0.091     LM   
+gnadjust 25 55       1    0.100   0.999   0.100     LM   
+gnadjust 25 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 55       1    0.100   1.002   0.100     LM   
+gnadjust 25 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 55       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 25 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 46       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 46       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 45       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 25 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 45       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 44       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 46       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 45       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 44       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 43       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 42       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 57     0.900  0.090   0.794   0.030     LM   
+gpadjust 26 56       1    0.100   0.987   0.086     LM   
+gpadjust 25 56       1    0.100   0.973   0.092     LM   
+gpadjust 25 55       1    0.100   1.006   0.099     LM   
+gpadjust 25 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 55       1    0.100   1.002   0.099     LM   
+gpadjust 25 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 55       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 25 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 46       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 46       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 45       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 25 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 45       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 44       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 46       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 45       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 44       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 43       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 42       1    0.100     1     0.100  POSTUPDT
+aadjust 26 56        1    0.100   0.992   0.100     LM   
+aadjust 25 56      1.120  0.112   1.071   0.027     LM   
+aadjust 25 55        1    0.100     1     0.100  POSTUPDT
+aadjust 25 54        1    0.100     1     0.100  POSTUPDT
+aadjust 24 54        1    0.100     1     0.100  POSTUPDT
+aadjust 24 53        1    0.100   0.989   0.093     LM   
+aadjust 26 55        1    0.100   1.090   0.096     LM   
+aadjust 25 53        1    0.100     1     0.100  POSTUPDT
+aadjust 24 52        1    0.100     1     0.100  POSTUPDT
+aadjust 23 52        1    0.100     1     0.100  POSTUPDT
+aadjust 23 51        1    0.100     1     0.100  POSTUPDT
+aadjust 23 50        1    0.100     1     0.100  POSTUPDT
+aadjust 22 50        1    0.100     1     0.100  POSTUPDT
+aadjust 22 49        1    0.100     1     0.100  POSTUPDT
+aadjust 24 55        1    0.100     1     0.100  POSTUPDT
+aadjust 23 53        1    0.100     1     0.100  POSTUPDT
+aadjust 24 51        1    0.100     1     0.100  POSTUPDT
+aadjust 23 49        1    0.100     1     0.100  POSTUPDT
+aadjust 22 48        1    0.100     1     0.100  POSTUPDT
+aadjust 26 54        1    0.100     1     0.100  POSTUPDT
+aadjust 25 52        1    0.100     1     0.100  POSTUPDT
+aadjust 22 51        1    0.100     1     0.100  POSTUPDT
+aadjust 23 54        1    0.100     1     0.100  POSTUPDT
+aadjust 22 52        1    0.100     1     0.100  POSTUPDT
+aadjust 21 49        1    0.100     1     0.100  POSTUPDT
+aadjust 21 48        1    0.100     1     0.100  POSTUPDT
+aadjust 21 47        1    0.100     1     0.100  POSTUPDT
+aadjust 21 46        1    0.100     1     0.100  POSTUPDT
+aadjust 20 46        1    0.100     1     0.100  POSTUPDT
+aadjust 20 45        1    0.100     1     0.100  POSTUPDT
+aadjust 26 53        1    0.100     1     0.100  POSTUPDT
+aadjust 25 51        1    0.100     1     0.100  POSTUPDT
+aadjust 24 50        1    0.100     1     0.100  POSTUPDT
+aadjust 23 48        1    0.100     1     0.100  POSTUPDT
+aadjust 22 47        1    0.100     1     0.100  POSTUPDT
+aadjust 21 45        1    0.100     1     0.100  POSTUPDT
+aadjust 20 44        1    0.100     1     0.100  POSTUPDT
+aadjust 20 47        1    0.100     1     0.100  POSTUPDT
+aadjust 21 50        1    0.100     1     0.100  POSTUPDT
+aadjust 20 48        1    0.100     1     0.100  POSTUPDT
+aadjust 22 53        1    0.100     1     0.100  POSTUPDT
+aadjust 21 51        1    0.100     1     0.100  POSTUPDT
+aadjust 24 49        1    0.100     1     0.100  POSTUPDT
+aadjust 23 47        1    0.100     1     0.100  POSTUPDT
+aadjust 22 46        1    0.100     1     0.100  POSTUPDT
+aadjust 19 45        1    0.100     1     0.100  POSTUPDT
+aadjust 19 44        1    0.100     1     0.100  POSTUPDT
+aadjust 19 43        1    0.100     1     0.100  POSTUPDT
+aadjust 19 42        1    0.100     1     0.100  POSTUPDT
+v2adjust p           1    0.100   1.004   0.100     LM   
+v3adjust p           1    0.100     1     0.100  POSTUPDT
+v4adjust p           1    0.100     1     0.100  POSTUPDT
+rvadjust p         0.990  0.099   0.998   0.069     LM   
+avadjust p           1    0.100   0.915   0.086     LM   
+w2adjust p           1    0.100   1.015   0.099     LM   
+w3adjust p           1    0.100     1     0.100  POSTUPDT
+w4adjust p           1    0.100     1     0.100  POSTUPDT
+d2adjust p           1    0.100   1.030   0.099     LM   
+d3adjust p           1    0.100   1.071   0.098     LM   
+rvdadjust p          1    0.100     1     0.100  POSTUPDT
+avdadjust p          1    0.100   1.001   0.100     LM   
+rvsoadjust p         1    0.100   0.984   0.100     LM   
+avsoadjust p         1    0.100     1     0.100  POSTUPDT
+vso2adjust p         1    0.100     1     0.100  POSTUPDT
+wso2adjust p         1    0.100     1     0.100  POSTUPDT
+v2adjust a           1    0.100     1     0.100  POSTUPDT
+v3adjust a           1    0.100     1     0.100  POSTUPDT
+v4adjust a           1    0.100     1     0.100  POSTUPDT
+rvadjust a           1    0.100   1.061   0.070     LM   
+avadjust a           1    0.100   1.028   0.083     LM   
+w2adjust a           1    0.100     1     0.100  POSTUPDT
+w3adjust a           1    0.100     1     0.100  POSTUPDT
+w4adjust a           1    0.100     1     0.100  POSTUPDT
+d2adjust a           1    0.100     1     0.100  POSTUPDT
+d3adjust a           1    0.100     1     0.100  POSTUPDT
+rvdadjust a          1    0.100     1     0.100  POSTUPDT
+avdadjust a          1    0.100     1     0.100  POSTUPDT
+rvsoadjust a         1    0.100     1     0.100  POSTUPDT
+avsoadjust a         1    0.100     1     0.100  POSTUPDT
+vso2adjust a         1    0.100     1     0.100  POSTUPDT
+wso2adjust a         1    0.100     1     0.100  POSTUPDT
+v2adjust d           1    0.100     1     0.100  POSTUPDT
+v3adjust d           1    0.100     1     0.100  POSTUPDT
+v4adjust d           1    0.100     1     0.100  POSTUPDT
+rvadjust d           1    0.100   1.033   0.056     LM   
+avadjust d           1    0.100   1.018   0.091     LM   
+w2adjust d           1    0.100     1     0.100  POSTUPDT
+w3adjust d           1    0.100     1     0.100  POSTUPDT
+w4adjust d           1    0.100     1     0.100  POSTUPDT
+d2adjust d           1    0.100     1     0.100  POSTUPDT
+d3adjust d           1    0.100     1     0.100  POSTUPDT
+rvdadjust d          1    0.100     1     0.100  POSTUPDT
+avdadjust d          1    0.100     1     0.100  POSTUPDT
+rvsoadjust d         1    0.100     1     0.100  POSTUPDT
+avsoadjust d         1    0.100     1     0.100  POSTUPDT
+vso2adjust d         1    0.100     1     0.100  POSTUPDT
+wso2adjust d         1    0.100     1     0.100  POSTUPDT
+v2adjust t           1    0.100     1     0.100  POSTUPDT
+v3adjust t           1    0.100     1     0.100  POSTUPDT
+v4adjust t           1    0.100     1     0.100  POSTUPDT
+rvadjust t           1    0.100   0.998   0.097     LM   
+avadjust t           1    0.100   0.998   0.100     LM   
+w2adjust t           1    0.100     1     0.100  POSTUPDT
+w3adjust t           1    0.100     1     0.100  POSTUPDT
+w4adjust t           1    0.100     1     0.100  POSTUPDT
+d2adjust t           1    0.100     1     0.100  POSTUPDT
+d3adjust t           1    0.100     1     0.100  POSTUPDT
+rvdadjust t          1    0.100     1     0.100  POSTUPDT
+avdadjust t          1    0.100     1     0.100  POSTUPDT
+rvsoadjust t         1    0.100     1     0.100  POSTUPDT
+avsoadjust t         1    0.100     1     0.100  POSTUPDT
+vso2adjust t         1    0.100     1     0.100  POSTUPDT
+wso2adjust t         1    0.100     1     0.100  POSTUPDT
+v2adjust h           1    0.100     1     0.100  POSTUPDT
+v3adjust h           1    0.100     1     0.100  POSTUPDT
+v4adjust h           1    0.100     1     0.100  POSTUPDT
+rvadjust h           1    0.100     1     0.100  POSTUPDT
+avadjust h           1    0.100     1     0.100  POSTUPDT
+w2adjust h           1    0.100     1     0.100  POSTUPDT
+w3adjust h           1    0.100     1     0.100  POSTUPDT
+w4adjust h           1    0.100     1     0.100  POSTUPDT
+d2adjust h           1    0.100     1     0.100  POSTUPDT
+d3adjust h           1    0.100     1     0.100  POSTUPDT
+rvdadjust h          1    0.100     1     0.100  POSTUPDT
+avdadjust h          1    0.100     1     0.100  POSTUPDT
+rvsoadjust h         1    0.100     1     0.100  POSTUPDT
+avsoadjust h         1    0.100     1     0.100  POSTUPDT
+vso2adjust h         1    0.100     1     0.100  POSTUPDT
+wso2adjust h         1    0.100     1     0.100  POSTUPDT
+v1adjust(0) n        1    0.100   1.082   0.120  POSTUPDT
+d1adjust(0) n        1    0.100   -0.093  0.383  POSTUPDT
+w1adjust(0) n        1    0.100   -0.381  0.488  POSTUPDT
+vso1adjust(0) n      1    0.100   2.183   0.371  POSTUPDT
+wso1adjust(0) n      1    0.100   1.000   0.247  POSTUPDT
+rcadjust(0) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(2) n        1    0.100   1.139   0.002     LM   
+d1adjust(2) n        1    0.100   0.094   0.047     LM   
+w1adjust(2) n        1    0.100   0.866   0.463     LM   
+vso1adjust(2) n      1    0.100   1.769   0.251     LM   
+wso1adjust(2) n      1    0.100   0.997   0.246  POSTUPDT
+rcadjust(2) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(4) n        1    0.100   1.065   0.007     LM   
+d1adjust(4) n        1    0.100   1.725   0.215     LM   
+w1adjust(4) n        1    0.100   1.132   0.368     LM   
+vso1adjust(4) n      1    0.100   0.655   0.154     LM   
+wso1adjust(4) n      1    0.100   0.988   0.216  POSTUPDT
+rcadjust(4) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(6) n        1    0.100   1.067   0.008     LM   
+d1adjust(6) n        1    0.100   0.918   0.044     LM   
+w1adjust(6) n        1    0.100   1.011   0.106     LM   
+vso1adjust(6) n      1    0.100   0.598   0.104     LM   
+wso1adjust(6) n      1    0.100   0.996   0.144     LM   
+rcadjust(6) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(8) n        1    0.100   1.109   0.010     LM   
+d1adjust(8) n        1    0.100   0.669   0.063     LM   
+w1adjust(8) n        1    0.100   0.968   0.114     LM   
+vso1adjust(8) n      1    0.100   0.995   0.120     LM   
+wso1adjust(8) n      1    0.100   1.000   0.186     LM   
+rcadjust(8) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(10) n       1    0.100   1.086   0.012     LM   
+d1adjust(10) n       1    0.100   0.660   0.096     LM   
+w1adjust(10) n       1    0.100   0.961   0.373     LM   
+vso1adjust(10) n     1    0.100   1.065   0.215     LM   
+wso1adjust(10) n     1    0.100   1.000   0.233  POSTUPDT
+rcadjust(10) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(12) n       1    0.100   1.083   0.026     LM   
+d1adjust(12) n       1    0.100   0.702   0.120     LM   
+w1adjust(12) n       1    0.100   0.960   0.473     LM   
+vso1adjust(12) n     1    0.100   0.971   0.299     LM   
+wso1adjust(12) n     1    0.100   1.002   0.247  POSTUPDT
+rcadjust(12) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(14) n       1    0.100   1.103   0.028     LM   
+d1adjust(14) n       1    0.100   0.994   0.112     LM   
+w1adjust(14) n       1    0.100   0.999   0.462     LM   
+vso1adjust(14) n     1    0.100   0.993   0.357     LM   
+wso1adjust(14) n     1    0.100   1.007   0.247  POSTUPDT
+rcadjust(14) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(16) n       1    0.100   0.952   0.060     LM   
+d1adjust(16) n       1    0.100   1.139   0.161     LM   
+w1adjust(16) n       1    0.100   1.026   0.374     LM   
+vso1adjust(16) n     1    0.100   1.037   0.390     LM   
+wso1adjust(16) n     1    0.100   1.001   0.247     LM   
+rcadjust(16) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(18) n       1    0.100   0.903   0.065     LM   
+d1adjust(18) n       1    0.100   1.117   0.131     LM   
+w1adjust(18) n       1    0.100   1.025   0.270     LM   
+vso1adjust(18) n     1    0.100   1.021   0.423     LM   
+wso1adjust(18) n     1    0.100   1.001   0.247     LM   
+rcadjust(18) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(20) n       1    0.100   1.025   0.103     LM   
+d1adjust(20) n       1    0.100   1.103   0.107     LM   
+w1adjust(20) n       1    0.100   1.020   0.399     LM   
+vso1adjust(20) n     1    0.100   0.998   0.450     LM   
+wso1adjust(20) n     1    0.100     1     0.247     LM   
+rcadjust(20) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(22) n       1    0.100   1.048   0.105     LM   
+d1adjust(22) n       1    0.100   0.955   0.150     LM   
+w1adjust(22) n       1    0.100   0.990   0.467     LM   
+vso1adjust(22) n     1    0.100   0.997   0.464     LM   
+wso1adjust(22) n     1    0.100   1.000   0.247     LM   
+rcadjust(22) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(24) n       1    0.100   1.057   0.103     LM   
+d1adjust(24) n       1    0.100   0.984   0.373     LM   
+w1adjust(24) n       1    0.100   0.996   0.467     LM   
+vso1adjust(24) n     1    0.100   1.000   0.471     LM   
+wso1adjust(24) n     1    0.100   1.000   0.247     LM   
+rcadjust(24) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(26) n       1    0.100   1.063   0.109     LM   
+d1adjust(26) n       1    0.100   1.000   0.479     LM   
+w1adjust(26) n       1    0.100   0.999   0.479     LM   
+vso1adjust(26) n     1    0.100   0.997   0.475     LM   
+wso1adjust(26) n     1    0.100   1.000   0.247     LM   
+rcadjust(26) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(28) n       1    0.100   1.048   0.120     LM   
+d1adjust(28) n       1    0.100   0.996   0.483     LM   
+w1adjust(28) n       1    0.100   0.999   0.479     LM   
+vso1adjust(28) n     1    0.100   0.997   0.478     LM   
+wso1adjust(28) n     1    0.100   1.000   0.246     LM   
+rcadjust(28) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(30) n       1    0.100   1.031   0.140     LM   
+d1adjust(30) n       1    0.100     1     0.479     LM   
+w1adjust(30) n       1    0.100     1     0.473     LM   
+vso1adjust(30) n     1    0.100   0.998   0.485     LM   
+wso1adjust(30) n     1    0.100   1.000   0.245     LM   
+rcadjust(30) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(200) n      1    0.100     1     0.169  POSTUPDT
+d1adjust(200) n      1    0.100     1     0.500  POSTUPDT
+w1adjust(200) n      1    0.100     1     0.500  POSTUPDT
+vso1adjust(200) n    1    0.100     1     0.500  POSTUPDT
+wso1adjust(200) n    1    0.100     1     0.247  POSTUPDT
+rcadjust(200) n      1    0.100     1     0.100  POSTUPDT
+v1adjust(0) p        1    0.100   1.113   0.184  POSTUPDT
+d1adjust(0) p        1    0.100   1.287   0.450  POSTUPDT
+w1adjust(0) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(0) p      1    0.100   1.055   0.499  POSTUPDT
+wso1adjust(0) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(0) p        1    0.100   1.086   0.496  POSTUPDT
+v1adjust(2) p        1    0.100   1.173   0.150     LM   
+d1adjust(2) p        1    0.100   1.008   0.332     LM   
+w1adjust(2) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(2) p      1    0.100   1.003   0.498     LM   
+wso1adjust(2) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(2) p        1    0.100   1.017   0.480     LM   
+v1adjust(4) p        1    0.100   0.980   0.152     LM   
+d1adjust(4) p        1    0.100   0.861   0.374     LM   
+w1adjust(4) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(4) p      1    0.100   0.994   0.496  POSTUPDT
+wso1adjust(4) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(4) p        1    0.100   0.985   0.461     LM   
+v1adjust(6) p        1    0.100   0.883   0.175     LM   
+d1adjust(6) p        1    0.100   0.949   0.412     LM   
+w1adjust(6) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(6) p      1    0.100   0.994   0.495     LM   
+wso1adjust(6) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(6) p        1    0.100   0.986   0.482     LM   
+v1adjust(8) p        1    0.100   0.887   0.215     LM   
+d1adjust(8) p        1    0.100   1.064   0.440     LM   
+w1adjust(8) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(8) p      1    0.100   0.938   0.498  POSTUPDT
+wso1adjust(8) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(8) p        1    0.100   0.996   0.497     LM   
+v1adjust(10) p       1    0.100   0.950   0.271     LM   
+d1adjust(10) p       1    0.100   1.004   0.459     LM   
+w1adjust(10) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(10) p     1    0.100   0.969   0.500  POSTUPDT
+wso1adjust(10) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(10) p       1    0.100   0.965   0.500  POSTUPDT
+v1adjust(12) p       1    0.100   1.010   0.333     LM   
+d1adjust(12) p       1    0.100   0.955   0.463     LM   
+w1adjust(12) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(12) p     1    0.100   0.991   0.500  POSTUPDT
+wso1adjust(12) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(12) p       1    0.100   0.992   0.500  POSTUPDT
+v1adjust(14) p       1    0.100   1.023   0.392     LM   
+d1adjust(14) p       1    0.100   0.957   0.451     LM   
+w1adjust(14) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(14) p     1    0.100   0.999   0.500  POSTUPDT
+wso1adjust(14) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(14) p       1    0.100   0.999   0.500  POSTUPDT
+v1adjust(16) p       1    0.100   0.980   0.437     LM   
+d1adjust(16) p       1    0.100   0.993   0.480     LM   
+w1adjust(16) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(16) p     1    0.100   1.000   0.500  POSTUPDT
+wso1adjust(16) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(16) p       1    0.100   1.000   0.500  POSTUPDT
+v1adjust(18) p       1    0.100   0.991   0.468  POSTUPDT
+d1adjust(18) p       1    0.100   0.879   0.498  POSTUPDT
+w1adjust(18) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(18) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(18) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(18) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(20) p       1    0.100   0.973   0.485  POSTUPDT
+d1adjust(20) p       1    0.100   0.984   0.500  POSTUPDT
+w1adjust(20) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(20) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(20) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(20) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(22) p       1    0.100   0.961   0.494  POSTUPDT
+d1adjust(22) p       1    0.100   0.999   0.500  POSTUPDT
+w1adjust(22) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(22) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(22) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(22) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(24) p       1    0.100   0.959   0.498  POSTUPDT
+d1adjust(24) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(24) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(24) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(24) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(24) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(26) p       1    0.100   0.964   0.499  POSTUPDT
+d1adjust(26) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(26) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(26) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(26) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(26) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(28) p       1    0.100   0.974   0.500  POSTUPDT
+d1adjust(28) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(28) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(28) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(28) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(28) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(30) p       1    0.100   0.983   0.500  POSTUPDT
+d1adjust(30) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(30) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(30) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(30) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(30) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(200) p      1    0.100     1     0.500  POSTUPDT
+d1adjust(200) p      1    0.100     1     0.500  POSTUPDT
+w1adjust(200) p      1    0.100     1     0.500  POSTUPDT
+vso1adjust(200) p    1    0.100     1     0.500  POSTUPDT
+wso1adjust(200) p    1    0.100     1     0.108  POSTUPDT
+rcadjust(200) p      1    0.100     1     0.500  POSTUPDT
+v1adjust(0) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(0) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(0) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(0) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(0) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(2) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(2) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(2) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(2) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(2) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(4) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(4) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(4) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(4) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(4) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(6) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(6) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(6) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(6) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(6) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(8) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(8) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(8) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(8) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(8) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(10) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(10) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(10) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(10) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(10) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(12) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(12) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(12) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(12) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(12) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(14) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(14) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(14) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(14) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(14) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(16) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(16) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(16) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(16) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(16) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(18) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(18) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(18) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(18) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(18) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(20) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(20) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(20) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(20) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(20) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(22) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(22) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(22) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(22) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(22) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(24) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(24) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(24) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(24) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(24) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(26) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(26) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(26) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(26) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(26) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(28) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(28) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(28) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(28) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(28) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(30) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(30) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(30) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(30) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(30) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(200) d      1    0.100     1     0.100  POSTUPDT
+d1adjust(200) d      1    0.100     1     0.101  POSTUPDT
+w1adjust(200) d      1    0.100     1     0.106  POSTUPDT
+vso1adjust(200) d    1    0.100     1     0.103  POSTUPDT
+wso1adjust(200) d    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) d      1    0.100     1     0.102  POSTUPDT
+v1adjust(0) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(0) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(0) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(0) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(0) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(2) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(2) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(2) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(2) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(2) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(4) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(4) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(4) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(4) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(4) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(6) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(6) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(6) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(6) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(6) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(8) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(8) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(8) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(8) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(8) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(10) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(10) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(10) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(10) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(10) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(12) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(12) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(12) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(12) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(12) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(14) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(14) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(14) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(14) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(14) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(16) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(16) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(16) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(16) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(16) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(18) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(18) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(18) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(18) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(18) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(20) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(20) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(20) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(20) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(20) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(22) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(22) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(22) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(22) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(22) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(24) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(24) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(24) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(24) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(24) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(26) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(26) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(26) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(26) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(26) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(28) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(28) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(28) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(28) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(28) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(30) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(30) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(30) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(30) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(30) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(200) t      1    0.100     1     0.102  POSTUPDT
+d1adjust(200) t      1    0.100     1     0.100  POSTUPDT
+w1adjust(200) t      1    0.100     1     0.100  POSTUPDT
+vso1adjust(200) t    1    0.100     1     0.100  POSTUPDT
+wso1adjust(200) t    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) t      1    0.100     1     0.100  POSTUPDT
+v1adjust(0) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(0) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(0) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(0) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(0) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(2) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(2) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(2) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(2) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(2) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(4) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(4) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(4) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(4) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(4) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(6) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(6) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(6) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(6) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(6) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(8) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(8) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(8) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(8) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(8) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(10) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(10) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(10) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(10) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(10) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(12) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(12) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(12) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(12) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(12) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(14) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(14) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(14) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(14) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(14) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(16) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(16) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(16) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(16) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(16) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(18) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(18) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(18) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(18) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(18) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(20) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(20) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(20) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(20) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(20) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(22) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(22) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(22) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(22) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(22) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(24) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(24) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(24) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(24) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(24) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(26) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(26) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(26) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(26) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(26) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(28) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(28) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(28) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(28) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(28) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(30) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(30) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(30) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(30) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(30) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(200) h      1    0.100     1     0.100  POSTUPDT
+d1adjust(200) h      1    0.100     1     0.100  POSTUPDT
+w1adjust(200) h      1    0.100     1     0.100  POSTUPDT
+vso1adjust(200) h    1    0.100     1     0.100  POSTUPDT
+wso1adjust(200) h    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) h      1    0.100     1     0.100  POSTUPDT
+v1adjust(0) a        1    0.100   1.004   0.500  POSTUPDT
+d1adjust(0) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(0) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(0) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(0) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(2) a        1    0.100   1.049   0.498  POSTUPDT
+d1adjust(2) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(2) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(2) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(2) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(4) a        1    0.100   1.215   0.450  POSTUPDT
+d1adjust(4) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(4) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(4) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(4) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(6) a        1    0.100   1.031   0.349     LM   
+d1adjust(6) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(6) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(6) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(6) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(8) a        1    0.100   1.004   0.425     LM   
+d1adjust(8) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(8) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(8) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(8) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(10) a       1    0.100   0.994   0.475     LM   
+d1adjust(10) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(10) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(10) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(10) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(12) a       1    0.100   0.998   0.495     LM   
+d1adjust(12) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(12) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(12) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(12) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(14) a       1    0.100   0.999   0.499     LM   
+d1adjust(14) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(14) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(14) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(14) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(16) a       1    0.100   0.998   0.500  POSTUPDT
+d1adjust(16) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(16) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(16) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(16) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(18) a       1    0.100   0.999   0.500  POSTUPDT
+d1adjust(18) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(18) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(18) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(18) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(20) a       1    0.100   1.000   0.500  POSTUPDT
+d1adjust(20) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(20) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(20) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(20) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(22) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(22) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(22) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(22) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(22) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(24) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(24) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(24) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(24) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(24) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(26) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(26) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(26) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(26) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(26) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(28) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(28) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(28) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(28) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(28) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(30) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(30) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(30) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(30) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(30) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(200) a      1    0.100     1     0.500  POSTUPDT
+d1adjust(200) a      1    0.100     1     0.254  POSTUPDT
+w1adjust(200) a      1    0.100     1     0.100  POSTUPDT
+vso1adjust(200) a    1    0.100     1     0.100  POSTUPDT
+wso1adjust(200) a    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) a      1    0.100     1     0.104  POSTUPDT
+---------------------------------------------------------
+
+********************* R E F E R E N C E S  ************************
+
+[1]	A. J. Koning and D. Rochman, “Modern Nuclear Data 
+Evaluation with the TALYS Code System,” Nuclear Data Sheets, 
+vol. 113, no. 12, pp. 2841–2934, Dec. 2012, doi: 
+10.1016/j.nds.2012.11.002.
+[2]	A. J. Koning, D. Rochman, J.-Ch. Sublet, N. Dzysiuk, M. 
+Fleming, and S. van der Marck, “TENDL: Complete Nuclear Data 
+Library for Innovative Nuclear Science and Technology,” Nuclear 
+Data Sheets, vol. 155, pp. 1–55, Jan. 2019, doi: 
+10.1016/j.nds.2019.01.002.
+[3]	G. Schnabel, H. Sjöstrand, D. Rochman, A. Koning, J. 
+Hansson, and R. Capote, “Conception and software implementation 
+of a nuclear data evaluation pipeline,” p. 69.
+[4]	Schnabel Georg, “Fitting and Analysis Technique for 
+Inconsistent Nuclear Data,” Proceedings of the International 
+Conference on Mathematics and Computational Methods applied to 
+Nuclear Science and Engineering, 2017, [Online]. Available: 
+http://toc.proceedings.com/38222webtoc.pdf.
+[5]	H. Sjöstrand and G. Schnabel, “Monte Carlo integral 
+adjustment of nuclear data libraries – experimental covariances 
+and inconsistent data,” EPJ Web Conf., vol. 211, p. 07007, 2019, 
+doi: 10.1051/epjconf/201921107007.
+[6]	K. Levenberg, “A method for the solution of certain 
+non-linear problems in least squares,” Quart. Appl. Math., vol. 
+2, no. 2, pp. 164–168, 1944, doi: 10.1090/qam/10666.
+[7]	D. W. Marquardt, “An Algorithm for Least-Squares 
+Estimation of Nonlinear Parameters,” Journal of the Society for 
+Industrial and Applied Mathematics, vol. 11, no. 2, pp. 431–441, 
+Jun. 1963, doi: 10.1137/0111030.
+[8]	P. Helgesson and H. Sjöstrand, “Fitting a defect 
+non-linear model with or without prior, distinguishing nuclear 
+reaction products as an example,” Review of Scientific 
+Instruments, vol. 88, no. 11, p. 115114, Nov. 2017, doi: 
+10.1063/1.4993697.
+[9]	C. E. Rasmussen and C. K. I. Williams, Gaussian processes 
+for machine learning. Cambridge, Mass: MIT Press, 2006.
+[10]	P. Helgesson and H. Sjöstrand, “Treating model defects 
+by fitting smoothly varying model parameters: Energy dependence in 
+nuclear data evaluation,” Annals of Nuclear Energy, vol. 120, 
+pp. 35–47, Oct. 2018, doi: 10.1016/j.anucene.2018.05.026.
+
+
+************************ T E N D L  I N F O **********************
+
+TENDL-2012 (Talys Evaluated Nuclear Data Library)
+
+Neutron transport library made by Talys 
+
+Authors: A.J. Koning and D. Rochman, NRG Petten, The Netherlands
+
+************** G E N E R A L   I N F O R M A T I O N *************
+
+This evaluated data file is based primarily on the nuclear model 
+code Talys [kon07], version 1.4 and on existing resonance 
+parameter tables. It is part of a large collection of isotopic 
+evaluations, all created by running Talys with either default or
+adjusted input parameters. This means that the data in this 
+evaluation have been tested in detail for some isotopes against 
+individual experimental data, while for other isotopes it is
+only as good as the global quality of Talys at the present moment.
+The mutual quality of all individual evaluations is however 
+consistent: The same set of nuclear models is used and, equally 
+important, the same ENDF-6 formatting procedures for each isotope.
+The resulting data file provides a complete representation of 
+nuclear data needed for transport, damage, heating, radioactivity,
+and shielding applications over the incident neutron energy range 
+from 1.0E-11 to 200 MeV. 
+
+For the resonance range we have adopted the best possible 
+resonance parameters from available numerical tables or from an 
+existing library.
+
+All transport data for neutrons, charged particles, photons and 
+residual nuclides are filed using a combination of MF1,2,3,4,5,6, 
+12,14,15. This includes cross sections, angular distributions, 
+double-differential spectra, discrete and continuum photon 
+production cross sections, and residual production (activation) 
+cross sections. Moreover, isomeric production data are stored in 
+MF8,9,10. This evaluation can thus be used as both transport 
+and activation library. The data file has been created 
+automatically using the ENDF-6 format generator TEFAL.
+
+A complete set of covariance data is included, which is stored
+in MF32,33,34.
+
+##### ORIGIN
+
+Resonance parameters (MF2/MT151): Best data from existing sets
+All other data < 200 MeV        : Produced with Talys code 
+
+*************************** T H E O R Y **************************
+
+Talys is a computer code system for the prediction and analysis 
+of nuclear reactions. Talys simulates reactions that involve 
+neutrons, gamma-rays, protons, deuterons, tritons, helions and 
+alpha-particles, in the 1 keV - 200 MeV energy range and for 
+target nuclides of mass 12 and heavier. This is achieved by 
+implementing a suite of nuclear reaction models into a single 
+code system. It enables to evaluate nuclear reactions from 
+the unresolved resonance region up to intermediate energies. This 
+evaluation is based on a theoretical analysis that utilizes the 
+optical model, compound nucleus statistical theory, fission, 
+direct reactions and pre-equilibrium processes, in combination 
+with databases and models for nuclear structure. The following 
+output of Talys is stored in this data file:
+
+- Total, elastic and non-elastic cross sections
+- Elastic scattering angular distributions
+- Inelastic cross sections to discrete states
+- Inelastic scattering angular distributions to discrete states
+- Exclusive channel cross sections, e.g. (n,g), (n,2n), (n,np),..
+- Exclusive channel energy spectra
+- Exclusive channel double-differential spectra
+- Exclusive gamma production for discrete states and continuum
+- Isomeric and ground state cross sections
+- Residual production cross sections
+- Recoil data
+- Total particle cross sections, e.g. (n,xn), (n,xp),..
+- Total particle energy spectra
+- Total particle double-differential spectra
+
+Here follows a short description of the used nuclear models:
+
+##### OPTICAL MODEL
+
+All optical model calculations are performed by ECIS-06 [ray94], 
+in Talys used as a subroutine. The default optical model 
+potentials (OMP) used are the local and global parameterizations 
+of Koning and Delaroche [kon03]. These are phenomenological OMPs 
+for neutrons and protons which in principle are valid over the 
+1 keV - 200 MeV energy range, though the low energy boundary of 
+validity may differ from nucleus to nucleus. For neutrons and 
+protons, the used parameterization is given in Eq. (7) of 
+[kon03]. Revised versions of these potentials (unpublished) are 
+used in the case of deformed nuclides.
+To calculate the transmission coefficients and reaction 
+cross sections for deuterons, tritons, helions and alpha 
+particles, we use OMPs that are directly derived from our nucleon 
+potentials using Watanabe's folding approach.
+
+##### DIRECT REACTIONS
+
+The built-in ECIS-06 is used for DWBA or coupled-channels 
+calculations for rotational or vibrational (or a combination of
+these) nuclides, depending on the information present in the
+nuclear structure database of Talys.
+In addition, a macroscopic, phenomenological model to describe 
+giant resonances in the inelastic channel is used. For each 
+multipolarity an energy weighted sum rule applies and a DWBA 
+calculation with ECIS-06 is performed for each giant resonance 
+state. The cross section is then spread over the continuum with a 
+Gaussian distribution.
+
+##### COMPOUND NUCLEUS
+
+For binary compound nucleus reactions we use the model of 
+Moldauer, i.e. the Hauser-Feshbach model corrected for width 
+fluctuations. The transmission coefficients have been generated 
+with the aforementioned OMPs and the full j,l-dependence of the 
+transmission coefficients in the Hauser-Feshbach model is used. 
+For each nucleus that can be reached through a binary reaction, 
+several discrete levels and a continuum described by level 
+densities are included simultaneously as competing channels.
+
+The compound nucleus angular distributions are calculated with 
+the Blatt-Biedenharn formalism, leading to compound nucleus 
+Legendre coefficients that are added to their direct 
+counterparts. For multiple compound emission, i.e. emitted 
+particles after the binary emission, we use the Hauser-Feshbach 
+model. Again, for each residual nucleus several discrete states 
+are included as well as a continuum described by level densities. 
+Multiple compound emission is continued until all reaction 
+channels are closed and the population distribution of all 
+residual nuclides is depleted, through gamma decay, until they
+end up in the ground state or in an isomer. 
+
+For the level density, we take the Constant Temperature Model 
+with level density parameters as given in [kon08]. This employs
+the temperature law at low energies and a Fermi gas expression at 
+high energies, and takes into account the damping of shell 
+effects at high excitation energy. We have obtained the level 
+density parameters from a simultaneous fit to all experimental 
+discrete levels and D0 values from the RIPL library [rip09]. 
+
+Gamma-ray transmission coefficients are generated with the 
+Kopecky-Uhl generalized Lorentzian for strength functions, with 
+giant dipole resonance parameters taken from the RIPL library 
+[rip09], and normalized with experimental radiative widths. 
+
+##### PRE-EQUILIBRIUM REACTIONS
+
+For pre-equilibrium reactions, which become important for 
+incident energies above about 10 MeV, we use the two-component 
+exciton model [kon04], in which the neutron or proton types of 
+particles and holes are followed throughout the reaction. For 
+energies above 20 MeV, multiple pre-equilibrium emission up to 
+any order of particle emission was included in the calculations.
+A parameterization for the squared matrix element is used that is 
+valid for the whole energy range of this evaluation.
+
+For deuterons, tritons, helions and alpha-particles, an extra
+contribution was added from the pick/up and knock-out reaction
+model by Kalbach [kal05]. 
+
+For photons, the model of Akkermans and Gruppelaar [akk85] was 
+applied, to simulate the direct and semi-direct capture 
+processes. 
+
+The angular distribution systematics by Kalbach [kal88] were used 
+to describe the angular distributions for all continuum 
+particles. An isotopic distribution for photons was adopted.
+
+***************** F I L E   I N F O R M A T I O N ****************
+
+##### MF1: GENERAL INFORMATION 
+ 
+- MT451    : Descriptive data and directory
+  
+This text and the full directory of used MF/MT sections.
+
+##### MF2: RESONANCE PARAMETERS
+
+- MT151    : Resonance parameters
+
+If present, we adopt the resonance parameters from an existing 
+table or library. The choice of library is made, for each isotope 
+separately, on basis of completeness, date of the evaluation and 
+used representation. If not present, the potential scattering 
+radius, calculated from the optical model, is written to MF2.
+The default is to take the resonances from a revised version of
+the Atlas of Neutron Resonances, 5th edition [mug06]. 
+
+##### MF3: REACTION CROSS SECTIONS
+
+All the data present in the following MT-sections have been 
+calculated with Talys. If the maximal cross section in an 
+excitation function over the whole energy range does not exceed 
+1.e-9 b, the MT-number is not included at all. Cross sections 
+lower than 1.e-20 b are assumed to have no physical meaning and 
+are set to zero. We present only the most important reactions
+explicitly with a separate MT-number. The minor reaction channels
+are also present but they are stored in MT5 and can be
+reproduced in combination with MF6. All MT numbers extend up to
+the highest incident energy.
+The following reaction channels/MT numbers are generally included:
+
+- MT1      : Total cross section 
+
+Calculated with the optical model over the whole energy range,
+or partly reproduced using experimental data.
+
+- MT2      : Elastic scattering cross section 
+
+Obtained by subtracting the non-elastic cross section from the
+total cross section. 
+
+- MT3      : Non-elastic cross section 
+
+Calculated with the optical model over the whole energy range.
+
+- MT4      : Total inelastic cross section
+
+Sum of MT=51-91.
+
+- MT5      : (n,anything) cross section
+
+MT5 contains the reactions which can not be stored in any other 
+MT-number. As the incident energy increases, the cross section 
+of MT5 increases as more reaction channels are no longer stored 
+under a specific MT number. The information of MF3/MT5 can be 
+combined with MF6/MT5 to obtain residual production cross 
+sections particle production cross sections and 
+(double-)differential cross sections.
+
+- MT16     : (n,2n) cross section
+- MT17     : (n,3n) cross section
+- MT22     : (n,na) cross section
+- MT28     : (n,np) cross section
+- MT51-70  : (n,n') cross section for 1st-20th excited state
+- MT91     : (n,n') continuum cross section
+- MT102    : (n,gamma) cross section 
+- MT103    : (n,p) cross section
+- MT104    : (n,d) cross section
+- MT105    : (n,t) cross section
+- MT106    : (n,h) cross section
+- MT107    : (n,a) cross section
+- MT600-610: (n,p) cross section for 0th-10th excited state
+- MT649    : (n,p) continuum cross section
+- MT650-655: (n,d) cross section for 0th-5th excited state
+- MT699    : (n,d) continuum cross section
+- MT700-705: (n,t) cross section for 0th-5th excited state
+- MT749    : (n,t) continuum cross section
+- MT750-755: (n,h) cross section for 0th-5th excited state
+- MT799    : (n,h) continuum cross section
+- MT800-810: (n,a) cross section for 0th-10th excited state
+- MT849    : (n,a) continuum cross section
+
+##### MF4: ANGULAR DISTRIBUTIONS OF SECONDARY PARTICLES
+
+We use MF4 for the neutron scattering angular distribution for 
+discrete levels. 
+
+- MT2      : Elastic angular distribution         
+
+The flag LTT=3 is used to indicate a switch at some high energy,
+generally 50 MeV, from a Legendre representation to a tabulated 
+representation. For incident energies below this energy, the 
+Legendre coefficients are given on a sufficiently precise energy 
+grid. They are a sum of calculated Legendre coefficients for 
+compound nucleus and shape-elastic scattering. For higher 
+incident energies, relative angular distributions are tabulated 
+on an angular grid. 
+
+- MT51-70  : (n,n') angular distribution for 1st-20th state
+- MT600-610: (n,p) angular distribution for 0th-10th state
+- MT650-655: (n,d) angular distribution for 0th-5th state
+- MT700-705: (n,t) angular distribution for 0th-5th state
+- MT750-755: (n,h) angular distribution for 0th-5th state
+- MT800-810: (n,a) angular distribution for 0th-10th state
+
+##### MF6: PRODUCT ENERGY-ANGLE DISTRIBUTIONS
+
+In MF6 we store all secondary energy, angle, and energy-angle 
+distributions, as well as all residual and discrete + continuum
+photon production cross sections for channels other than capture 
+(MT102) and reactions to discrete levels (MT51,etc.). 
+All data are generated with Talys.
+
+- MT5      : (n,anything) yields and energy-angle distributions
+
+MT5 contains the production yields of particles and residual 
+products. It also contains the secondary energy-angle 
+distributions for all particles and photons which are not
+represented by explicit MT numbers. First, the yields for 
+neutrons are given for the whole energy range. Next, on a 
+secondary energy grid the relative emission spectra are given 
+together with the parameters for the Kalbach systematics for 
+angular distributions. Inelastic scattering cross sections for 
+discrete states have been broadened and added to the continuum 
+spectra. This procedure is repeated for protons, deuterons, 
+tritons, Helium-3, alpha particles and photons. Finally, the 
+residual production yields are given per final product. All these 
+yields and relative distributions can be multiplied with the 
+cross sections given in MF3/MT5 to get the production cross 
+sections and (double-)differential cross sections.
+
+- MT16     : (n,2n) energy-angle distr. and photon production
+
+First, for each type of outgoing particle, the (trivial) integer 
+particle yields are given. Next, on a sufficiently dense incident 
+energy grid the secondary energy-angle distributions are 
+specified by means of the relative emission spectra and the 
+parameters for the Kalbach systematics for angular distributions. 
+Next, the photon yield is tabulated as a function of incident 
+energy. For each incident energy, the photon production is given 
+for all discrete gamma lines present in the final nucleus. A
+continuum photon distribution is added to this. We assume 
+isotropy for all produced gamma rays.
+
+For the following MT-numbers, the same procedure as for MT16 is
+followed:
+
+- MT17 : (n,3n) energy-angle distr. and photon production
+- MT22 : (n,na) energy-angle distr. and photon production
+- MT28 : (n,np) energy-angle distr. and photon production
+- MT91 : (n,n') continuum energy-angle distr. and phot. prod.
+- MT649: (n,p) continuum energy-angle distr. and photon prod.
+- MT699: (n,d) continuum energy-angle distr. and photon prod.
+- MT749: (n,t) continuum energy-angle distr. and photon prod.
+- MT809: (n,h) continuum energy-angle distr. and photon prod.
+- MT849: (n,a) continuum energy-angle distr. and photon prod.
+
+-----
+
+##### MF8: RADIOACTIVE DECAY DATA
+
+For reactions to isomers, MF8 designates where the information 
+for isomeric versus ground state production can be found, i.e. 
+for each MT number it points to either MF6, MF9 or MF10.
+
+##### MF9: MULTIPLICITIES FOR PRODUCTION OF RADIOACTIVE NUCLIDES
+
+MF9 is used for non-threshold reactions.
+All data are generated with Talys. Final states with a lifetime
+that exceeds 1 second are treated as isomer.
+
+##### MF10: CROSS SECTIONS FOR PRODUCTION OF RADIOACTIVE NUCLIDES
+
+MF10 is used for threshold reactions.
+All data are generated with Talys. Final states with a lifetime
+that exceeds 1 second are treated as isomer.
+
+##### MF12: PHOTOPRODUCTION YIELD DATA
+
+MF12 is used for the photon production for two types of reactions:
+- Reactions to discrete levels (MT51, etc.) For this transition 
+  probabilities are used (LO=2)
+- Photons from neutron capture (MT102). Here multiplicities are
+  given
+
+##### MF14: PHOTON ANGULAR DISTRIBUTIONS
+
+All photon production is considered as isotropic
+
+##### MF15: PHOTON ENERGY SPECTRA
+
+For capture (MT102), the photon energy spectrum is given.
+
+##### MF32: COVARIANCES OF RESONANCE PARAMETERS
+
+In MF32, we store the covariances of resonance parameters 
+considering the resonance energy and the neutron and radiative 
+widths. The uncertainties of these parameters are based on the 
+Atlas of Neutron Resonances, 5th edition [mug06]. For each 
+isotope, the bound level resonance parameters, scattering radius 
+and uncertainties have been adjusted to match the microscopic 
+uncertainties (thermal elastic and capture cross sections as well 
+as the capture integral), as given in the Atlas, or as extracted
+from evaluated libraries. For parameter correlation between Gn 
+and Gg, no long-range correlation is considered for the time 
+being. As short-range correlation (between parameters of the same 
+resonance), the method described in Ref [roc08a] is used. 
+Uncertainties on cross sections have been checked and are 
+partially presented in Ref.[roc08b] and Ref.[roc08c]. It should 
+be noted that the scattering radius can not be varied in the
+existing format for MF-32, (which would underestimate the 
+elastic and total cross section uncertainties between resonances) 
+however we have added its uncertainty in a vacant field in the 
+header of each subsection.
+
+##### MF33: COVARIANCES OF NEUTRON CROSS SECTIONS
+
+In MF33, we store the covariances of most, but not all, reaction
+channels that are given in MF3. All covariances are generated
+with the TASMAN code, which generates Talys runs using a Monte
+Carlo parameter method.
+For each MT-number, the information consists of:
+1. Covariances for MTa, Ea and MTa, Ea (variances)
+2. Covariances for MTa, Ea and MTa, Eb (correlations for the
+   same reaction channel between different energies)
+3. Covariances for MTa, Ea and MTb, Ea (correlations between
+   different reaction channels for the same energy)
+4. Covariances for MTa, Ea and MTb, Eb (correlations between
+   different reaction channels for different energies)
+Classes 1 and 2 are covered by NI-type subsubsections with
+flag LB=5, followed by an obligatory LB=8 section which contains
+the cross section variances multiplied by 1.e-3 (a suggestion
+adopted from S. Tagesen and used, for example, in the JEFF-3.1 
+Fe-56 file). Next, classes 3 and 4 are covered by flag LB=6 to 
+account for the different energy grids that two correlating 
+MT-sections may have. Since the total correlation matrix is fully 
+symmetric, we only need to include the correlation elements 
+between different MT-numbers once, and we do that in the 
+subsection with the lowest of the two MT-numbers.
+We include covariance information for all the total cross 
+sections, the lumped partial cross sections and the individual 
+inelastic cross sections per level (MT51,...). We do not include 
+covariances for MT600 and higher MT-numbers.
+
+##### MF34: COVARIANCES OF ANGULAR DISTRIBUTIONS 
+
+In MF34, we store the covariances of the elastic scattering 
+angular distributions that are given in MF4/MT2. All covariances 
+are generated with the TASMAN code, which generates Talys runs 
+using a Monte Carlo parameter method.
+The tables are restricted to MT2 and contain covariances for the 
+first 6 Legendre coefficients. Boht intra- and inter-correlations 
+of the various Legendre coefficients are given. As in MF33, the 
+LB5 representation is used.
+
+***** F I L E   C H E C K I N G   A N D   P R O C E S S I N G ****
+
+This file has been checked successfully by the BNL checking 
+codes CHECKR-8.0, FIZCON-8.0 and PSYCHE-8.0 [her08] and has 
+been processed successfully into an MCNP library by the 
+processing code NJOY99.90 [mac00].
+
+*********************** R E F E R E N C E S **********************
+
+[akk85] J.M. Akkermans and H. Gruppelaar, Phys. Lett. 157B, 95
+        (1985).   
+[her08] M. Herman, ENDF Utility Codes Release 8.0, (2008).
+[kal88] C. Kalbach, Phys. Rev. C37, 2350 (1988).    
+[kal05] C. Kalbach, Phys. Rev. C71, 034606 (2005).
+[kon03] A.J. Koning and J.P. Delaroche, Nucl. Phys. A713, 231 
+        (2003).  
+[kon04] A.J. Koning and M.C. Duijvestijn, Nucl. Phys. A744, 15
+        (2004).
+[kon07] A.J. Koning, S. Hilaire and M.C. Duijvestijn, Talys-1.0,
+        Proceedings of the International Conference on Nuclear 
+        Data for Science and Technology - ND-2007, 
+        April 22-27, 2007, Nice, France
+[kon08] A.J. Koning, S. Hilaire and S. Goriely, ``Global and 
+        local level density models'', Nucl Phys. A810, 
+        13-76 (2008).
+[mac00] R.E. Macfarlane, NJOY99 - Code system for producing 
+        pointwise and multigroup neutron and photon cross 
+        sections from ENDF/B Data, RSIC PSR-480 (2000).
+[mug06] S.F. Mughabghab, Atlas of Neutron Resonances, 
+        5th edition, Elsevier Publisher, 2006.
+[ray94] J. Raynal, Notes on ECIS94, CEA Saclay Report 
+        No. CEA-N-2772, 1994.         
+[roc08a] D. Rochman and A.J. Koning, "Pb and Bi neutron data 
+         libraries with full covariance evaluation and improved 
+         integral tests", Nucl. Inst. and Methods A589 (2008) 85.
+[roc08b] A.J. Koning and D. Rochman, "Towards sustainable nuclear
+         energy: Putting nuclear physics to work", Annals of 
+         Nuclear Energy 35 (2008) 2024.
+[roc08c] D.Rochman, A.J.Koning and S.C. van der Marck, 
+         "Uncertainties for criticality-safety benchmarks and 
+         keff distributions", Ann. Nuc. En. 36 810-831 (2009).
+[rip09] R. Capote, M. Herman, P. Oblozinsky, P.G. Young,
+        S. Goriely, T. Belgya, A.V. Ignatyuk, A.J. Koning,
+        S. Hilaire, V. Plujko, M. Avrigeanu, O. Bersillon,
+        M.B. Chadwick, T. Fukahori, S. Kailas, J. Kopecky,
+        V.M. Maslov, G. Reffo, M. Sin, E. Soukhovitskii,
+        P. Talou, H. Yinlu, and G. Zhigang,
+        RIPL - Reference Input Parameter Library for calculation
+        of nuclear reactions and nuclear data evaluation,
+        Nucl. Data Sheets 110, 3107 (2009).
+
+************************* C O N T E N T S ************************
+

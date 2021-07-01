@@ -1,0 +1,964 @@
+
+=========================================================
+Name               Prior PriorUnc  Updt  UpdtUnc Adjust. 
+---------------------------------------------------------
+s2adjust 25 56_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 55_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 26 55_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 55_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 26 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 54_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 52_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 46_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 46_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 45_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 26 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 25 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 45_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 44_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 50_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 20 48_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 53_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 21 51_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 24 49_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 23 47_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 22 46_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 45_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 44_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 43_0     1    0.100     1     0.100  POSTUPDT
+s2adjust 19 42_0     1    0.100     1     0.100  POSTUPDT
+v2adjust n           1    0.100   0.974   0.049     LM   
+v3adjust n           1    0.100   1.006   0.100     LM   
+v4adjust n           1    0.100   1.000   0.100     LM   
+rvadjust n           1    0.100   0.878   0.001     LM   
+avadjust n           1    0.100   1.362   0.015     LM   
+w2adjust n           1    0.100   1.081   0.097     LM   
+w3adjust n           1    0.100     1     0.100  POSTUPDT
+w4adjust n           1    0.100     1     0.100  POSTUPDT
+d2adjust n           1    0.100   1.075   0.088     LM   
+d3adjust n           1    0.100   1.353   0.076     LM   
+rvdadjust n          1    0.100     1     0.100  POSTUPDT
+avdadjust n          1    0.100   1.001   0.100     LM   
+rvsoadjust n         1    0.100   1.610   0.080     LM   
+avsoadjust n         1    0.100   0.754   0.027     LM   
+vso2adjust n         1    0.100   0.967   0.100     LM   
+wso2adjust n         1    0.100   0.971   0.100     LM   
+gamgamadjust 26 57 0.600  0.060   0.614   0.060     LM   
+sgradjust 26 57_e1   1    0.100   0.965   0.099     LM   
+egradjust 26 57_e1   1    0.100   1.179   0.088     LM   
+ggradjust 26 57_e1   1    0.100   0.930   0.098     LM   
+s2adjust 26 57       1    0.100   0.966   0.100     LM   
+s2adjust 26 56       1    0.100   1.049   0.096     LM   
+s2adjust 25 56       1    0.100   1.049   0.068     LM   
+s2adjust 25 55       1    0.100   0.996   0.100     LM   
+s2adjust 25 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 53       1    0.100     1     0.100     LM   
+s2adjust 26 55       1    0.100   1.004   0.100     LM   
+s2adjust 25 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 55       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 26 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 25 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 54       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 52       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 46       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 46       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 45       1    0.100     1     0.100  POSTUPDT
+s2adjust 26 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 25 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 45       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 44       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 50       1    0.100     1     0.100  POSTUPDT
+s2adjust 20 48       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 53       1    0.100     1     0.100  POSTUPDT
+s2adjust 21 51       1    0.100     1     0.100  POSTUPDT
+s2adjust 24 49       1    0.100     1     0.100  POSTUPDT
+s2adjust 23 47       1    0.100     1     0.100  POSTUPDT
+s2adjust 22 46       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 45       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 44       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 43       1    0.100     1     0.100  POSTUPDT
+s2adjust 19 42       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 57     0.900  0.090   0.905   0.044     LM   
+gnadjust 26 56       1    0.100   0.932   0.094     LM   
+gnadjust 25 56       1    0.100   0.976   0.091     LM   
+gnadjust 25 55       1    0.100   0.999   0.100     LM   
+gnadjust 25 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 55       1    0.100   1.002   0.100     LM   
+gnadjust 25 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 55       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 25 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 54       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 52       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 46       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 46       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 45       1    0.100     1     0.100  POSTUPDT
+gnadjust 26 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 25 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 45       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 44       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 50       1    0.100     1     0.100  POSTUPDT
+gnadjust 20 48       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 53       1    0.100     1     0.100  POSTUPDT
+gnadjust 21 51       1    0.100     1     0.100  POSTUPDT
+gnadjust 24 49       1    0.100     1     0.100  POSTUPDT
+gnadjust 23 47       1    0.100     1     0.100  POSTUPDT
+gnadjust 22 46       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 45       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 44       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 43       1    0.100     1     0.100  POSTUPDT
+gnadjust 19 42       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 57     0.900  0.090   0.794   0.030     LM   
+gpadjust 26 56       1    0.100   0.987   0.086     LM   
+gpadjust 25 56       1    0.100   0.973   0.092     LM   
+gpadjust 25 55       1    0.100   1.006   0.099     LM   
+gpadjust 25 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 55       1    0.100   1.002   0.099     LM   
+gpadjust 25 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 55       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 25 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 54       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 52       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 46       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 46       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 45       1    0.100     1     0.100  POSTUPDT
+gpadjust 26 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 25 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 45       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 44       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 50       1    0.100     1     0.100  POSTUPDT
+gpadjust 20 48       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 53       1    0.100     1     0.100  POSTUPDT
+gpadjust 21 51       1    0.100     1     0.100  POSTUPDT
+gpadjust 24 49       1    0.100     1     0.100  POSTUPDT
+gpadjust 23 47       1    0.100     1     0.100  POSTUPDT
+gpadjust 22 46       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 45       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 44       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 43       1    0.100     1     0.100  POSTUPDT
+gpadjust 19 42       1    0.100     1     0.100  POSTUPDT
+aadjust 26 56        1    0.100   0.992   0.100     LM   
+aadjust 25 56      1.120  0.112   1.071   0.027     LM   
+aadjust 25 55        1    0.100     1     0.100  POSTUPDT
+aadjust 25 54        1    0.100     1     0.100  POSTUPDT
+aadjust 24 54        1    0.100     1     0.100  POSTUPDT
+aadjust 24 53        1    0.100   0.989   0.093     LM   
+aadjust 26 55        1    0.100   1.090   0.096     LM   
+aadjust 25 53        1    0.100     1     0.100  POSTUPDT
+aadjust 24 52        1    0.100     1     0.100  POSTUPDT
+aadjust 23 52        1    0.100     1     0.100  POSTUPDT
+aadjust 23 51        1    0.100     1     0.100  POSTUPDT
+aadjust 23 50        1    0.100     1     0.100  POSTUPDT
+aadjust 22 50        1    0.100     1     0.100  POSTUPDT
+aadjust 22 49        1    0.100     1     0.100  POSTUPDT
+aadjust 24 55        1    0.100     1     0.100  POSTUPDT
+aadjust 23 53        1    0.100     1     0.100  POSTUPDT
+aadjust 24 51        1    0.100     1     0.100  POSTUPDT
+aadjust 23 49        1    0.100     1     0.100  POSTUPDT
+aadjust 22 48        1    0.100     1     0.100  POSTUPDT
+aadjust 26 54        1    0.100     1     0.100  POSTUPDT
+aadjust 25 52        1    0.100     1     0.100  POSTUPDT
+aadjust 22 51        1    0.100     1     0.100  POSTUPDT
+aadjust 23 54        1    0.100     1     0.100  POSTUPDT
+aadjust 22 52        1    0.100     1     0.100  POSTUPDT
+aadjust 21 49        1    0.100     1     0.100  POSTUPDT
+aadjust 21 48        1    0.100     1     0.100  POSTUPDT
+aadjust 21 47        1    0.100     1     0.100  POSTUPDT
+aadjust 21 46        1    0.100     1     0.100  POSTUPDT
+aadjust 20 46        1    0.100     1     0.100  POSTUPDT
+aadjust 20 45        1    0.100     1     0.100  POSTUPDT
+aadjust 26 53        1    0.100     1     0.100  POSTUPDT
+aadjust 25 51        1    0.100     1     0.100  POSTUPDT
+aadjust 24 50        1    0.100     1     0.100  POSTUPDT
+aadjust 23 48        1    0.100     1     0.100  POSTUPDT
+aadjust 22 47        1    0.100     1     0.100  POSTUPDT
+aadjust 21 45        1    0.100     1     0.100  POSTUPDT
+aadjust 20 44        1    0.100     1     0.100  POSTUPDT
+aadjust 20 47        1    0.100     1     0.100  POSTUPDT
+aadjust 21 50        1    0.100     1     0.100  POSTUPDT
+aadjust 20 48        1    0.100     1     0.100  POSTUPDT
+aadjust 22 53        1    0.100     1     0.100  POSTUPDT
+aadjust 21 51        1    0.100     1     0.100  POSTUPDT
+aadjust 24 49        1    0.100     1     0.100  POSTUPDT
+aadjust 23 47        1    0.100     1     0.100  POSTUPDT
+aadjust 22 46        1    0.100     1     0.100  POSTUPDT
+aadjust 19 45        1    0.100     1     0.100  POSTUPDT
+aadjust 19 44        1    0.100     1     0.100  POSTUPDT
+aadjust 19 43        1    0.100     1     0.100  POSTUPDT
+aadjust 19 42        1    0.100     1     0.100  POSTUPDT
+v2adjust p           1    0.100   1.004   0.100     LM   
+v3adjust p           1    0.100     1     0.100  POSTUPDT
+v4adjust p           1    0.100     1     0.100  POSTUPDT
+rvadjust p         0.990  0.099   0.998   0.069     LM   
+avadjust p           1    0.100   0.915   0.086     LM   
+w2adjust p           1    0.100   1.015   0.099     LM   
+w3adjust p           1    0.100     1     0.100  POSTUPDT
+w4adjust p           1    0.100     1     0.100  POSTUPDT
+d2adjust p           1    0.100   1.030   0.099     LM   
+d3adjust p           1    0.100   1.071   0.098     LM   
+rvdadjust p          1    0.100     1     0.100  POSTUPDT
+avdadjust p          1    0.100   1.001   0.100     LM   
+rvsoadjust p         1    0.100   0.984   0.100     LM   
+avsoadjust p         1    0.100     1     0.100  POSTUPDT
+vso2adjust p         1    0.100     1     0.100  POSTUPDT
+wso2adjust p         1    0.100     1     0.100  POSTUPDT
+v2adjust a           1    0.100     1     0.100  POSTUPDT
+v3adjust a           1    0.100     1     0.100  POSTUPDT
+v4adjust a           1    0.100     1     0.100  POSTUPDT
+rvadjust a           1    0.100   1.061   0.070     LM   
+avadjust a           1    0.100   1.028   0.083     LM   
+w2adjust a           1    0.100     1     0.100  POSTUPDT
+w3adjust a           1    0.100     1     0.100  POSTUPDT
+w4adjust a           1    0.100     1     0.100  POSTUPDT
+d2adjust a           1    0.100     1     0.100  POSTUPDT
+d3adjust a           1    0.100     1     0.100  POSTUPDT
+rvdadjust a          1    0.100     1     0.100  POSTUPDT
+avdadjust a          1    0.100     1     0.100  POSTUPDT
+rvsoadjust a         1    0.100     1     0.100  POSTUPDT
+avsoadjust a         1    0.100     1     0.100  POSTUPDT
+vso2adjust a         1    0.100     1     0.100  POSTUPDT
+wso2adjust a         1    0.100     1     0.100  POSTUPDT
+v2adjust d           1    0.100     1     0.100  POSTUPDT
+v3adjust d           1    0.100     1     0.100  POSTUPDT
+v4adjust d           1    0.100     1     0.100  POSTUPDT
+rvadjust d           1    0.100   1.033   0.056     LM   
+avadjust d           1    0.100   1.018   0.091     LM   
+w2adjust d           1    0.100     1     0.100  POSTUPDT
+w3adjust d           1    0.100     1     0.100  POSTUPDT
+w4adjust d           1    0.100     1     0.100  POSTUPDT
+d2adjust d           1    0.100     1     0.100  POSTUPDT
+d3adjust d           1    0.100     1     0.100  POSTUPDT
+rvdadjust d          1    0.100     1     0.100  POSTUPDT
+avdadjust d          1    0.100     1     0.100  POSTUPDT
+rvsoadjust d         1    0.100     1     0.100  POSTUPDT
+avsoadjust d         1    0.100     1     0.100  POSTUPDT
+vso2adjust d         1    0.100     1     0.100  POSTUPDT
+wso2adjust d         1    0.100     1     0.100  POSTUPDT
+v2adjust t           1    0.100     1     0.100  POSTUPDT
+v3adjust t           1    0.100     1     0.100  POSTUPDT
+v4adjust t           1    0.100     1     0.100  POSTUPDT
+rvadjust t           1    0.100   0.998   0.097     LM   
+avadjust t           1    0.100   0.998   0.100     LM   
+w2adjust t           1    0.100     1     0.100  POSTUPDT
+w3adjust t           1    0.100     1     0.100  POSTUPDT
+w4adjust t           1    0.100     1     0.100  POSTUPDT
+d2adjust t           1    0.100     1     0.100  POSTUPDT
+d3adjust t           1    0.100     1     0.100  POSTUPDT
+rvdadjust t          1    0.100     1     0.100  POSTUPDT
+avdadjust t          1    0.100     1     0.100  POSTUPDT
+rvsoadjust t         1    0.100     1     0.100  POSTUPDT
+avsoadjust t         1    0.100     1     0.100  POSTUPDT
+vso2adjust t         1    0.100     1     0.100  POSTUPDT
+wso2adjust t         1    0.100     1     0.100  POSTUPDT
+v2adjust h           1    0.100     1     0.100  POSTUPDT
+v3adjust h           1    0.100     1     0.100  POSTUPDT
+v4adjust h           1    0.100     1     0.100  POSTUPDT
+rvadjust h           1    0.100     1     0.100  POSTUPDT
+avadjust h           1    0.100     1     0.100  POSTUPDT
+w2adjust h           1    0.100     1     0.100  POSTUPDT
+w3adjust h           1    0.100     1     0.100  POSTUPDT
+w4adjust h           1    0.100     1     0.100  POSTUPDT
+d2adjust h           1    0.100     1     0.100  POSTUPDT
+d3adjust h           1    0.100     1     0.100  POSTUPDT
+rvdadjust h          1    0.100     1     0.100  POSTUPDT
+avdadjust h          1    0.100     1     0.100  POSTUPDT
+rvsoadjust h         1    0.100     1     0.100  POSTUPDT
+avsoadjust h         1    0.100     1     0.100  POSTUPDT
+vso2adjust h         1    0.100     1     0.100  POSTUPDT
+wso2adjust h         1    0.100     1     0.100  POSTUPDT
+v1adjust(0) n        1    0.100   1.082   0.120  POSTUPDT
+d1adjust(0) n        1    0.100   -0.093  0.383  POSTUPDT
+w1adjust(0) n        1    0.100   -0.381  0.488  POSTUPDT
+vso1adjust(0) n      1    0.100   2.183   0.371  POSTUPDT
+wso1adjust(0) n      1    0.100   1.000   0.247  POSTUPDT
+rcadjust(0) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(2) n        1    0.100   1.139   0.002     LM   
+d1adjust(2) n        1    0.100   0.094   0.047     LM   
+w1adjust(2) n        1    0.100   0.866   0.463     LM   
+vso1adjust(2) n      1    0.100   1.769   0.251     LM   
+wso1adjust(2) n      1    0.100   0.997   0.246  POSTUPDT
+rcadjust(2) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(4) n        1    0.100   1.065   0.007     LM   
+d1adjust(4) n        1    0.100   1.725   0.215     LM   
+w1adjust(4) n        1    0.100   1.132   0.368     LM   
+vso1adjust(4) n      1    0.100   0.655   0.154     LM   
+wso1adjust(4) n      1    0.100   0.988   0.216  POSTUPDT
+rcadjust(4) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(6) n        1    0.100   1.067   0.008     LM   
+d1adjust(6) n        1    0.100   0.918   0.044     LM   
+w1adjust(6) n        1    0.100   1.011   0.106     LM   
+vso1adjust(6) n      1    0.100   0.598   0.104     LM   
+wso1adjust(6) n      1    0.100   0.996   0.144     LM   
+rcadjust(6) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(8) n        1    0.100   1.109   0.010     LM   
+d1adjust(8) n        1    0.100   0.669   0.063     LM   
+w1adjust(8) n        1    0.100   0.968   0.114     LM   
+vso1adjust(8) n      1    0.100   0.995   0.120     LM   
+wso1adjust(8) n      1    0.100   1.000   0.186     LM   
+rcadjust(8) n        1    0.100     1     0.100  POSTUPDT
+v1adjust(10) n       1    0.100   1.086   0.012     LM   
+d1adjust(10) n       1    0.100   0.660   0.096     LM   
+w1adjust(10) n       1    0.100   0.961   0.373     LM   
+vso1adjust(10) n     1    0.100   1.065   0.215     LM   
+wso1adjust(10) n     1    0.100   1.000   0.233  POSTUPDT
+rcadjust(10) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(12) n       1    0.100   1.083   0.026     LM   
+d1adjust(12) n       1    0.100   0.702   0.120     LM   
+w1adjust(12) n       1    0.100   0.960   0.473     LM   
+vso1adjust(12) n     1    0.100   0.971   0.299     LM   
+wso1adjust(12) n     1    0.100   1.002   0.247  POSTUPDT
+rcadjust(12) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(14) n       1    0.100   1.103   0.028     LM   
+d1adjust(14) n       1    0.100   0.994   0.112     LM   
+w1adjust(14) n       1    0.100   0.999   0.462     LM   
+vso1adjust(14) n     1    0.100   0.993   0.357     LM   
+wso1adjust(14) n     1    0.100   1.007   0.247  POSTUPDT
+rcadjust(14) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(16) n       1    0.100   0.952   0.060     LM   
+d1adjust(16) n       1    0.100   1.139   0.161     LM   
+w1adjust(16) n       1    0.100   1.026   0.374     LM   
+vso1adjust(16) n     1    0.100   1.037   0.390     LM   
+wso1adjust(16) n     1    0.100   1.001   0.247     LM   
+rcadjust(16) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(18) n       1    0.100   0.903   0.065     LM   
+d1adjust(18) n       1    0.100   1.117   0.131     LM   
+w1adjust(18) n       1    0.100   1.025   0.270     LM   
+vso1adjust(18) n     1    0.100   1.021   0.423     LM   
+wso1adjust(18) n     1    0.100   1.001   0.247     LM   
+rcadjust(18) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(20) n       1    0.100   1.025   0.103     LM   
+d1adjust(20) n       1    0.100   1.103   0.107     LM   
+w1adjust(20) n       1    0.100   1.020   0.399     LM   
+vso1adjust(20) n     1    0.100   0.998   0.450     LM   
+wso1adjust(20) n     1    0.100     1     0.247     LM   
+rcadjust(20) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(22) n       1    0.100   1.048   0.105     LM   
+d1adjust(22) n       1    0.100   0.955   0.150     LM   
+w1adjust(22) n       1    0.100   0.990   0.467     LM   
+vso1adjust(22) n     1    0.100   0.997   0.464     LM   
+wso1adjust(22) n     1    0.100   1.000   0.247     LM   
+rcadjust(22) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(24) n       1    0.100   1.057   0.103     LM   
+d1adjust(24) n       1    0.100   0.984   0.373     LM   
+w1adjust(24) n       1    0.100   0.996   0.467     LM   
+vso1adjust(24) n     1    0.100   1.000   0.471     LM   
+wso1adjust(24) n     1    0.100   1.000   0.247     LM   
+rcadjust(24) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(26) n       1    0.100   1.063   0.109     LM   
+d1adjust(26) n       1    0.100   1.000   0.479     LM   
+w1adjust(26) n       1    0.100   0.999   0.479     LM   
+vso1adjust(26) n     1    0.100   0.997   0.475     LM   
+wso1adjust(26) n     1    0.100   1.000   0.247     LM   
+rcadjust(26) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(28) n       1    0.100   1.048   0.120     LM   
+d1adjust(28) n       1    0.100   0.996   0.483     LM   
+w1adjust(28) n       1    0.100   0.999   0.479     LM   
+vso1adjust(28) n     1    0.100   0.997   0.478     LM   
+wso1adjust(28) n     1    0.100   1.000   0.246     LM   
+rcadjust(28) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(30) n       1    0.100   1.031   0.140     LM   
+d1adjust(30) n       1    0.100     1     0.479     LM   
+w1adjust(30) n       1    0.100     1     0.473     LM   
+vso1adjust(30) n     1    0.100   0.998   0.485     LM   
+wso1adjust(30) n     1    0.100   1.000   0.245     LM   
+rcadjust(30) n       1    0.100     1     0.100  POSTUPDT
+v1adjust(200) n      1    0.100     1     0.169  POSTUPDT
+d1adjust(200) n      1    0.100     1     0.500  POSTUPDT
+w1adjust(200) n      1    0.100     1     0.500  POSTUPDT
+vso1adjust(200) n    1    0.100     1     0.500  POSTUPDT
+wso1adjust(200) n    1    0.100     1     0.247  POSTUPDT
+rcadjust(200) n      1    0.100     1     0.100  POSTUPDT
+v1adjust(0) p        1    0.100   1.113   0.184  POSTUPDT
+d1adjust(0) p        1    0.100   1.287   0.450  POSTUPDT
+w1adjust(0) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(0) p      1    0.100   1.055   0.499  POSTUPDT
+wso1adjust(0) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(0) p        1    0.100   1.086   0.496  POSTUPDT
+v1adjust(2) p        1    0.100   1.173   0.150     LM   
+d1adjust(2) p        1    0.100   1.008   0.332     LM   
+w1adjust(2) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(2) p      1    0.100   1.003   0.498     LM   
+wso1adjust(2) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(2) p        1    0.100   1.017   0.480     LM   
+v1adjust(4) p        1    0.100   0.980   0.152     LM   
+d1adjust(4) p        1    0.100   0.861   0.374     LM   
+w1adjust(4) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(4) p      1    0.100   0.994   0.496  POSTUPDT
+wso1adjust(4) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(4) p        1    0.100   0.985   0.461     LM   
+v1adjust(6) p        1    0.100   0.883   0.175     LM   
+d1adjust(6) p        1    0.100   0.949   0.412     LM   
+w1adjust(6) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(6) p      1    0.100   0.994   0.495     LM   
+wso1adjust(6) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(6) p        1    0.100   0.986   0.482     LM   
+v1adjust(8) p        1    0.100   0.887   0.215     LM   
+d1adjust(8) p        1    0.100   1.064   0.440     LM   
+w1adjust(8) p        1    0.100     1     0.500  POSTUPDT
+vso1adjust(8) p      1    0.100   0.938   0.498  POSTUPDT
+wso1adjust(8) p      1    0.100     1     0.108  POSTUPDT
+rcadjust(8) p        1    0.100   0.996   0.497     LM   
+v1adjust(10) p       1    0.100   0.950   0.271     LM   
+d1adjust(10) p       1    0.100   1.004   0.459     LM   
+w1adjust(10) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(10) p     1    0.100   0.969   0.500  POSTUPDT
+wso1adjust(10) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(10) p       1    0.100   0.965   0.500  POSTUPDT
+v1adjust(12) p       1    0.100   1.010   0.333     LM   
+d1adjust(12) p       1    0.100   0.955   0.463     LM   
+w1adjust(12) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(12) p     1    0.100   0.991   0.500  POSTUPDT
+wso1adjust(12) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(12) p       1    0.100   0.992   0.500  POSTUPDT
+v1adjust(14) p       1    0.100   1.023   0.392     LM   
+d1adjust(14) p       1    0.100   0.957   0.451     LM   
+w1adjust(14) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(14) p     1    0.100   0.999   0.500  POSTUPDT
+wso1adjust(14) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(14) p       1    0.100   0.999   0.500  POSTUPDT
+v1adjust(16) p       1    0.100   0.980   0.437     LM   
+d1adjust(16) p       1    0.100   0.993   0.480     LM   
+w1adjust(16) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(16) p     1    0.100   1.000   0.500  POSTUPDT
+wso1adjust(16) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(16) p       1    0.100   1.000   0.500  POSTUPDT
+v1adjust(18) p       1    0.100   0.991   0.468  POSTUPDT
+d1adjust(18) p       1    0.100   0.879   0.498  POSTUPDT
+w1adjust(18) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(18) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(18) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(18) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(20) p       1    0.100   0.973   0.485  POSTUPDT
+d1adjust(20) p       1    0.100   0.984   0.500  POSTUPDT
+w1adjust(20) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(20) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(20) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(20) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(22) p       1    0.100   0.961   0.494  POSTUPDT
+d1adjust(22) p       1    0.100   0.999   0.500  POSTUPDT
+w1adjust(22) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(22) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(22) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(22) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(24) p       1    0.100   0.959   0.498  POSTUPDT
+d1adjust(24) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(24) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(24) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(24) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(24) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(26) p       1    0.100   0.964   0.499  POSTUPDT
+d1adjust(26) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(26) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(26) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(26) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(26) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(28) p       1    0.100   0.974   0.500  POSTUPDT
+d1adjust(28) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(28) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(28) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(28) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(28) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(30) p       1    0.100   0.983   0.500  POSTUPDT
+d1adjust(30) p       1    0.100     1     0.500  POSTUPDT
+w1adjust(30) p       1    0.100     1     0.500  POSTUPDT
+vso1adjust(30) p     1    0.100     1     0.500  POSTUPDT
+wso1adjust(30) p     1    0.100     1     0.108  POSTUPDT
+rcadjust(30) p       1    0.100     1     0.500  POSTUPDT
+v1adjust(200) p      1    0.100     1     0.500  POSTUPDT
+d1adjust(200) p      1    0.100     1     0.500  POSTUPDT
+w1adjust(200) p      1    0.100     1     0.500  POSTUPDT
+vso1adjust(200) p    1    0.100     1     0.500  POSTUPDT
+wso1adjust(200) p    1    0.100     1     0.108  POSTUPDT
+rcadjust(200) p      1    0.100     1     0.500  POSTUPDT
+v1adjust(0) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(0) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(0) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(0) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(0) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(2) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(2) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(2) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(2) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(2) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(4) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(4) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(4) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(4) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(4) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(6) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(6) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(6) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(6) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(6) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(8) d        1    0.100     1     0.100  POSTUPDT
+d1adjust(8) d        1    0.100     1     0.101  POSTUPDT
+w1adjust(8) d        1    0.100     1     0.106  POSTUPDT
+vso1adjust(8) d      1    0.100     1     0.103  POSTUPDT
+wso1adjust(8) d      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) d        1    0.100     1     0.102  POSTUPDT
+v1adjust(10) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(10) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(10) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(10) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(10) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(12) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(12) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(12) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(12) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(12) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(14) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(14) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(14) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(14) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(14) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(16) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(16) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(16) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(16) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(16) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(18) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(18) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(18) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(18) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(18) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(20) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(20) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(20) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(20) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(20) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(22) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(22) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(22) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(22) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(22) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(24) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(24) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(24) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(24) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(24) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(26) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(26) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(26) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(26) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(26) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(28) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(28) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(28) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(28) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(28) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(30) d       1    0.100     1     0.100  POSTUPDT
+d1adjust(30) d       1    0.100     1     0.101  POSTUPDT
+w1adjust(30) d       1    0.100     1     0.106  POSTUPDT
+vso1adjust(30) d     1    0.100     1     0.103  POSTUPDT
+wso1adjust(30) d     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) d       1    0.100     1     0.102  POSTUPDT
+v1adjust(200) d      1    0.100     1     0.100  POSTUPDT
+d1adjust(200) d      1    0.100     1     0.101  POSTUPDT
+w1adjust(200) d      1    0.100     1     0.106  POSTUPDT
+vso1adjust(200) d    1    0.100     1     0.103  POSTUPDT
+wso1adjust(200) d    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) d      1    0.100     1     0.102  POSTUPDT
+v1adjust(0) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(0) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(0) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(0) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(0) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(2) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(2) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(2) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(2) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(2) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(4) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(4) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(4) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(4) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(4) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(6) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(6) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(6) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(6) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(6) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(8) t        1    0.100     1     0.102  POSTUPDT
+d1adjust(8) t        1    0.100     1     0.100  POSTUPDT
+w1adjust(8) t        1    0.100     1     0.100  POSTUPDT
+vso1adjust(8) t      1    0.100     1     0.100  POSTUPDT
+wso1adjust(8) t      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) t        1    0.100     1     0.100  POSTUPDT
+v1adjust(10) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(10) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(10) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(10) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(10) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(12) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(12) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(12) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(12) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(12) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(14) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(14) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(14) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(14) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(14) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(16) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(16) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(16) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(16) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(16) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(18) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(18) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(18) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(18) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(18) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(20) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(20) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(20) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(20) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(20) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(22) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(22) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(22) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(22) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(22) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(24) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(24) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(24) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(24) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(24) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(26) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(26) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(26) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(26) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(26) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(28) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(28) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(28) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(28) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(28) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(30) t       1    0.100     1     0.102  POSTUPDT
+d1adjust(30) t       1    0.100     1     0.100  POSTUPDT
+w1adjust(30) t       1    0.100     1     0.100  POSTUPDT
+vso1adjust(30) t     1    0.100     1     0.100  POSTUPDT
+wso1adjust(30) t     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) t       1    0.100     1     0.100  POSTUPDT
+v1adjust(200) t      1    0.100     1     0.102  POSTUPDT
+d1adjust(200) t      1    0.100     1     0.100  POSTUPDT
+w1adjust(200) t      1    0.100     1     0.100  POSTUPDT
+vso1adjust(200) t    1    0.100     1     0.100  POSTUPDT
+wso1adjust(200) t    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) t      1    0.100     1     0.100  POSTUPDT
+v1adjust(0) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(0) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(0) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(0) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(0) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(2) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(2) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(2) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(2) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(2) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(4) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(4) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(4) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(4) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(4) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(6) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(6) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(6) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(6) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(6) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(8) h        1    0.100     1     0.100  POSTUPDT
+d1adjust(8) h        1    0.100     1     0.100  POSTUPDT
+w1adjust(8) h        1    0.100     1     0.100  POSTUPDT
+vso1adjust(8) h      1    0.100     1     0.100  POSTUPDT
+wso1adjust(8) h      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) h        1    0.100     1     0.100  POSTUPDT
+v1adjust(10) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(10) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(10) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(10) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(10) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(12) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(12) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(12) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(12) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(12) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(14) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(14) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(14) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(14) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(14) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(16) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(16) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(16) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(16) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(16) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(18) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(18) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(18) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(18) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(18) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(20) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(20) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(20) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(20) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(20) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(22) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(22) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(22) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(22) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(22) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(24) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(24) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(24) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(24) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(24) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(26) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(26) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(26) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(26) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(26) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(28) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(28) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(28) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(28) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(28) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(30) h       1    0.100     1     0.100  POSTUPDT
+d1adjust(30) h       1    0.100     1     0.100  POSTUPDT
+w1adjust(30) h       1    0.100     1     0.100  POSTUPDT
+vso1adjust(30) h     1    0.100     1     0.100  POSTUPDT
+wso1adjust(30) h     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) h       1    0.100     1     0.100  POSTUPDT
+v1adjust(200) h      1    0.100     1     0.100  POSTUPDT
+d1adjust(200) h      1    0.100     1     0.100  POSTUPDT
+w1adjust(200) h      1    0.100     1     0.100  POSTUPDT
+vso1adjust(200) h    1    0.100     1     0.100  POSTUPDT
+wso1adjust(200) h    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) h      1    0.100     1     0.100  POSTUPDT
+v1adjust(0) a        1    0.100   1.004   0.500  POSTUPDT
+d1adjust(0) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(0) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(0) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(0) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(0) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(2) a        1    0.100   1.049   0.498  POSTUPDT
+d1adjust(2) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(2) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(2) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(2) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(2) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(4) a        1    0.100   1.215   0.450  POSTUPDT
+d1adjust(4) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(4) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(4) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(4) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(4) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(6) a        1    0.100   1.031   0.349     LM   
+d1adjust(6) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(6) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(6) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(6) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(6) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(8) a        1    0.100   1.004   0.425     LM   
+d1adjust(8) a        1    0.100     1     0.254  POSTUPDT
+w1adjust(8) a        1    0.100     1     0.100  POSTUPDT
+vso1adjust(8) a      1    0.100     1     0.100  POSTUPDT
+wso1adjust(8) a      1    0.100     1     0.100  POSTUPDT
+rcadjust(8) a        1    0.100     1     0.104  POSTUPDT
+v1adjust(10) a       1    0.100   0.994   0.475     LM   
+d1adjust(10) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(10) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(10) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(10) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(10) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(12) a       1    0.100   0.998   0.495     LM   
+d1adjust(12) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(12) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(12) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(12) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(12) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(14) a       1    0.100   0.999   0.499     LM   
+d1adjust(14) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(14) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(14) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(14) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(14) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(16) a       1    0.100   0.998   0.500  POSTUPDT
+d1adjust(16) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(16) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(16) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(16) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(16) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(18) a       1    0.100   0.999   0.500  POSTUPDT
+d1adjust(18) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(18) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(18) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(18) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(18) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(20) a       1    0.100   1.000   0.500  POSTUPDT
+d1adjust(20) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(20) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(20) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(20) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(20) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(22) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(22) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(22) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(22) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(22) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(22) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(24) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(24) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(24) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(24) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(24) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(24) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(26) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(26) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(26) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(26) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(26) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(26) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(28) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(28) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(28) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(28) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(28) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(28) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(30) a       1    0.100     1     0.500  POSTUPDT
+d1adjust(30) a       1    0.100     1     0.254  POSTUPDT
+w1adjust(30) a       1    0.100     1     0.100  POSTUPDT
+vso1adjust(30) a     1    0.100     1     0.100  POSTUPDT
+wso1adjust(30) a     1    0.100     1     0.100  POSTUPDT
+rcadjust(30) a       1    0.100     1     0.104  POSTUPDT
+v1adjust(200) a      1    0.100     1     0.500  POSTUPDT
+d1adjust(200) a      1    0.100     1     0.254  POSTUPDT
+w1adjust(200) a      1    0.100     1     0.100  POSTUPDT
+vso1adjust(200) a    1    0.100     1     0.100  POSTUPDT
+wso1adjust(200) a    1    0.100     1     0.100  POSTUPDT
+rcadjust(200) a      1    0.100     1     0.104  POSTUPDT
+---------------------------------------------------------
