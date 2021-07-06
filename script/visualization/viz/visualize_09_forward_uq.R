@@ -1,19 +1,18 @@
 
 
-source("config/config.R")
+source("config.R")
 library(ggplot2)
-outdataPathRun <- outdataPath
+#outdataPathRun <- paste0(outdataPath, "_2-200_MeV_100_files_small_lenght_good")
+outdataPathRun <- paste0(outdataPath)
 plotPath <- paste0(outdataPathRun, "/plots")
 crossSectionSamples<- read_object(9, 'allResults', outdata_path = outdataPathRun)
-crossSectionSamples <- crossSectionSamples[,complete.cases(t(crossSectionSamples))]
-
 optExpDt <- read_object(6, "optExpDt", outdata_path = outdataPathRun)
 updSysDt <- read_object(4, "updSysDt", outdata_path = outdataPathRun)
 needsDt <- read_object(1, "needsDt", outdata_path = outdataPathRun)
 optRes <- read_object(7, "optRes", outdata_path = outdataPathRun)
 subents <- read_object(1, "subents", outdata_path = outdataPathRun)
 optGpDt <- read_object(6, "optGpDt", outdata_path = outdataPathRun)
-mapAssignment <- read_object(7, "mapAssignment", outdata_path = outdataPathRun)
+mapAssignment <- read_object(6, "mapAssignment", outdata_path = outdataPathRun)
 
 #plot_path <- file.path(rootpath, outdataDir, "plots")
 

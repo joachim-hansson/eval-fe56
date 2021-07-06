@@ -29,7 +29,7 @@ if (length(args)==0) {
 #       SCRIPT PARAMETERS
 ##################################################
 
-scriptnr <- 8L
+scriptnr <- 11L
 overwrite <- FALSE
 
 ##################################################
@@ -40,18 +40,18 @@ refParamDt <- read_object(2, "refParamDt")
 optSysDt <- read_object(6, "optSysDt")
 optGpDt <- read_object(6, "optGpDt")
 extNeedsDt <- read_object(2, "extNeedsDt")
-optParamDt <- read_object(7, "optParamDt")
-Sexp <- read_object(7, "Sexp")
-mask <- read_object(7, "mask")
-refPar <- read_object(7, "refPar")
-P0 <- read_object(7, "P0")
-yexp <- read_object(7, "yexp")
-D <- read_object(7, "D")
-S0 <- read_object(7, "S0")
-X <- read_object(7, "X")
-optRes <- read_object(7, "optRes")
-optSysDt_allpars <- read_object(7, "optSysDt_allpars")
-optSysDt_optpars <- read_object(7, "optSysDt_optpars")
+optParamDt <- read_object(10, "optParamDt")
+Sexp <- read_object(10, "Sexp")
+mask <- read_object(10, "mask")
+refPar <- read_object(10, "refPar")
+P0 <- read_object(10, "P0")
+yexp <- read_object(10, "yexp")
+D <- read_object(10, "D")
+S0 <- read_object(10, "S0")
+X <- read_object(10, "X")
+optRes <- read_object(10, "optRes")
+optSysDt_allpars <- read_object(10, "optSysDt_allpars")
+optSysDt_optpars <- read_object(10, "optSysDt_optpars")
 
 ##################################################
 #       START OF SCRIPT
@@ -135,7 +135,7 @@ finalParCovmat <- (-1) * solve(H)
 
 # if LM algorithm did not sufficiently converge
 # in step 07, the covariance matrix would not be well defined
-stopifnot(isSymmetric(finalParCovmat, tol=1e-10))
+stopifnot(isSymmetric(finalParCovmat, tol=1e-8))
 finalParCovmat <- (finalParCovmat + t(finalParCovmat)) / 2
 stopifnot(all(eigen(finalParCovmat)$values >= 0))
 

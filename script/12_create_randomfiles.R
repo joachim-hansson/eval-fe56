@@ -29,7 +29,7 @@ if (length(args)==0) {
 #       SCRIPT PARAMETERS
 ##################################################
 
-scriptnr <- 9L
+scriptnr <- 12L
 overwrite <- FALSE
 
 ##################################################
@@ -37,13 +37,13 @@ overwrite <- FALSE
 ##################################################
 
 extNeedsDt <- read_object(2, "extNeedsDt")
-optParamDt <- read_object(7, "optParamDt")
+optParamDt <- read_object(10, "optParamDt")
 needsDt <- read_object(1, "needsDt")
-Sexp <- read_object(7, "Sexp")
-mask <- read_object(7, "mask")
-optSysDt_allpars <- read_object(7, "optSysDt_allpars")
-finalPars <- read_object(8, "finalPars")
-finalParCovmat <- read_object(8, "finalParCovmat")
+Sexp <- read_object(10, "Sexp")
+mask <- read_object(10, "mask")
+optSysDt_allpars <- read_object(10, "optSysDt_allpars")
+finalPars <- read_object(11, "finalPars")
+finalParCovmat <- read_object(11, "finalParCovmat")
 
 
 ##################################################

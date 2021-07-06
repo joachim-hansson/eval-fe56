@@ -1,5 +1,5 @@
 
-source("config/config.R")
+source('config.R')
 library(ggplot2)
 
 extNeedsDt <- read_object(2, "extNeedsDt")
@@ -7,9 +7,17 @@ expDt <- read_object(3, "expDt")
 updSysDt <- read_object(4, "updSysDt")
 sysDt <- updSysDt[grepl('^EXPID-', EXPID)]
 sysDt[, IDX:=seq_len(.N)]
-
+needsDt <- read_object(1, "needsDt")
 retrieve_option <- 2L
 
+# create data table for extrapolation
+extNeedsDt <- needsDt[,{
+  stopifnot(all(L2 == 0) & all(L3 == 0))
+  list(L1 = defineEnergyGrid(L1, energyGridrandomFiles, enPolicy="compgrid"),
+       L2 = 0, L3 = 0, V1 = 0)
+}, by=c("PROJECTILE", "ELEMENT", "MASS", "REAC")]
+
+extNeedsDt[, IDX := seq_len(.N)]
 # option 1: retrieve the information from resulting tarfiles
 # NOTE: savePathTalys must be accessible from within the container
 #       this may not be the case if calculations have not been run
@@ -91,7 +99,7 @@ ggp <- ggp + geom_point(aes(x=L1, y=DATA, col=EXPID), data=tmpExpDt, size=0.2)
 # plot the model
 ggp <- ggp + geom_line(aes(x=L1, y=DATA))
 ggp <- ggp + geom_ribbon(aes(x=L1, ymin=DATA-UNC, ymax=DATA+UNC), alpha=0.3)
-ggp <- ggp + facet_wrap(~REAC, scales='free_y')
+ggp <- ggp + facet_wrap(~REAC, scales='free_y') + theme(strip.background = element_blank())
 
 ggp
 

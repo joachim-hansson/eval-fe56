@@ -1,9 +1,9 @@
-setwd("/home/joape785/eval-fe56-master")
-source('config.R')
+
+source("config/config.R")
 library(ggplot2)
 library(moments)
-#outdataPathRun <- paste0(outdataPath, "_2-200_MeV_100_files_small_lenght_good")
-outdataPathRun <- file.path(rootpath, "outdata") 
+
+outdataPathRun <- outdataPath
 extNeedsDt <- read_object(2, "extNeedsDt", outdata_path=outdataPathRun)
 expDt <- read_object(3, "expDt", outdata_path=outdataPathRun)
 updSysDt <- read_object(4, "updSysDt", outdata_path=outdataPathRun)

@@ -3,7 +3,7 @@
 ##################################################
 
 check_output_objects <- function(scriptnr, objnames, overwrite=FALSE) {
-    outpath <- file.path(rootpath, "outdata", sprintf("%02d", scriptnr))
+    outpath <- file.path(outdataPath, sprintf("%02d", scriptnr))
     outfiles <- file.path(outpath, paste0(objnames, ".rda"))
     print(outfiles)
     dir.create(outpath, showWarnings=FALSE, recursive=TRUE)
@@ -13,7 +13,7 @@ check_output_objects <- function(scriptnr, objnames, overwrite=FALSE) {
 }
 
 save_output_objects <- function(scriptnr, objnames, overwrite=FALSE) {
-    outpath <- file.path(rootpath, "outdata", sprintf("%02d", scriptnr))
+    outpath <- file.path(outdataPath, sprintf("%02d", scriptnr))
     for (objname in objnames) {
         curObj <- get(objname, envir=parent.frame()) 
         outfile <- file.path(outpath, paste0(objname, ".rda"))
@@ -23,7 +23,7 @@ save_output_objects <- function(scriptnr, objnames, overwrite=FALSE) {
 }
 
 save_objects <- function(scriptnr, objnames) {
-  outpath <- file.path(rootpath, "outdata", sprintf("%02d", scriptnr))
+  outpath <- file.path(outdataPath, sprintf("%02d", scriptnr))
   
   for (objname in objnames) {
     curObj <- get(objname, envir=parent.frame()) 
@@ -34,9 +34,9 @@ save_objects <- function(scriptnr, objnames) {
   } 
 }
 
-read_object <- function(scriptnr, objname, outdata_path=outdataPath) {
+read_object <- function(scriptnr, objname, outdataPath=outdataPath) {
   
-  outpath <- file.path(outdata_path, sprintf("%02d", scriptnr))
+  outpath <- file.path(outdataPath, sprintf("%02d", scriptnr))
   outfile <- file.path(outpath, paste0(objname, ".rda"))
   print(outfile)
   readRDS(outfile)

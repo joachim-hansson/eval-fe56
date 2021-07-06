@@ -27,8 +27,8 @@ library(ggplot2)
 
 # reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)",
 #                "(26-FE-56(N,P)25-MN-56,,SIG)")
-reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)")
-
+#reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)")
+reactions <- expDt[,unique(REAC)]
 for (curReac in reactions) {
 
     curExpDt <- expDt[REAC == curReac]

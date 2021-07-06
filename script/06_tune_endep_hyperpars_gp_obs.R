@@ -29,7 +29,7 @@ if (length(args)==0) {
 #       SCRIPT PARAMETERS
 ##################################################
 
-scriptnr <- 7L
+scriptnr <- 6L
 overwrite <- TRUE
 
 ##################################################
@@ -44,14 +44,13 @@ expDt <- read_object(3, "expDt")
 updSysDt <- read_object(4, "updSysDt")
 fullSensDt <- read_object(5, "fullSensDt") 
 modDt <- read_object(3, "modDt")
-yexp <- read_object(7, "yexp")
+priorDt <- read_object(4, "priorDt")
 ##################################################
 #       START OF SCRIPT
 ##################################################
 
 # define objects to be returned
-outputObjectNames <- c("optExpDt", "optSysDt", "optGpDt", "mapAssignment", "reacHandlerGPobs", "sysCompHandler", 
-                       "Xk", "S0k")
+outputObjectNames <- c("optExpDt", "optSysDt", "optGpDt", "mapAssignment", "reacHandlerGPobs", "sysCompHandler")
 check_output_objects(scriptnr, outputObjectNames)
 
 # prepare the data table with systematic components
@@ -74,7 +73,7 @@ curSysDt[, ADJUSTABLE := FALSE]
 gpHandler <- createSysCompGPHandler()
 parnames_endep <- unique(curSysDt[ERRTYPE == "talyspar_endep", EXPID])
 for (curParname in parnames_endep) {
-  gpHandler$addGP(curParname, 0.1, 3, 1e-4)
+    gpHandler$addGP(curParname, 0.1, 3, 1e-4)
 }
 
 # create a mapping matrix from the model output
@@ -89,7 +88,7 @@ setkey(extNeedsDt, IDX)
 # calculation. It serves as the expansion point in the
 # Taylor approximation of the model entering the Bayesian
 # update
-curExpDt[, REFDATA := yexp]
+curExpDt[, REFDATA := as.vector(Sexp %*% extNeedsDt$V1)]
 curExpDt[, ADJUSTABLE := FALSE]
 
 gpDt <- gpHandler$createGPDt()
@@ -97,8 +96,6 @@ gpHandler$updateSysDt(curSysDt)
 
 # define which GP hyperparameters are adjustable
 gpDt[, ADJUSTABLE := PARNAME %in% c("sigma","len")]
-
-gpDt[, ADJUSTABLE := FALSE]
 gpDt[, IDX := seq_len(.N)]
 
 # initialize handler for systematic experimental uncertainties
@@ -131,10 +128,19 @@ for(curReac in reacs){
   curUncs <- c(0, 0, rep(2, length(curEnGrid)-2))
   reacHandlerGPobs$assignMapToReac("pw", curReac,
                                    vals = rep(0, length(curEnGrid)),
-                                   uncs =  rep(1e4, length(curEnGrid)),
+                                  uncs =  rep(1e4, length(curEnGrid)),
                                    opts = list(ens = curEnGrid,
                                                order = 1, outsideZero = TRUE))
+
+
+  #prior <- ifelse(curReac %in% priorDt$REAC,  as.numeric(priorDt[REAC==curReac, PRIOR]), 10)
   
+  #curUncs <- c(1e4, 1e4, rep(prior, length(curEnGrid)-2)) # order = 3
+  #reacHandlerGPobs$assignMapToReac("pw", curReac,
+  #                                 vals = rep(0, length(curEnGrid)),
+  #                                 uncs =  curUncs,
+  #                                 opts = list(ens = curEnGrid,
+  #                                             order = 3, outsideZero = TRUE))    
 }
 
 curSysDtGPobs <- reacHandlerGPobs$createSysDtGpObs()
@@ -161,8 +167,8 @@ for(curReac in reactions){
 gpObsDt <- gpObsHandler$createGPDt()
 
 gpObsDt[,ADJUSTABLE := FALSE]
-gpObsDt[EXPID %in% exactGPObsSysDt[,.N, by=EXPID][N>1,EXPID],  ADJUSTABLE := PARNAME %in% c("sigma","len")]
-#gpObsDt[EXPID %in% exactGPObsSysDt[,.N, by=EXPID][N>1,EXPID],  ADJUSTABLE := PARNAME %in% c("sigma","len","nugget")]
+#gpObsDt[EXPID %in% exactGPObsSysDt[,.N, by=EXPID][N>1,EXPID],  ADJUSTABLE := PARNAME %in% c("sigma","len")]
+gpObsDt[EXPID %in% exactGPObsSysDt[,.N, by=EXPID][N>1,EXPID],  ADJUSTABLE := PARNAME %in% c("sigma","len","nugget")]
 gpObsDt[EXPID %in% exactGPObsSysDt[,.N, by=EXPID][N==1,EXPID] & PARNAME %in% c("sigma","len"),  PARVAL := 1]
 gpObsDt[EXPID %in% exactGPObsSysDt[,.N, by=EXPID][N==1,EXPID] & PARNAME %in% c("nugget"),  PARVAL := 1]
 gpObsDt[, IDX := seq_len(.N)]
@@ -206,8 +212,6 @@ gpDt[grepl("TALYS-",EXPID)  & PARNAME == "sigma", UPPERLIMS := 0.5]
 gpDt[grepl("TALYS-",EXPID)  & PARNAME == "len", UPPERLIMS := 5]
 gpDt[grepl("TALYS-",EXPID)  & PARNAME == "nugget", UPPERLIMS := 1000]
 
-# Do not adjust prior on energy dependat paramters
-gpDt[grepl("TALYS-",EXPID), ADJUSTABLE := FALSE]
 
 gpDt[grepl("REACEXP",EXPID) & PARNAME == "sigma" , LOWERLIMS := 1] # Set different upper limit for GPs on the observable
 gpDt[grepl("REACEXP",EXPID) & PARNAME == "len" , LOWERLIMS := 0.01]# Set different upper limit for GPs on the observable
@@ -251,32 +255,6 @@ optExpDt <- newDts$expDt
 optSysDt <- newDts$sysDt
 optGpDt <- newDts$gpDt
 
-
-# construct the matrix to map from systematic error components
-# of the experiments to the measurement points
-S <- sysCompHandler$map(optExpDt, optSysDt, ret.mat = TRUE)
-# construct the covariance matrix containing both the 
-# covariances of the systematic experimental errors and
-# the covariances for the model parameters. This matrix is diagonal
-# for the portions relating to experiments and energy-independent
-# parameters. The blocks associated with energy-dependent TALYS
-# parameters are constructed by a Gaussian process and contain
-# therefore correlations.
-P <- sysCompHandler$cov(optSysDt, optGpDt, ret.mat = TRUE)
-# The Levenberg-Marquardt routine assumes that systematic
-# components in optSysDt are only related to experiments
-# and not to model parameters. The latter were introduced
-# in step 06 to optimize the hyperparameters of the GPs
-# associated with energy-dependent TALYS parameters.
-# Therefore we need to remove them now.
-setkey(optSysDt, IDX)
-setkey(optExpDt, IDX)
-expSel <- optSysDt[, !grepl("TALYS-", EXPID)]
-talysSel <- !expSel
-
-
-Xk <- P[expSel, expSel] 
-S0k <- S[, expSel]
 # save the needed files for reference
 save_output_objects(scriptnr, outputObjectNames, overwrite)
 

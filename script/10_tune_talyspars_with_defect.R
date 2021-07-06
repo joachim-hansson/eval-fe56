@@ -7,7 +7,23 @@
 # with the Levenberg-Marquardt algorithm.
 #
 
-source("config.R")
+#################################################
+#       SCRIPT Setup
+##################################################
+
+args = commandArgs(trailingOnly=TRUE)
+
+
+if (length(args)==0) {
+  source("./config/config.R")
+  stop("No config file supplied, using default file config.R", call.=FALSE)
+} else if (length(args) > 1) {
+  stop("Script only accepts one argument.", call.=FALSE)
+} else {
+  print(paste0("Setting as config file: ", args[1]))
+  source(args[1])
+}
+
 
 #################################################
 #       SCRIPT PARAMETERS
@@ -240,11 +256,12 @@ loggerLM <- createLoggerLM(talys, savePathLM)
 
 # uncomment the line below to start from last parameterset of previous LM run
 #pinit <- read_object(7, "optRes")$par
-pinit <- refPar
+pinit <- read_object(10, "pref_last")
+#pinit <- refPar
 
 optRes <- LMalgo(talys$fun, talys$jac, pinit = pinit, p0 = refPar, P0 = P0, D = D, S = S0, X = X, yexp =yexp,
                  lower = rep(-Inf, length(refPar)), upper = rep(Inf, length(refPar)), logger = loggerLM,
-                 control = list(maxit = maxitLM, reltol = reltolLM, acc = FALSE, alpha=0.75, acc_step = 1e-1))
+                 control = list(maxit = maxitLM, reltol = reltolLM, acc = FALSE, alpha=0.75, acc_step = 1e-1, mu=6319.014))
 
 # save the needed files for reference
 save_output_objects(scriptnr, outputObjectNames, overwrite)

@@ -1,16 +1,12 @@
 # plot the posterior distribution of energy-dependent TALYS parameters
 
-source("config/config.R")
+source("config.R")
 library(ggplot2)
-outdataPathRun <- outdataPath
-plotPath <- paste0(outdataPathRun, "/plots")
 
+finalPars <- read_object(8, "finalPars")
+finalParCovmat <- read_object(8, "finalParCovmat")
+optSysDt_allpars <- read_object(7, "optSysDt_allpars")
 
-finalPars <- read_object(11, "finalPars", outdata_path = outdataPathRun)
-finalParCovmat <- read_object(11, "finalParCovmat", outdata_path = outdataPathRun)
-optSysDt_allpars <- read_object(10, "optSysDt_allpars", outdata_path = outdataPathRun)
-
-plotDt <- copy(optSysDt_allpars)
 setkey(plotDt, IDX)
 plotDt$DATA <- paramTrafo$fun(finalPars)
 plotDt$UNC <- sqrt(diag(finalParCovmat))

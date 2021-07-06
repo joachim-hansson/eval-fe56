@@ -12,7 +12,23 @@
 # in order to avoid Peelle's pertinent puzzle.
 #
 
-source("config.R")
+#################################################
+#       SCRIPT Setup
+##################################################
+
+args = commandArgs(trailingOnly=TRUE)
+
+
+if (length(args)==0) {
+  source("./config/config.R")
+  stop("No config file supplied, using default file config.R", call.=FALSE)
+} else if (length(args) > 1) {
+  stop("Script only accepts one argument.", call.=FALSE)
+} else {
+  print(paste0("Setting as config file: ", args[1]))
+  source(args[1])
+}
+
 
 #################################################
 #       SCRIPT PARAMETERS
