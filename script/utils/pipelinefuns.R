@@ -34,9 +34,9 @@ save_objects <- function(scriptnr, objnames) {
   } 
 }
 
-read_object <- function(scriptnr, objname, outdataPath=outdataPath) {
+read_object <- function(scriptnr, objname, outdata_path=outdataPath) {
   
-  outpath <- file.path(outdataPath, sprintf("%02d", scriptnr))
+  outpath <- file.path(outdata_path, sprintf("%02d", scriptnr))
   outfile <- file.path(outpath, paste0(objname, ".rda"))
   print(outfile)
   readRDS(outfile)

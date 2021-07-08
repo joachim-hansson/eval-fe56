@@ -34,7 +34,7 @@ create_run_step <- function(config){
     logPath <- file.path(outdataPath, script_n)
     dir.create(file.path(logPath), showWarnings = FALSE)
     logfile <- file.path(logPath, paste0(script_n,"_run.log"))
-    cmdstr <- paste0(Rscript," ",filepath," ",config," | tee ", logfile)
+    cmdstr <- paste0(Rscript," ",filepath," ",config," 2>&1 | tee ", logfile)
     cat("###################################\n")
     cat("Starting execution of step: '", filename, "\n")
     cat("###################################\n\n")
@@ -53,15 +53,15 @@ create_run_step <- function(config){
 
 run_step <- create_run_step(config=config)
 
-run_step("01_prepare_experimental_data.R")
+#run_step("01_prepare_experimental_data.R")
 #run_step("02_create_reference_calculation.R")
 #run_step("03_extract_experimental_uncertainties.R")
 #run_step("04_tune_experimental_uncertainties.R")
-#run_step("05_create_reference_jacobian.R")
-#run_step("06_tune_endep_hyperpars.R")
-#run_step("07_tune_talyspars.R")
-#run_step("08_calculate_posterior_approximation.R")
-#run_step("09_create_randomfiles.R")
+run_step("05_create_reference_jacobian.R")
+run_step("06_tune_endep_hyperpars.R")
+run_step("07_tune_talyspars.R")
+run_step("08_calculate_posterior_approximation.R")
+run_step("09_create_randomfiles.R")
 
 
 

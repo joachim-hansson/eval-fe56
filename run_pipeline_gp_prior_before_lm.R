@@ -34,7 +34,7 @@ create_run_step <- function(config){
     logPath <- file.path(outdataPath, script_n)
     dir.create(file.path(logPath), showWarnings = FALSE)
     logfile <- file.path(logPath, paste0(script_n,"_run.log"))
-    cmdstr <- paste0(Rscript," ",filepath," ",config," | tee ", logfile)
+    cmdstr <- paste0(Rscript," ",filepath," ",config," 2>&1 | tee ", logfile)
     cat("###################################\n")
     cat("Starting execution of step: '", filename, "\n")
     cat("###################################\n\n")

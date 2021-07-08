@@ -1,7 +1,24 @@
+#################################################
+#       SCRIPT Setup
+##################################################
+args = commandArgs(trailingOnly=TRUE)
 
+if (length(args)==0) {
+  source("./config/config.R")
+  stop("No config file supplied, using default file config.R", call.=FALSE)
+} else if (length(args) > 1) {
+  stop("Script only accepts one argument.", call.=FALSE)
+} else {
+  print(paste0("Setting as config file: ", args[1]))
+  source(args[1])
+}
 
-source("config/config.R")
 library(ggplot2)
+
+##################################################
+#       OUTPUT FROM PREVIOUS STEPS
+##################################################
+
 outdataPathRun <- outdataPath
 plotPath <- paste0(outdataPathRun, "/plots")
 crossSectionSamples<- read_object(9, 'allResults', outdata_path = outdataPathRun)
@@ -15,7 +32,9 @@ subents <- read_object(1, "subents", outdata_path = outdataPathRun)
 optGpDt <- read_object(6, "optGpDt", outdata_path = outdataPathRun)
 mapAssignment <- read_object(7, "mapAssignment", outdata_path = outdataPathRun)
 
-#plot_path <- file.path(rootpath, outdataDir, "plots")
+##################################################
+#       Visualization
+##################################################
 
 normHandler <- createSysCompNormHandler("DATAREF")
 normHandler$addSysUnc("EXPID", "", 0, 0, TRUE)

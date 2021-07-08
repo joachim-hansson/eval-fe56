@@ -1,5 +1,23 @@
-source("config.R")
+#################################################
+#       SCRIPT Setup
+##################################################
+args = commandArgs(trailingOnly=TRUE)
+
+if (length(args)==0) {
+  source("./config/config.R")
+  stop("No config file supplied, using default file config.R", call.=FALSE)
+} else if (length(args) > 1) {
+  stop("Script only accepts one argument.", call.=FALSE)
+} else {
+  print(paste0("Setting as config file: ", args[1]))
+  source(args[1])
+}
+
 library(ggplot2)
+
+##################################################
+#       OUTPUT FROM PREVIOUS STEPS
+##################################################
 
 origSysDt <- read_object(4, "origSysDt")
 updSysDt <- read_object(4, "updSysDt")
@@ -23,12 +41,9 @@ setkey(expDt, IDX)
 expDt[, ORIGUNC := origUnc]
 expDt[, UPDUNC := updUnc]
 
-library(ggplot2)
 
-# reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)",
-#                "(26-FE-56(N,P)25-MN-56,,SIG)")
-#reactions <- c("(26-FE-56(N,2N)26-FE-55,,SIG)")
 reactions <- expDt[,unique(REAC)]
+
 for (curReac in reactions) {
 
     curExpDt <- expDt[REAC == curReac]
@@ -48,7 +63,7 @@ for (curReac in reactions) {
 
     print(ggp)
     dir.create(plotPath, recursive=TRUE, showWarnings=FALSE)
-    filepath <- file.path(plotPath, 'plot_example_MLO_correction.png')
+    filepath <- file.path(plotPath, paste0('MLO_correction_', curReac,'.png'))
     ggsave(filepath, ggp, width = 8.65, height = 5.6, units = "cm", dpi = 300)
 }
 

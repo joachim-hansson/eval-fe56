@@ -1,6 +1,26 @@
+#################################################
+#       SCRIPT Setup
+##################################################
+args = commandArgs(trailingOnly=TRUE)
+
+if (length(args)==0) {
+  source("./config/config.R")
+  stop("No config file supplied, using default file config.R", call.=FALSE)
+} else if (length(args) > 1) {
+  stop("Script only accepts one argument.", call.=FALSE)
+} else {
+  print(paste0("Setting as config file: ", args[1]))
+  source(args[1])
+}
+
 library(ggplot2)
-source("config/config.R")
-source("script/visualization/funs/plot_gp_prior_function.R")
+library(stringr)
+library(data.table)
+library(Matrix)
+
+##################################################
+#       OUTPUT FROM PREVIOUS STEPS
+##################################################
 
 outdataPathRun <- outdataPath
 plotPath <- paste0(outdataPathRun, "/plots")
