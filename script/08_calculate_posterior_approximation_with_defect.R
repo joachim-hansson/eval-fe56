@@ -135,7 +135,7 @@ finalParCovmat <- (-1) * solve(H)
 
 # if LM algorithm did not sufficiently converge
 # in step 07, the covariance matrix would not be well defined
-stopifnot(isSymmetric(finalParCovmat, tol=1e-10))
+stopifnot(isSymmetric(finalParCovmat, tol=1e-9))
 finalParCovmat <- (finalParCovmat + t(finalParCovmat)) / 2
 stopifnot(all(eigen(finalParCovmat)$values >= 0))
 
