@@ -27,7 +27,7 @@ if (is.na(maxNumCPU)) maxNumCPU <- 32
 
 # settings needed to connect to the cluster
 # and run TALYS calculations in parallel
-ssh_login <- "user@host.com"
+ssh_login <- "localhost"
 ssh_pw <- "sshpassword"
 
 # a valid path on the remote machine and the
@@ -85,6 +85,10 @@ maxitLM <- 10
 # Levenberg-Marquardt algorithm falls below this value,
 # the optimization procedure terminates
 reltolLM <- 1e-5
+
+# where to save output data
+outdataPath <- file.path(rootpath, "outdata_test")
+dir.create(outdataPath, recursive=TRUE, showWarnings=FALSE)
 
 # specify the directory were status information and plots during the 
 # optimization using the Levenberg-Marquardt algorithm should be stored

@@ -29,15 +29,17 @@ optParCovmat <- read_object(8, "finalParCovmat")
 P0 <- read_object(8, "P0_all")
 refParamDt <- read_object(2, "refParamDt")
 optSysDt_allpars <- read_object(7, "optSysDt_allpars")
+optParamDt <- read_object(7, "optParamDt")
 
-par_selection <- finalParamDt[, ADJUSTABLE==TRUE] 
+par_selection <- optParamDt[, ADJUSTABLE==TRUE] 
 
-paramDt <- finalParamDt[par_selection]
+#paramDt <- finalParamDt[par_selection]
+paramDt <- optParamDt[par_selection]
 
 paramDt[, OPTPARVAL_ref := as.numeric(paramDt$PARVAL)]
 paramDt[, OPTPARUNC_ref := as.numeric(as.vector(sqrt(diag(P0))))]
-paramDt[, OPTPARVAL := optPars]
-paramDt[, OPTPARUNC := sqrt(diag(optParCovmat))]
+paramDt[, OPTPARVAL := optPars[par_selection]]
+paramDt[, OPTPARUNC := sqrt(diag(optParCovmat))[par_selection]]
 
 
 paramDt[, ENDEPPARTYPE := str_extract(paramDt$PARNAME, ".*(?=\\(.+?\\))")]
@@ -56,6 +58,7 @@ for (edep_par in edep_partypes) {
 
 for (edep_par in edep_partypes) {
   curparamDt <- paramDt[ENDEPPARTYPE == edep_par]
+  print(curparamDt)
   setkey(curparamDt, ENERGY) 
   ggp_epar <- ggplot(curparamDt) + theme_bw() + ggtitle(edep_par)
   #ggp_epar <- ggplot(curparamDt) + theme_bw() + ylim(0.2, 1.8) + ggtitle(edep_par)
